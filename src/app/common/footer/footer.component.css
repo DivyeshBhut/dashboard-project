@@ -1,0 +1,27 @@
+.app-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  padding: 1rem 2rem;
+  margin-top: auto; 
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+.footer-content p { margin: 0; }
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-links a:hover {
+  color: var(--accent-color);
+}

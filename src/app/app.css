@@ -1,0 +1,6 @@
+/* App component is just a router outlet, no global flex centering needed here. */
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}

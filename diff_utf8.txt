@@ -1,0 +1,1506 @@
+﻿diff --git a/angular.json b/angular.json
+index 8f4fc34..cf25981 100644
+--- a/angular.json
++++ b/angular.json
+@@ -25,6 +25,7 @@
+               }
+             ],
+             "styles": [
++              "node_modules/@progress/kendo-theme-default/dist/all.css",
+               "src/styles.css"
+             ]
+           },
+diff --git a/package-lock.json b/package-lock.json
+index 00a2b57..02689d0 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -14,6 +14,19 @@
+         "@angular/forms": "^21.2.0",
+         "@angular/platform-browser": "^21.2.0",
+         "@angular/router": "^21.2.0",
++        "@progress/kendo-angular-buttons": "^23.3.0",
++        "@progress/kendo-angular-common": "^23.3.0",
++        "@progress/kendo-angular-dateinputs": "^23.3.0",
++        "@progress/kendo-angular-dropdowns": "^23.3.0",
++        "@progress/kendo-angular-grid": "^23.3.0",
++        "@progress/kendo-angular-indicators": "^23.3.0",
++        "@progress/kendo-angular-inputs": "^23.3.0",
++        "@progress/kendo-angular-intl": "^23.3.0",
++        "@progress/kendo-angular-l10n": "^23.3.0",
++        "@progress/kendo-drawing": "^1.24.1",
++        "@progress/kendo-licensing": "^1.10.1",
++        "@progress/kendo-svg-icons": "^4.8.0",
++        "@progress/kendo-theme-default": "^13.1.1",
+         "rxjs": "~7.8.0",
+         "tslib": "^2.3.0"
+       },
+@@ -1096,43 +1109,6 @@
+         "node": ">=20.19.0"
+       }
+     },
+-    "node_modules/@emnapi/core": {
+-      "version": "1.9.2",
+-      "resolved": "https://registry.npmjs.org/@emnapi/core/-/core-1.9.2.tgz",
+-      "integrity": "sha512-UC+ZhH3XtczQYfOlu3lNEkdW/p4dsJ1r/bP7H8+rhao3TTTMO1ATq/4DdIi23XuGoFY+Cz0JmCbdVl0hz9jZcA==",
+-      "dev": true,
+-      "license": "MIT",
+-      "optional": true,
+-      "peer": true,
+-      "dependencies": {
+-        "@emnapi/wasi-threads": "1.2.1",
+-        "tslib": "^2.4.0"
+-      }
+-    },
+-    "node_modules/@emnapi/runtime": {
+-      "version": "1.9.2",
+-      "resolved": "https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.9.2.tgz",
+-      "integrity": "sha512-3U4+MIWHImeyu1wnmVygh5WlgfYDtyf0k8AbLhMFxOipihf6nrWC4syIm/SwEeec0mNSafiiNnMJwbza/Is6Lw==",
+-      "dev": true,
+-      "license": "MIT",
+-      "optional": true,
+-      "peer": true,
+-      "dependencies": {
+-        "tslib": "^2.4.0"
+-      }
+-    },
+-    "node_modules/@emnapi/wasi-threads": {
+-      "version": "1.2.1",
+-      "resolved": "https://registry.npmjs.org/@emnapi/wasi-threads/-/wasi-threads-1.2.1.tgz",
+-      "integrity": "sha512-uTII7OYF+/Mes/MrcIOYp5yOtSMLBWSIoLPpcgwipoiKbli6k322tcoFsxoIIxPDqW01SQGAgko4EzZi2BNv2w==",
+-      "dev": true,
+-      "license": "MIT",
+-      "optional": true,
+-      "peer": true,
+-      "dependencies": {
+-        "tslib": "^2.4.0"
+-      }
+-    },
+     "node_modules/@esbuild/aix-ppc64": {
+       "version": "0.27.3",
+       "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.27.3.tgz",
+@@ -3165,6 +3141,544 @@
+       "license": "MIT",
+       "optional": true
+     },
++    "node_modules/@progress/kendo-angular-buttons": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-buttons/-/kendo-angular-buttons-23.3.0.tgz",
++      "integrity": "sha512-JqAclXe5vOGApAia591lAGHBIaLsevl5byIXbcbXehWMYn+xso/7Wfp/puHDnpPzgFm/Gp1km5zaXQ6mpP7q5A==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/kendo-smartpaste-common": "1.0.0",
++        "@progress/kendo-webspeech-common": "1.0.1",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-icons": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-angular-popup": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-common": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-common/-/kendo-angular-common-23.3.0.tgz",
++      "integrity": "sha512-GgqwylCpLjo59U6iJRB1ZdjTFRCleDkyMHyBx2kqh6kDJEjrG9a287rcCpuG+E3iG4+LHZKjB3GHCdd8R9DDcQ==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/kendo-draggable": "^3.0.2",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-dateinputs": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-dateinputs/-/kendo-angular-dateinputs-23.3.0.tgz",
++      "integrity": "sha512-ETrjYGD0t5Dx8HSX/+4wtEsCxYkImXclebybW5DYcVCBmCuqFnKs8LdNMFmEzxYikOB5HqLiONyRMEKn+tg+1Q==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/kendo-date-math": "^1.1.0",
++        "@progress/kendo-dateinputs-common": "^0.4.10",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/forms": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-buttons": "23.3.0",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-icons": "23.3.0",
++        "@progress/kendo-angular-intl": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-angular-navigation": "23.3.0",
++        "@progress/kendo-angular-popup": "23.3.0",
++        "@progress/kendo-angular-utils": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-dropdowns": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-dropdowns/-/kendo-angular-dropdowns-23.3.0.tgz",
++      "integrity": "sha512-4CBpEAiojGIIXw9T4D8yiFhPm2XMb6klPMWRcGs0fHPEk0sNE+PynnFOZrGq3PkKNpkJxeC/SVcJsywvjDRZfQ==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/forms": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-icons": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-angular-navigation": "23.3.0",
++        "@progress/kendo-angular-popup": "23.3.0",
++        "@progress/kendo-angular-treeview": "23.3.0",
++        "@progress/kendo-angular-utils": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-grid": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-grid/-/kendo-angular-grid-23.3.0.tgz",
++      "integrity": "sha512-UBH/HwvUAuPsq0648YiWWFoHYlfw5CjXRIxFWEZsBezoMY6MRYiYmT0u+jhMhKA2PizjIUF8DpwW54BFBrU7ZQ==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/kendo-csv": "^1.0.0",
++        "@progress/kendo-file-saver": "^1.0.0",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/forms": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-buttons": "23.3.0",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-conversational-ui": "23.3.0",
++        "@progress/kendo-angular-dateinputs": "23.3.0",
++        "@progress/kendo-angular-dropdowns": "23.3.0",
++        "@progress/kendo-angular-excel-export": "23.3.0",
++        "@progress/kendo-angular-icons": "23.3.0",
++        "@progress/kendo-angular-indicators": "23.3.0",
++        "@progress/kendo-angular-inputs": "23.3.0",
++        "@progress/kendo-angular-intl": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-angular-label": "23.3.0",
++        "@progress/kendo-angular-layout": "23.3.0",
++        "@progress/kendo-angular-menu": "23.3.0",
++        "@progress/kendo-angular-navigation": "23.3.0",
++        "@progress/kendo-angular-pager": "23.3.0",
++        "@progress/kendo-angular-pdf-export": "23.3.0",
++        "@progress/kendo-angular-popup": "23.3.0",
++        "@progress/kendo-angular-toolbar": "23.3.0",
++        "@progress/kendo-angular-upload": "23.3.0",
++        "@progress/kendo-angular-utils": "23.3.0",
++        "@progress/kendo-data-query": "^1.7.3",
++        "@progress/kendo-drawing": "^1.24.1",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-indicators": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-indicators/-/kendo-angular-indicators-23.3.0.tgz",
++      "integrity": "sha512-g65AlhalamwhjZ+pcT2RQMHPfT3TDhqt73u0F3+rooc43KmncoPI0CefwQDdDg+aexbrR92KQ25DpOgJVWRotg==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-intl": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-inputs": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-inputs/-/kendo-angular-inputs-23.3.0.tgz",
++      "integrity": "sha512-vkuaqdZAX2LFzXOSswpA+8ZzjjrFrN2eKuG1UkUePXUl6OEq6SyWrko9klp9NhjRlWwQr6FIIX3ETz+pgLYHFQ==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/kendo-draggable": "^3.0.0",
++        "@progress/kendo-inputs-common": "^3.1.0",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/forms": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-buttons": "23.3.0",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-angular-dialog": "23.3.0",
++        "@progress/kendo-angular-icons": "23.3.0",
++        "@progress/kendo-angular-intl": "23.3.0",
++        "@progress/kendo-angular-l10n": "23.3.0",
++        "@progress/kendo-angular-navigation": "23.3.0",
++        "@progress/kendo-angular-popup": "23.3.0",
++        "@progress/kendo-angular-utils": "23.3.0",
++        "@progress/kendo-drawing": "^1.24.1",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-intl": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-intl/-/kendo-angular-intl-23.3.0.tgz",
++      "integrity": "sha512-s0rExU3ncFYi2lfIItP48Yu5/gY9+Fht7hMCGBpVJgGyE8d6Pj6czWJrlMoYrfF84qOAQusB4ERV621FRH2d3g==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@progress/kendo-intl": "3.2.1",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-l10n": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-l10n/-/kendo-angular-l10n-23.3.0.tgz",
++      "integrity": "sha512-qyC9VTba0DF/hVD/Vh8riYOv3kXTbGloINDl+m8BOyVI3T7LgvzRj1cvpBxKUxRma6xjSXT/aoZPI9/aES0j/g==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "tslib": "^2.3.1"
++      },
++      "peerDependencies": {
++        "@angular/animations": "19 - 21",
++        "@angular/common": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@angular/platform-browser": "19 - 21",
++        "@progress/kendo-angular-common": "23.3.0",
++        "@progress/kendo-licensing": "^1.10.0",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-angular-schematics": {
++      "version": "23.3.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-angular-schematics/-/kendo-angular-schematics-23.3.0.tgz",
++      "integrity": "sha512-aqIBx6NTSqdJlwtwcUgQMpDIdK+65EHaHaPu7ChC7z2R8Q+dzuRBdjZN29n1P+V9qaX/mBU9USer3jd3Ap6wog==",
++      "license": "SEE LICENSE in LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-angular-schematics": "23.3.0",
++        "@types/semver": "^7.5.0",
++        "semver": "^7.5.3"
++      },
++      "peerDependencies": {
++        "@angular-devkit/core": "19 - 21",
++        "@angular-devkit/schematics": "19 - 21",
++        "@angular/core": "19 - 21",
++        "@schematics/angular": "19 - 21",
++        "rxjs": "^6.5.3 || ^7.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-common": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-common/-/kendo-common-1.0.2.tgz",
++      "integrity": "sha512-PHxnquetSmtmXiF4dmlQiypzXaFLUEPK3VAOHxmnRDrLxaPrcZfaW9FOOiyur8hv4QmXlohISMwMElZS8Xi1Ag==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "tslib": "^1.7.0"
++      }
++    },
++    "node_modules/@progress/kendo-common/node_modules/tslib": {
++      "version": "1.14.1",
++      "resolved": "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz",
++      "integrity": "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==",
++      "license": "0BSD"
++    },
++    "node_modules/@progress/kendo-csv": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-csv/-/kendo-csv-1.0.0.tgz",
++      "integrity": "sha512-Z23QE0AbX9I5upvKzbDT71XQmQ9rEKIOBgWpTblBnjTtBd7n+gLOQ954drd+NHJ5xw8R+xAhtDTEBd8JtKzq7A==",
++      "license": "SEE LICENSE IN LICENSE.md"
++    },
++    "node_modules/@progress/kendo-date-math": {
++      "version": "1.5.16",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-date-math/-/kendo-date-math-1.5.16.tgz",
++      "integrity": "sha512-Nwulm8BnXYprq2P0UoqwyxArloAe+i0NAOK5Qq3ISMmfORk66njC3IGVf80Cu28SlOGLOKsCx8Kd1Fph4WbPng==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "tslib": "^2.4.1"
++      },
++      "engines": {
++        "node": ">=20.0.0",
++        "npm": ">=10.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-dateinputs-common": {
++      "version": "0.4.10",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-dateinputs-common/-/kendo-dateinputs-common-0.4.10.tgz",
++      "integrity": "sha512-jCcDBi14jmA02iqZGHUWbOnRW4r1zClTZDrVwkbO61pFNUZRmrLMFgWw8LDwmxZZvNhnyEsxgN7YOIesvLKutA==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-date-math": "^1.5.9",
++        "tslib": "^2.4.1"
++      },
++      "engines": {
++        "node": ">=20.0.0",
++        "npm": ">=10.0.0"
++      }
++    },
++    "node_modules/@progress/kendo-draggable": {
++      "version": "3.1.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-draggable/-/kendo-draggable-3.1.0.tgz",
++      "integrity": "sha512-S5AHF9uiy44um+06ABJcjZn/wpO3ZwLahd2BhiTd7NeBVPt5lkj2bjdmkd88GEIIBKmT7FOK308WUt5/MmKVTQ==",
++      "license": "Apache-2.0"
++    },
++    "node_modules/@progress/kendo-drawing": {
++      "version": "1.24.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-drawing/-/kendo-drawing-1.24.1.tgz",
++      "integrity": "sha512-KXhmBPfP7rRUaNKDTRRTmd0/LV0R2fICdpaRKthlGO8u6c7QNXdJ3Lr5eLs6iCXYIVFTAQRoj6fgptmqCpG/vA==",
++      "license": "See license in LICENSE.md",
++      "dependencies": {
++        "@progress/kendo-common": "^1.0.1",
++        "@progress/pako-esm": "^1.0.1"
++      }
++    },
++    "node_modules/@progress/kendo-file-saver": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-file-saver/-/kendo-file-saver-1.1.2.tgz",
++      "integrity": "sha512-hWpJ67L8b2+GIhsIWR09NgGaEh87jvcHv7kScC671cbVWJycXTGqdy3ZoI0pzIaH8K0IgP2TNkF1ay4HGxe+pg==",
++      "license": "Apache-2.0"
++    },
++    "node_modules/@progress/kendo-inputs-common": {
++      "version": "3.1.2",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-inputs-common/-/kendo-inputs-common-3.1.2.tgz",
++      "integrity": "sha512-iCYz0yuDeR/YS+mW5tY7UkWEsf5EjdTKLpx8O5VJAFFcd2dxLCK/HAihSHS+KpWqIZIw4EIWeR6lzGQf0nN0nA==",
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "tslib": "^2.3.1"
++      },
++      "engines": {
++        "node": ">=20.0.0",
++        "npm": ">=10.0.0"
++      },
++      "peerDependencies": {
++        "@progress/kendo-drawing": "^1.21.2"
++      }
++    },
++    "node_modules/@progress/kendo-intl": {
++      "version": "3.2.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-intl/-/kendo-intl-3.2.1.tgz",
++      "integrity": "sha512-xNV/tlyd+YE+XgBci7RV55YRyB84Lp91MmVbolSKL4FmjEQsE18H86CKM9bFJc5juyTOuqmJCKUGa9x0be473Q==",
++      "license": "Apache-2.0"
++    },
++    "node_modules/@progress/kendo-licensing": {
++      "version": "1.10.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-licensing/-/kendo-licensing-1.10.1.tgz",
++      "integrity": "sha512-1h5WRU+NggU4dOSSFZW1nFFHYJ5uN03pkDgyYzO5DnrUFWIxvX+yAli+UJt6y9834Pab2lhyVnuf8JkuC7u7kQ==",
++      "hasInstallScript": true,
++      "license": "SEE LICENSE IN LICENSE.md",
++      "dependencies": {
++        "glob": "^13.0.1",
++        "jsonwebtoken": "^9.0.3",
++        "yargs": "^17.7.2"
++      },
++      "bin": {
++        "kendo-ui-license": "bin/kendo-ui-license.js"
++      },
++      "engines": {
++        "node": "14 || 16 || 18 || 20 || >=22"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/ansi-regex": {
++      "version": "5.0.1",
++      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
++      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/ansi-styles": {
++      "version": "4.3.0",
++      "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
++      "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
++      "license": "MIT",
++      "dependencies": {
++        "color-convert": "^2.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      },
++      "funding": {
++        "url": "https://github.com/chalk/ansi-styles?sponsor=1"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/cliui": {
++      "version": "8.0.1",
++      "resolved": "https://registry.npmjs.org/cliui/-/cliui-8.0.1.tgz",
++      "integrity": "sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==",
++      "license": "ISC",
++      "dependencies": {
++        "string-width": "^4.2.0",
++        "strip-ansi": "^6.0.1",
++        "wrap-ansi": "^7.0.0"
++      },
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/emoji-regex": {
++      "version": "8.0.0",
++      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
++      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
++      "license": "MIT"
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/is-fullwidth-code-point": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
++      "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/string-width": {
++      "version": "4.2.3",
++      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
++      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
++      "license": "MIT",
++      "dependencies": {
++        "emoji-regex": "^8.0.0",
++        "is-fullwidth-code-point": "^3.0.0",
++        "strip-ansi": "^6.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/strip-ansi": {
++      "version": "6.0.1",
++      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
++      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
++      "license": "MIT",
++      "dependencies": {
++        "ansi-regex": "^5.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/wrap-ansi": {
++      "version": "7.0.0",
++      "resolved": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
++      "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
++      "license": "MIT",
++      "dependencies": {
++        "ansi-styles": "^4.0.0",
++        "string-width": "^4.1.0",
++        "strip-ansi": "^6.0.0"
++      },
++      "engines": {
++        "node": ">=10"
++      },
++      "funding": {
++        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/yargs": {
++      "version": "17.7.2",
++      "resolved": "https://registry.npmjs.org/yargs/-/yargs-17.7.2.tgz",
++      "integrity": "sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==",
++      "license": "MIT",
++      "dependencies": {
++        "cliui": "^8.0.1",
++        "escalade": "^3.1.1",
++        "get-caller-file": "^2.0.5",
++        "require-directory": "^2.1.1",
++        "string-width": "^4.2.3",
++        "y18n": "^5.0.5",
++        "yargs-parser": "^21.1.1"
++      },
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@progress/kendo-licensing/node_modules/yargs-parser": {
++      "version": "21.1.1",
++      "resolved": "https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.1.1.tgz",
++      "integrity": "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==",
++      "license": "ISC",
++      "engines": {
++        "node": ">=12"
++      }
++    },
++    "node_modules/@progress/kendo-smartpaste-common": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-smartpaste-common/-/kendo-smartpaste-common-1.0.0.tgz",
++      "integrity": "sha512-XH27wyfkQ7ez/h8bUt1GGgBEA8iMICvqsvch8+pEwZR2SaWUkV0PjeLFXT1ZNSVolEfmzQCKZJbFeYTPkKLBWA==",
++      "license": "SEE LICENSE IN LICENSE.md"
++    },
++    "node_modules/@progress/kendo-svg-icons": {
++      "version": "4.8.0",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-svg-icons/-/kendo-svg-icons-4.8.0.tgz",
++      "integrity": "sha512-KHD/nwZXl15jk/kdmxTP9pOfqCGhfBGj15IIVFGfdx6LTkpBur4FUEmdWwE8hph0xVHxl5R8AbKgH8mzf4xIfw==",
++      "license": "Apache-2.0"
++    },
++    "node_modules/@progress/kendo-theme-core": {
++      "version": "13.1.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-theme-core/-/kendo-theme-core-13.1.1.tgz",
++      "integrity": "sha512-lV+soSk2WmF/xjIUbqln09aYCF2UGI8Jr1jZ9dP3kDrzPHJRpGmzI/sab5XqUJUmsa2b6/RIRCL2jeAi+0N/Rg==",
++      "license": "Apache-2.0"
++    },
++    "node_modules/@progress/kendo-theme-default": {
++      "version": "13.1.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-theme-default/-/kendo-theme-default-13.1.1.tgz",
++      "integrity": "sha512-aoP+NEA57aTT0SyT5CLNr/u7eExCZz+zIw+t9jXPY6w4euTC4KJY13onjEVmQbqvBnWGrI1eSvL1b09RinXirw==",
++      "license": "Apache-2.0",
++      "dependencies": {
++        "@progress/kendo-svg-icons": "^4.8.0",
++        "@progress/kendo-theme-core": "13.1.1",
++        "@progress/kendo-theme-utils": "13.1.1"
++      }
++    },
++    "node_modules/@progress/kendo-theme-utils": {
++      "version": "13.1.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-theme-utils/-/kendo-theme-utils-13.1.1.tgz",
++      "integrity": "sha512-7RXXxXMuX4PY+eAbDnxMroOBZpoeoRbptgg5V6Lw7P/in2cGbuxkki1jX3NPdch3d3yVeTfhliRIvHY80cfSzw==",
++      "license": "Apache-2.0",
++      "dependencies": {
++        "@progress/kendo-theme-core": "13.1.1"
++      }
++    },
++    "node_modules/@progress/kendo-webspeech-common": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/@progress/kendo-webspeech-common/-/kendo-webspeech-common-1.0.1.tgz",
++      "integrity": "sha512-c5IHS5vakAtxbaVfd26rM1dZnt9JfUOqWFq7gK8mU3HaZ9rqoH+DEIn72bbiRs+Ju5e81d7H1Q/nMx8u09pwRg==",
++      "license": "SEE LICENSE IN LICENSE.md"
++    },
++    "node_modules/@progress/pako-esm": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/@progress/pako-esm/-/pako-esm-1.0.1.tgz",
++      "integrity": "sha512-O4A3b1EuE9Xe1pC3Xz9Tcn1M/CYrL71f4y/5TXeytOVTkmkzBgYW97fYP2f+54H0e0erWRaqV/kUUB/a8Uxfbw==",
++      "license": "SEE LICENSE IN LICENSE.md"
++    },
+     "node_modules/@rolldown/binding-android-arm64": {
+       "version": "1.0.0-rc.4",
+       "resolved": "https://registry.npmjs.org/@rolldown/binding-android-arm64/-/binding-android-arm64-1.0.0-rc.4.tgz",
+@@ -3906,6 +4420,12 @@
+       "dev": true,
+       "license": "MIT"
+     },
++    "node_modules/@types/semver": {
++      "version": "7.7.1",
++      "resolved": "https://registry.npmjs.org/@types/semver/-/semver-7.7.1.tgz",
++      "integrity": "sha512-FmgJfu+MOcQ370SD0ev7EI8TlCAfKYU+B4m5T3yXc1CiRN94g/SZPtsCkk506aUDtlMnFZvasDwHHUcZUEaYuA==",
++      "license": "MIT"
++    },
+     "node_modules/@vitejs/plugin-basic-ssl": {
+       "version": "2.1.4",
+       "resolved": "https://registry.npmjs.org/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-2.1.4.tgz",
+@@ -4197,7 +4717,6 @@
+       "version": "4.0.4",
+       "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-4.0.4.tgz",
+       "integrity": "sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==",
+-      "dev": true,
+       "license": "MIT",
+       "engines": {
+         "node": "18 || 20 || >=22"
+@@ -4283,7 +4802,6 @@
+       "version": "5.0.5",
+       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.5.tgz",
+       "integrity": "sha512-VZznLgtwhn+Mact9tfiwx64fA9erHH/MCXEUfB/0bX/6Fz6ny5EGTXYltMocqg4xFAQZtnO3DHWWXi8RiuN7cQ==",
+-      "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "balanced-match": "^4.0.2"
+@@ -4326,6 +4844,12 @@
+         "node": "^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7"
+       }
+     },
++    "node_modules/buffer-equal-constant-time": {
++      "version": "1.0.1",
++      "resolved": "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz",
++      "integrity": "sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA==",
++      "license": "BSD-3-Clause"
++    },
+     "node_modules/buffer-from": {
+       "version": "1.1.2",
+       "resolved": "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz",
+@@ -4594,7 +5118,6 @@
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+       "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+-      "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "color-name": "~1.1.4"
+@@ -4607,7 +5130,6 @@
+       "version": "1.1.4",
+       "resolved": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+       "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+-      "dev": true,
+       "license": "MIT"
+     },
+     "node_modules/colorette": {
+@@ -4905,6 +5427,15 @@
+         "node": ">= 0.4"
+       }
+     },
++    "node_modules/ecdsa-sig-formatter": {
++      "version": "1.0.11",
++      "resolved": "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz",
++      "integrity": "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==",
++      "license": "Apache-2.0",
++      "dependencies": {
++        "safe-buffer": "^5.0.1"
++      }
++    },
+     "node_modules/ee-first": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+@@ -5065,7 +5596,6 @@
+       "version": "3.2.0",
+       "resolved": "https://registry.npmjs.org/escalade/-/escalade-3.2.0.tgz",
+       "integrity": "sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==",
+-      "dev": true,
+       "license": "MIT",
+       "engines": {
+         "node": ">=6"
+@@ -5344,7 +5874,6 @@
+       "version": "2.0.5",
+       "resolved": "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz",
+       "integrity": "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==",
+-      "dev": true,
+       "license": "ISC",
+       "engines": {
+         "node": "6.* || 8.* || >= 10.*"
+@@ -5406,7 +5935,6 @@
+       "version": "13.0.6",
+       "resolved": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
+       "integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+-      "dev": true,
+       "license": "BlueOak-1.0.0",
+       "dependencies": {
+         "minimatch": "^10.2.2",
+@@ -5922,6 +6450,49 @@
+       ],
+       "license": "MIT"
+     },
++    "node_modules/jsonwebtoken": {
++      "version": "9.0.3",
++      "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.3.tgz",
++      "integrity": "sha512-MT/xP0CrubFRNLNKvxJ2BYfy53Zkm++5bX9dtuPbqAeQpTVe0MQTFhao8+Cp//EmJp244xt6Drw/GVEGCUj40g==",
++      "license": "MIT",
++      "dependencies": {
++        "jws": "^4.0.1",
++        "lodash.includes": "^4.3.0",
++        "lodash.isboolean": "^3.0.3",
++        "lodash.isinteger": "^4.0.4",
++        "lodash.isnumber": "^3.0.3",
++        "lodash.isplainobject": "^4.0.6",
++        "lodash.isstring": "^4.0.1",
++        "lodash.once": "^4.0.0",
++        "ms": "^2.1.1",
++        "semver": "^7.5.4"
++      },
++      "engines": {
++        "node": ">=12",
++        "npm": ">=6"
++      }
++    },
++    "node_modules/jwa": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/jwa/-/jwa-2.0.1.tgz",
++      "integrity": "sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg==",
++      "license": "MIT",
++      "dependencies": {
++        "buffer-equal-constant-time": "^1.0.1",
++        "ecdsa-sig-formatter": "1.0.11",
++        "safe-buffer": "^5.0.1"
++      }
++    },
++    "node_modules/jws": {
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/jws/-/jws-4.0.1.tgz",
++      "integrity": "sha512-EKI/M/yqPncGUUh44xz0PxSidXFr/+r0pA70+gIYhjv+et7yxM+s29Y+VGDkovRofQem0fs7Uvf4+YmAdyRduA==",
++      "license": "MIT",
++      "dependencies": {
++        "jwa": "^2.0.1",
++        "safe-buffer": "^5.0.1"
++      }
++    },
+     "node_modules/listr2": {
+       "version": "9.0.5",
+       "resolved": "https://registry.npmjs.org/listr2/-/listr2-9.0.5.tgz",
+@@ -6005,6 +6576,48 @@
+         "@lmdb/lmdb-win32-x64": "3.5.1"
+       }
+     },
++    "node_modules/lodash.includes": {
++      "version": "4.3.0",
++      "resolved": "https://registry.npmjs.org/lodash.includes/-/lodash.includes-4.3.0.tgz",
++      "integrity": "sha512-W3Bx6mdkRTGtlJISOvVD/lbqjTlPPUDTMnlXZFnVwi9NKJ6tiAk6LVdlhZMm17VZisqhKcgzpO5Wz91PCt5b0w==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.isboolean": {
++      "version": "3.0.3",
++      "resolved": "https://registry.npmjs.org/lodash.isboolean/-/lodash.isboolean-3.0.3.tgz",
++      "integrity": "sha512-Bz5mupy2SVbPHURB98VAcw+aHh4vRV5IPNhILUCsOzRmsTmSQ17jIuqopAentWoehktxGd9e/hbIXq980/1QJg==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.isinteger": {
++      "version": "4.0.4",
++      "resolved": "https://registry.npmjs.org/lodash.isinteger/-/lodash.isinteger-4.0.4.tgz",
++      "integrity": "sha512-DBwtEWN2caHQ9/imiNeEA5ys1JoRtRfY3d7V9wkqtbycnAmTvRRmbHKDV4a0EYc678/dia0jrte4tjYwVBaZUA==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.isnumber": {
++      "version": "3.0.3",
++      "resolved": "https://registry.npmjs.org/lodash.isnumber/-/lodash.isnumber-3.0.3.tgz",
++      "integrity": "sha512-QYqzpfwO3/CWf3XP+Z+tkQsfaLL/EnUlXWVkIk5FUPc4sBdTehEqZONuyRt2P67PXAk+NXmTBcc97zw9t1FQrw==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.isplainobject": {
++      "version": "4.0.6",
++      "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz",
++      "integrity": "sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.isstring": {
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/lodash.isstring/-/lodash.isstring-4.0.1.tgz",
++      "integrity": "sha512-0wJxfxH1wgO3GrbuP+dTTk7op+6L41QCXbGINEmD+ny/G/eCqGzxyCsh7159S+mgDDcoarnBw6PC1PS5+wUGgw==",
++      "license": "MIT"
++    },
++    "node_modules/lodash.once": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz",
++      "integrity": "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==",
++      "license": "MIT"
++    },
+     "node_modules/log-symbols": {
+       "version": "7.0.1",
+       "resolved": "https://registry.npmjs.org/log-symbols/-/log-symbols-7.0.1.tgz",
+@@ -6223,7 +6836,6 @@
+       "version": "10.2.5",
+       "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.5.tgz",
+       "integrity": "sha512-MULkVLfKGYDFYejP07QOurDLLQpcjk7Fw+7jXS2R2czRQzR56yHRveU5NDJEOviH+hETZKSkIk5c+T23GjFUMg==",
+-      "dev": true,
+       "license": "BlueOak-1.0.0",
+       "dependencies": {
+         "brace-expansion": "^5.0.5"
+@@ -6239,7 +6851,6 @@
+       "version": "7.1.3",
+       "resolved": "https://registry.npmjs.org/minipass/-/minipass-7.1.3.tgz",
+       "integrity": "sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A==",
+-      "dev": true,
+       "license": "BlueOak-1.0.0",
+       "engines": {
+         "node": ">=16 || 14 >=14.17"
+@@ -6382,7 +6993,6 @@
+       "version": "2.1.3",
+       "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-      "dev": true,
+       "license": "MIT"
+     },
+     "node_modules/msgpackr": {
+@@ -6911,7 +7521,6 @@
+       "version": "2.0.2",
+       "resolved": "https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz",
+       "integrity": "sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==",
+-      "dev": true,
+       "license": "BlueOak-1.0.0",
+       "dependencies": {
+         "lru-cache": "^11.0.0",
+@@ -6928,7 +7537,6 @@
+       "version": "11.3.3",
+       "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.3.3.tgz",
+       "integrity": "sha512-JvNw9Y81y33E+BEYPr0U7omo+U9AySnsMsEiXgwT6yqd31VQWTLNQqmT4ou5eqPFUrTfIDFta2wKhB1hyohtAQ==",
+-      "dev": true,
+       "license": "BlueOak-1.0.0",
+       "engines": {
+         "node": "20 || >=22"
+@@ -7185,6 +7793,15 @@
+       "dev": true,
+       "license": "Apache-2.0"
+     },
++    "node_modules/require-directory": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz",
++      "integrity": "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
+     "node_modules/require-from-string": {
+       "version": "2.0.2",
+       "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+@@ -7332,6 +7949,26 @@
+         "tslib": "^2.1.0"
+       }
+     },
++    "node_modules/safe-buffer": {
++      "version": "5.2.1",
++      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
++      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/feross"
++        },
++        {
++          "type": "patreon",
++          "url": "https://www.patreon.com/feross"
++        },
++        {
++          "type": "consulting",
++          "url": "https://feross.org/support"
++        }
++      ],
++      "license": "MIT"
++    },
+     "node_modules/safer-buffer": {
+       "version": "2.1.2",
+       "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
+@@ -7407,7 +8044,6 @@
+       "version": "7.7.4",
+       "resolved": "https://registry.npmjs.org/semver/-/semver-7.7.4.tgz",
+       "integrity": "sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==",
+-      "dev": true,
+       "license": "ISC",
+       "bin": {
+         "semver": "bin/semver.js"
+@@ -8451,7 +9087,6 @@
+       "version": "5.0.8",
+       "resolved": "https://registry.npmjs.org/y18n/-/y18n-5.0.8.tgz",
+       "integrity": "sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==",
+-      "dev": true,
+       "license": "ISC",
+       "engines": {
+         "node": ">=10"
+diff --git a/package.json b/package.json
+index d447056..be2adaf 100644
+--- a/package.json
++++ b/package.json
+@@ -17,6 +17,19 @@
+     "@angular/forms": "^21.2.0",
+     "@angular/platform-browser": "^21.2.0",
+     "@angular/router": "^21.2.0",
++    "@progress/kendo-angular-buttons": "^23.3.0",
++    "@progress/kendo-angular-common": "^23.3.0",
++    "@progress/kendo-angular-dateinputs": "^23.3.0",
++    "@progress/kendo-angular-dropdowns": "^23.3.0",
++    "@progress/kendo-angular-grid": "^23.3.0",
++    "@progress/kendo-angular-indicators": "^23.3.0",
++    "@progress/kendo-angular-inputs": "^23.3.0",
++    "@progress/kendo-angular-intl": "^23.3.0",
++    "@progress/kendo-angular-l10n": "^23.3.0",
++    "@progress/kendo-drawing": "^1.24.1",
++    "@progress/kendo-licensing": "^1.10.1",
++    "@progress/kendo-svg-icons": "^4.8.0",
++    "@progress/kendo-theme-default": "^13.1.1",
+     "rxjs": "~7.8.0",
+     "tslib": "^2.3.0"
+   },
+@@ -29,4 +42,4 @@
+     "typescript": "~5.9.2",
+     "vitest": "^4.0.8"
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/src/app/app.config.ts b/src/app/app.config.ts
+index cb1270e..e75614a 100644
+--- a/src/app/app.config.ts
++++ b/src/app/app.config.ts
+@@ -4,8 +4,5 @@ import { provideRouter } from '@angular/router';
+ import { routes } from './app.routes';
+ 
+ export const appConfig: ApplicationConfig = {
+-  providers: [
+-    provideBrowserGlobalErrorListeners(),
+-    provideRouter(routes)
+-  ]
++  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],
+ };
+diff --git a/src/app/app.css b/src/app/app.css
+index e69de29..859d29f 100644
+--- a/src/app/app.css
++++ b/src/app/app.css
+@@ -0,0 +1,6 @@
++/* App component is just a router outlet, no global flex centering needed here. */
++:host {
++  display: block;
++  width: 100%;
++  min-height: 100vh;
++}
+diff --git a/src/app/app.html b/src/app/app.html
+index a1c4296..0680b43 100644
+--- a/src/app/app.html
++++ b/src/app/app.html
+@@ -1,344 +1 @@
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
+-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
+-<!-- * * * * * * * to get started with your project! * * * * * * * -->
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-
+-<style>
+-  :host {
+-    --bright-blue: oklch(51.01% 0.274 263.83);
+-    --electric-violet: oklch(53.18% 0.28 296.97);
+-    --french-violet: oklch(47.66% 0.246 305.88);
+-    --vivid-pink: oklch(69.02% 0.277 332.77);
+-    --hot-red: oklch(61.42% 0.238 15.34);
+-    --orange-red: oklch(63.32% 0.24 31.68);
+-
+-    --gray-900: oklch(19.37% 0.006 300.98);
+-    --gray-700: oklch(36.98% 0.014 302.71);
+-    --gray-400: oklch(70.9% 0.015 304.04);
+-
+-    --red-to-pink-to-purple-vertical-gradient: linear-gradient(
+-      180deg,
+-      var(--orange-red) 0%,
+-      var(--vivid-pink) 50%,
+-      var(--electric-violet) 100%
+-    );
+-
+-    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(
+-      90deg,
+-      var(--orange-red) 0%,
+-      var(--vivid-pink) 50%,
+-      var(--electric-violet) 100%
+-    );
+-
+-    --pill-accent: var(--bright-blue);
+-
+-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+-      "Segoe UI Symbol";
+-    box-sizing: border-box;
+-    -webkit-font-smoothing: antialiased;
+-    -moz-osx-font-smoothing: grayscale;
+-    display: block;
+-    height: 100dvh;
+-  }
+-
+-  h1 {
+-    font-size: 3.125rem;
+-    color: var(--gray-900);
+-    font-weight: 500;
+-    line-height: 100%;
+-    letter-spacing: -0.125rem;
+-    margin: 0;
+-    font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+-      Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+-      "Segoe UI Symbol";
+-  }
+-
+-  p {
+-    margin: 0;
+-    color: var(--gray-700);
+-  }
+-
+-  main {
+-    width: 100%;
+-    min-height: 100%;
+-    display: flex;
+-    justify-content: center;
+-    align-items: center;
+-    padding: 1rem;
+-    box-sizing: inherit;
+-    position: relative;
+-  }
+-
+-  .angular-logo {
+-    max-width: 9.2rem;
+-  }
+-
+-  .content {
+-    display: flex;
+-    justify-content: space-around;
+-    width: 100%;
+-    max-width: 700px;
+-    margin-bottom: 3rem;
+-  }
+-
+-  .content h1 {
+-    margin-top: 1.75rem;
+-  }
+-
+-  .content p {
+-    margin-top: 1.5rem;
+-  }
+-
+-  .divider {
+-    width: 1px;
+-    background: var(--red-to-pink-to-purple-vertical-gradient);
+-    margin-inline: 0.5rem;
+-  }
+-
+-  .pill-group {
+-    display: flex;
+-    flex-direction: column;
+-    align-items: start;
+-    flex-wrap: wrap;
+-    gap: 1.25rem;
+-  }
+-
+-  .pill {
+-    display: flex;
+-    align-items: center;
+-    --pill-accent: var(--bright-blue);
+-    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
+-    color: var(--pill-accent);
+-    padding-inline: 0.75rem;
+-    padding-block: 0.375rem;
+-    border-radius: 2.75rem;
+-    border: 0;
+-    transition: background 0.3s ease;
+-    font-family: var(--inter-font);
+-    font-size: 0.875rem;
+-    font-style: normal;
+-    font-weight: 500;
+-    line-height: 1.4rem;
+-    letter-spacing: -0.00875rem;
+-    text-decoration: none;
+-    white-space: nowrap;
+-  }
+-
+-  .pill:hover {
+-    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
+-  }
+-
+-  .pill-group .pill:nth-child(6n + 1) {
+-    --pill-accent: var(--bright-blue);
+-  }
+-  .pill-group .pill:nth-child(6n + 2) {
+-    --pill-accent: var(--electric-violet);
+-  }
+-  .pill-group .pill:nth-child(6n + 3) {
+-    --pill-accent: var(--french-violet);
+-  }
+-
+-  .pill-group .pill:nth-child(6n + 4),
+-  .pill-group .pill:nth-child(6n + 5),
+-  .pill-group .pill:nth-child(6n + 6) {
+-    --pill-accent: var(--hot-red);
+-  }
+-
+-  .pill-group svg {
+-    margin-inline-start: 0.25rem;
+-  }
+-
+-  .social-links {
+-    display: flex;
+-    align-items: center;
+-    gap: 0.73rem;
+-    margin-top: 1.5rem;
+-  }
+-
+-  .social-links path {
+-    transition: fill 0.3s ease;
+-    fill: var(--gray-400);
+-  }
+-
+-  .social-links a:hover svg path {
+-    fill: var(--gray-900);
+-  }
+-
+-  @media screen and (max-width: 650px) {
+-    .content {
+-      flex-direction: column;
+-      width: max-content;
+-    }
+-
+-    .divider {
+-      height: 1px;
+-      width: 100%;
+-      background: var(--red-to-pink-to-purple-horizontal-gradient);
+-      margin-block: 1.5rem;
+-    }
+-  }
+-</style>
+-
+-<main class="main">
+-  <div class="content">
+-    <div class="left-side">
+-      <svg
+-        xmlns="http://www.w3.org/2000/svg"
+-        viewBox="0 0 982 239"
+-        fill="none"
+-        class="angular-logo"
+-      >
+-        <g clip-path="url(#a)">
+-          <path
+-            fill="url(#b)"
+-            d="M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"
+-          />
+-          <path
+-            fill="url(#c)"
+-            d="M388.676 191.625h30.849L363.31 31.828h-35.758l-56.215 159.797h30.848l13.174-39.356h60.061l13.256 39.356Zm-65.461-62.675 21.602-64.311h1.227l21.602 64.311h-44.431Zm126.831-7.527v70.202h-28.23V71.839h27.002v20.374h1.392c2.782-6.71 7.2-12.028 13.255-15.956 6.056-3.927 13.584-5.89 22.503-5.89 8.264 0 15.465 1.8 21.684 5.318 6.137 3.518 10.964 8.673 14.319 15.382 3.437 6.71 5.074 14.81 4.992 24.383v76.175h-28.23v-71.92c0-8.019-2.046-14.237-6.219-18.819-4.173-4.5-9.819-6.791-17.102-6.791-4.91 0-9.328 1.063-13.174 3.272-3.846 2.128-6.792 5.237-9.001 9.328-2.046 4.009-3.191 8.918-3.191 14.728ZM589.233 239c-10.147 0-18.82-1.391-26.103-4.091-7.282-2.7-13.092-6.382-17.511-10.964-4.418-4.582-7.528-9.655-9.164-15.219l25.448-6.136c1.145 2.372 2.782 4.663 4.991 6.954 2.209 2.291 5.155 4.255 8.837 5.81 3.683 1.554 8.428 2.291 14.074 2.291 8.019 0 14.647-1.964 19.884-5.81 5.237-3.845 7.856-10.227 7.856-19.064v-22.665h-1.391c-1.473 2.946-3.601 5.892-6.383 9.001-2.782 3.109-6.464 5.645-10.965 7.691-4.582 2.046-10.228 3.109-17.101 3.109-9.165 0-17.511-2.209-25.039-6.545-7.446-4.337-13.42-10.883-17.757-19.474-4.418-8.673-6.628-19.473-6.628-32.565 0-13.091 2.21-24.301 6.628-33.383 4.419-9.082 10.311-15.955 17.839-20.7 7.528-4.746 15.874-7.037 25.039-7.037 7.037 0 12.846 1.145 17.347 3.518 4.582 2.373 8.182 5.236 10.883 8.51 2.7 3.272 4.746 6.382 6.137 9.327h1.554v-19.8h27.821v121.749c0 10.228-2.454 18.737-7.364 25.447-4.91 6.709-11.538 11.7-20.048 15.055-8.509 3.355-18.165 4.991-28.884 4.991Zm.245-71.266c5.974 0 11.047-1.473 15.302-4.337 4.173-2.945 7.446-7.118 9.573-12.519 2.21-5.482 3.274-12.027 3.274-19.637 0-7.609-1.064-14.155-3.274-19.8-2.127-5.646-5.318-10.064-9.491-13.255-4.174-3.11-9.329-4.746-15.384-4.746s-11.537 1.636-15.792 4.91c-4.173 3.272-7.365 7.772-9.492 13.418-2.128 5.727-3.191 12.191-3.191 19.392 0 7.2 1.063 13.745 3.273 19.228 2.127 5.482 5.318 9.736 9.573 12.764 4.174 3.027 9.41 4.582 15.629 4.582Zm141.56-26.51V71.839h28.23v119.786h-27.412v-21.273h-1.227c-2.7 6.709-7.119 12.191-13.338 16.446-6.137 4.255-13.747 6.382-22.748 6.382-7.855 0-14.81-1.718-20.783-5.237-5.974-3.518-10.72-8.591-14.075-15.382-3.355-6.709-5.073-14.891-5.073-24.464V71.839h28.312v71.921c0 7.609 2.046 13.664 6.219 18.083 4.173 4.5 9.655 6.709 16.365 6.709 4.173 0 8.183-.982 12.111-3.028 3.927-2.045 7.118-5.072 9.655-9.082 2.537-4.091 3.764-9.164 3.764-15.218Zm65.707-109.395v159.796h-28.23V31.828h28.23Zm44.841 162.169c-7.61 0-14.402-1.391-20.457-4.091-6.055-2.7-10.883-6.791-14.32-12.109-3.518-5.319-5.237-11.946-5.237-19.801 0-6.791 1.228-12.355 3.765-16.773 2.536-4.419 5.891-7.937 10.228-10.637 4.337-2.618 9.164-4.664 14.647-6.055 5.4-1.391 11.046-2.373 16.856-3.027 7.037-.737 12.683-1.391 17.102-1.964 4.337-.573 7.528-1.555 9.574-2.782 1.963-1.309 3.027-3.273 3.027-5.973v-.491c0-5.891-1.718-10.391-5.237-13.664-3.518-3.191-8.51-4.828-15.056-4.828-6.955 0-12.356 1.473-16.447 4.5-4.009 3.028-6.71 6.546-8.183 10.719l-26.348-3.764c2.046-7.282 5.483-13.336 10.31-18.328 4.746-4.909 10.638-8.59 17.511-11.045 6.955-2.455 14.565-3.682 22.912-3.682 5.809 0 11.537.654 17.265 2.045s10.965 3.6 15.711 6.71c4.746 3.109 8.51 7.282 11.455 12.6 2.864 5.318 4.337 11.946 4.337 19.883v80.184h-27.166v-16.446h-.9c-1.719 3.355-4.092 6.464-7.201 9.328-3.109 2.864-6.955 5.237-11.619 6.955-4.828 1.718-10.229 2.536-16.529 2.536Zm7.364-20.701c5.646 0 10.556-1.145 14.729-3.354 4.173-2.291 7.364-5.237 9.655-9.001 2.292-3.763 3.355-7.854 3.355-12.273v-14.155c-.9.737-2.373 1.391-4.5 2.046-2.128.654-4.419 1.145-7.037 1.636-2.619.491-5.155.9-7.692 1.227-2.537.328-4.746.655-6.628.901-4.173.572-8.019 1.472-11.292 2.781-3.355 1.31-5.973 3.11-7.855 5.401-1.964 2.291-2.864 5.318-2.864 8.918 0 5.237 1.882 9.164 5.728 11.782 3.682 2.782 8.51 4.091 14.401 4.091Zm64.643 18.328V71.839h27.412v19.965h1.227c2.21-6.955 5.974-12.274 11.292-16.038 5.319-3.763 11.456-5.645 18.329-5.645 1.555 0 3.355.082 5.237.163 1.964.164 3.601.328 4.91.573v25.938c-1.227-.41-3.109-.819-5.646-1.146a58.814 58.814 0 0 0-7.446-.49c-5.155 0-9.738 1.145-13.829 3.354-4.091 2.209-7.282 5.236-9.655 9.164-2.373 3.927-3.519 8.427-3.519 13.5v70.448h-28.312ZM222.077 39.192l-8.019 125.923L137.387 0l84.69 39.192Zm-53.105 162.825-57.933 33.056-57.934-33.056 11.783-28.556h92.301l11.783 28.556ZM111.039 62.675l30.357 73.803H80.681l30.358-73.803ZM7.937 165.115 0 39.192 84.69 0 7.937 165.115Z"
+-          />
+-        </g>
+-        <defs>
+-          <radialGradient
+-            id="c"
+-            cx="0"
+-            cy="0"
+-            r="1"
+-            gradientTransform="rotate(118.122 171.182 60.81) scale(205.794)"
+-            gradientUnits="userSpaceOnUse"
+-          >
+-            <stop stop-color="#FF41F8" />
+-            <stop offset=".707" stop-color="#FF41F8" stop-opacity=".5" />
+-            <stop offset="1" stop-color="#FF41F8" stop-opacity="0" />
+-          </radialGradient>
+-          <linearGradient
+-            id="b"
+-            x1="0"
+-            x2="982"
+-            y1="192"
+-            y2="192"
+-            gradientUnits="userSpaceOnUse"
+-          >
+-            <stop stop-color="#F0060B" />
+-            <stop offset="0" stop-color="#F0070C" />
+-            <stop offset=".526" stop-color="#CC26D5" />
+-            <stop offset="1" stop-color="#7702FF" />
+-          </linearGradient>
+-          <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
+-        </defs>
+-      </svg>
+-      <h1>Hello, {{ title() }}</h1>
+-      <p>Congratulations! Your app is running. ­ƒÄë</p>
+-    </div>
+-    <div class="divider" role="separator" aria-label="Divider"></div>
+-    <div class="right-side">
+-      <div class="pill-group">
+-        @for (item of [
+-          { title: 'Explore the Docs', link: 'https://angular.dev' },
+-          { title: 'Learn with Tutorials', link: 'https://angular.dev/tutorials' },
+-          { title: 'Prompt and best practices for AI', link: 'https://angular.dev/ai/develop-with-ai'},
+-          { title: 'CLI Docs', link: 'https://angular.dev/tools/cli' },
+-          { title: 'Angular Language Service', link: 'https://angular.dev/tools/language-service' },
+-          { title: 'Angular DevTools', link: 'https://angular.dev/tools/devtools' },
+-        ]; track item.title) {
+-          <a
+-            class="pill"
+-            [href]="item.link"
+-            target="_blank"
+-            rel="noopener"
+-          >
+-            <span>{{ item.title }}</span>
+-            <svg
+-              xmlns="http://www.w3.org/2000/svg"
+-              height="14"
+-              viewBox="0 -960 960 960"
+-              width="14"
+-              fill="currentColor"
+-            >
+-              <path
+-                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+-              />
+-            </svg>
+-          </a>
+-        }
+-      </div>
+-      <div class="social-links">
+-        <a
+-          href="https://github.com/angular/angular"
+-          aria-label="Github"
+-          target="_blank"
+-          rel="noopener"
+-        >
+-          <svg
+-            width="25"
+-            height="24"
+-            viewBox="0 0 25 24"
+-            fill="none"
+-            xmlns="http://www.w3.org/2000/svg"
+-            alt="Github"
+-          >
+-            <path
+-              d="M12.3047 0C5.50634 0 0 5.50942 0 12.3047C0 17.7423 3.52529 22.3535 8.41332 23.9787C9.02856 24.0946 9.25414 23.7142 9.25414 23.3871C9.25414 23.0949 9.24389 22.3207 9.23876 21.2953C5.81601 22.0377 5.09414 19.6444 5.09414 19.6444C4.53427 18.2243 3.72524 17.8449 3.72524 17.8449C2.61064 17.082 3.81137 17.0973 3.81137 17.0973C5.04697 17.1835 5.69604 18.3647 5.69604 18.3647C6.79321 20.2463 8.57636 19.7029 9.27978 19.3881C9.39052 18.5924 9.70736 18.0499 10.0591 17.7423C7.32641 17.4347 4.45429 16.3765 4.45429 11.6618C4.45429 10.3185 4.9311 9.22133 5.72065 8.36C5.58222 8.04931 5.16694 6.79833 5.82831 5.10337C5.82831 5.10337 6.85883 4.77319 9.2121 6.36459C10.1965 6.09082 11.2424 5.95546 12.2883 5.94931C13.3342 5.95546 14.3801 6.09082 15.3644 6.36459C17.7023 4.77319 18.7328 5.10337 18.7328 5.10337C19.3942 6.79833 18.9789 8.04931 18.8559 8.36C19.6403 9.22133 20.1171 10.3185 20.1171 11.6618C20.1171 16.3888 17.2409 17.4296 14.5031 17.7321C14.9338 18.1012 15.3337 18.8559 15.3337 20.0084C15.3337 21.6552 15.3183 22.978 15.3183 23.3779C15.3183 23.7009 15.5336 24.0854 16.1642 23.9623C21.0871 22.3484 24.6094 17.7341 24.6094 12.3047C24.6094 5.50942 19.0999 0 12.3047 0Z"
+-            />
+-          </svg>
+-        </a>
+-        <a
+-          href="https://x.com/angular"
+-          aria-label="X"
+-          target="_blank"
+-          rel="noopener"
+-        >
+-          <svg
+-            width="24"
+-            height="24"
+-            viewBox="0 0 24 24"
+-            fill="none"
+-            xmlns="http://www.w3.org/2000/svg"
+-            alt="X"
+-          >
+-            <path
+-              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+-            />
+-          </svg>
+-        </a>
+-        <a
+-          href="https://www.youtube.com/channel/UCbn1OgGei-DV7aSRo_HaAiw"
+-          aria-label="Youtube"
+-          target="_blank"
+-          rel="noopener"
+-        >
+-          <svg
+-            width="29"
+-            height="20"
+-            viewBox="0 0 29 20"
+-            fill="none"
+-            xmlns="http://www.w3.org/2000/svg"
+-            alt="Youtube"
+-          >
+-            <path
+-              fill-rule="evenodd"
+-              clip-rule="evenodd"
+-              d="M27.4896 1.52422C27.9301 1.96749 28.2463 2.51866 28.4068 3.12258C29.0004 5.35161 29.0004 10 29.0004 10C29.0004 10 29.0004 14.6484 28.4068 16.8774C28.2463 17.4813 27.9301 18.0325 27.4896 18.4758C27.0492 18.9191 26.5 19.2389 25.8972 19.4032C23.6778 20 14.8068 20 14.8068 20C14.8068 20 5.93586 20 3.71651 19.4032C3.11363 19.2389 2.56449 18.9191 2.12405 18.4758C1.68361 18.0325 1.36732 17.4813 1.20683 16.8774C0.613281 14.6484 0.613281 10 0.613281 10C0.613281 10 0.613281 5.35161 1.20683 3.12258C1.36732 2.51866 1.68361 1.96749 2.12405 1.52422C2.56449 1.08095 3.11363 0.76113 3.71651 0.596774C5.93586 0 14.8068 0 14.8068 0C14.8068 0 23.6778 0 25.8972 0.596774C26.5 0.76113 27.0492 1.08095 27.4896 1.52422ZM19.3229 10L11.9036 5.77905V14.221L19.3229 10Z"
+-            />
+-          </svg>
+-        </a>
+-      </div>
+-    </div>
+-  </div>
+-</main>
+-
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
+-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+-
+-
+-<router-outlet />
++<router-outlet></router-outlet>
+diff --git a/src/app/app.routes.ts b/src/app/app.routes.ts
+index dc39edb..df99f17 100644
+--- a/src/app/app.routes.ts
++++ b/src/app/app.routes.ts
+@@ -1,3 +1,24 @@
+ import { Routes } from '@angular/router';
++import { LoginComponent } from './login/login.component';
++import { DashboardLayoutComponent } from './dashboard/dashboard-layout.component';
++import { DashboardHomeComponent } from './dashboard/dashboard-home.component';
++import { UsersComponent } from './dashboard/users/users.component';
+ 
+-export const routes: Routes = [];
++export const routes: Routes = [
++  { path: 'login', component: LoginComponent },
++  { 
++    path: 'dashboard', 
++    component: DashboardLayoutComponent,
++    children: [
++      { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
++      { path: 'users', component: UsersComponent },
++      { path: 'groups', component: DashboardHomeComponent },
++      { path: 'permissions', component: DashboardHomeComponent },
++      { path: 'screenza-matrix', component: DashboardHomeComponent },
++      { path: 'test-case-runs', component: DashboardHomeComponent },
++      { path: 'audit-logs', component: DashboardHomeComponent },
++      { path: 'settings', component: DashboardHomeComponent },
++    ]
++  },
++  { path: '', redirectTo: '/login', pathMatch: 'full' }
++];
+diff --git a/src/app/app.ts b/src/app/app.ts
+index a3b9f1f..7d19fee 100644
+--- a/src/app/app.ts
++++ b/src/app/app.ts
+@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
+   selector: 'app-root',
+   imports: [RouterOutlet],
+   templateUrl: './app.html',
+-  styleUrl: './app.css'
++  styleUrl: './app.css',
+ })
+ export class App {
+   protected readonly title = signal('dashboard');
+diff --git a/src/index.html b/src/index.html
+index 6fb35cf..171836c 100644
+--- a/src/index.html
++++ b/src/index.html
+@@ -1,13 +1,13 @@
+ <!doctype html>
+ <html lang="en">
+-<head>
+-  <meta charset="utf-8">
+-  <title>Dashboard</title>
+-  <base href="/">
+-  <meta name="viewport" content="width=device-width, initial-scale=1">
+-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+-</head>
+-<body>
+-  <app-root></app-root>
+-</body>
++  <head>
++    <meta charset="utf-8" />
++    <title>Dashboard</title>
++    <base href="/" />
++    <meta name="viewport" content="width=device-width, initial-scale=1" />
++    <link rel="icon" type="image/x-icon" href="favicon.ico" />
++  </head>
++  <body>
++    <app-root></app-root>
++  </body>
+ </html>
+diff --git a/src/main.ts b/src/main.ts
+index 5df75f9..190f341 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -2,5 +2,4 @@ import { bootstrapApplication } from '@angular/platform-browser';
+ import { appConfig } from './app/app.config';
+ import { App } from './app/app';
+ 
+-bootstrapApplication(App, appConfig)
+-  .catch((err) => console.error(err));
++bootstrapApplication(App, appConfig).catch((err) => console.error(err));
+diff --git a/src/styles.css b/src/styles.css
+index 90d4ee0..1b5ee0a 100644
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -1 +1,55 @@
+-/* You can add global styles to this file, and also import other style files */
++/* Global Styles & Theme Variables */
++
++:root {
++  /* Light Theme Variables (Default) */
++  --bg-primary: #ffffff;
++  --bg-secondary: #f8fafc;
++  --text-primary: #0f172a;
++  --text-secondary: #475569;
++  --accent-color: #3b82f6;
++  --accent-hover: #2563eb;
++  --border-color: #e2e8f0;
++  --left-bg-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
++  --left-text: #ffffff;
++  --card-bg: #ffffff;
++  --card-border: #e2e8f0;
++  --input-bg: #ffffff;
++  --sidebar-bg: #ffffff;
++  --hover-color: #f1f5f9;
++  --accent-light: #eff6ff;
++  --text-muted: #64748b;
++}
++
++body.dark-theme {
++  /* Dark Theme Variables */
++  --bg-primary: #0f172a;
++  --bg-secondary: #1e293b;
++  --text-primary: #f8fafc;
++  --text-secondary: #94a3b8;
++  --accent-color: #3b82f6;
++  --accent-hover: #60a5fa;
++  --border-color: #334155;
++  --left-bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 100%);
++  --left-text: #ffffff;
++  --card-bg: #1e293b;
++  --card-border: #334155;
++  --input-bg: #0f172a;
++  --sidebar-bg: #0f172a;
++  --hover-color: #1e293b;
++  --accent-light: rgba(59, 130, 246, 0.15);
++  --text-muted: #64748b;
++}
++
++body, html {
++  margin: 0;
++  padding: 0;
++  height: 100%;
++  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
++  background-color: var(--bg-primary);
++  color: var(--text-primary);
++  transition: background-color 0.3s ease, color 0.3s ease;
++}
++
++* {
++  box-sizing: border-box;
++}
+diff --git a/tsconfig.app.json b/tsconfig.app.json
+index 264f459..a0dcc37 100644
+--- a/tsconfig.app.json
++++ b/tsconfig.app.json
+@@ -6,10 +6,6 @@
+     "outDir": "./out-tsc/app",
+     "types": []
+   },
+-  "include": [
+-    "src/**/*.ts"
+-  ],
+-  "exclude": [
+-    "src/**/*.spec.ts"
+-  ]
++  "include": ["src/**/*.ts"],
++  "exclude": ["src/**/*.spec.ts"]
+ }
+diff --git a/tsconfig.spec.json b/tsconfig.spec.json
+index d383706..26230b0 100644
+--- a/tsconfig.spec.json
++++ b/tsconfig.spec.json
+@@ -4,12 +4,7 @@
+   "extends": "./tsconfig.json",
+   "compilerOptions": {
+     "outDir": "./out-tsc/spec",
+-    "types": [
+-      "vitest/globals"
+-    ]
++    "types": ["vitest/globals"]
+   },
+-  "include": [
+-    "src/**/*.d.ts",
+-    "src/**/*.spec.ts"
+-  ]
++  "include": ["src/**/*.d.ts", "src/**/*.spec.ts"]
+ }

@@ -1,0 +1,181 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+  height: 100vh;
+  z-index: 50;
+}
+.sidebar {
+  width: 280px;
+  background-color: var(--sidebar-bg);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+.sidebar.collapsed { width: 72px; }
+
+.sidebar-header {
+  height: 72px;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  min-width: 280px;
+}
+.sidebar.collapsed .sidebar-header {
+  padding: 0 1rem;
+  justify-content: center;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.brand-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.brand-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toggle-btn:hover {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+.toggle-btn svg { width: 20px; height: 20px; }
+
+.sidebar-nav {
+  flex-grow: 1;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 280px;
+}
+.menu-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.nav-item:hover {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+.nav-item.active {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+}
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-group { margin-bottom: 0.25rem; }
+.group-toggle { justify-content: space-between; padding-right: 0.75rem; }
+.group-title { flex-grow: 1; }
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+.group-toggle.open .chevron { transform: rotate(180deg); }
+
+.sub-nav {
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.sub-nav.expanded { max-height: 400px; }
+
+.sub-nav-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-nav-item {
+  display: block;
+  padding: 0.6rem 1rem 0.6rem 2.25rem;
+  margin: 0.15rem 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.sub-nav-item:hover { 
+  background-color: var(--hover-color);
+  color: var(--text-primary); 
+}
+.sub-nav-item.active { 
+  background-color: var(--accent-light);
+  color: var(--accent-color); 
+  font-weight: 600; 
+}
+
+/* Collapsed state styling */
+.sidebar.collapsed .brand { display: none; }
+.sidebar.collapsed .brand-text { display: none; }
+.sidebar.collapsed .menu-label { opacity: 0; margin-bottom: 0; padding: 0; }
+.sidebar.collapsed .sidebar-header { padding: 0; min-width: 72px; justify-content: center; }
+.sidebar.collapsed .sidebar-nav { padding: 1.5rem 0.75rem; min-width: 72px; }
+.sidebar.collapsed .nav-item { 
+  padding: 0.75rem; 
+  justify-content: center; 
+}
+.sidebar.collapsed .nav-item span { display: none; }
+.sidebar.collapsed .chevron { display: none; }
+.sidebar.collapsed .sub-nav { display: none !important; }
+.sidebar.collapsed .sidebar-footer { min-width: 72px; padding: 1rem 0.75rem; }
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  min-width: 280px;
+}
