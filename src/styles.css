@@ -1,4 +1,5 @@
 /* Global Styles & Theme Variables */
+@import url('./kendo-theme.css');
 
 :root {
   /* Light Theme Variables (Default) */
@@ -18,6 +19,27 @@
   --hover-color: #f1f5f9;
   --accent-light: #eff6ff;
   --text-muted: #64748b;
+
+  /* Kendo UI Global Theme Mapping */
+  --kendo-color-app-surface: var(--bg-secondary);
+  --kendo-color-surface: var(--card-bg);
+  --kendo-color-base: var(--bg-primary);
+  --kendo-color-border: var(--border-color);
+  --kendo-color-base-border: var(--border-color);
+  --kendo-color-text: var(--text-primary);
+  --kendo-color-on-app-surface: var(--text-primary);
+  --kendo-color-on-surface: var(--text-primary);
+  --kendo-color-on-surface-alt: var(--text-secondary);
+  --kendo-color-base-hover: var(--hover-color);
+  --kendo-color-surface-hover: var(--hover-color);
+  --kendo-color-primary: var(--accent-color);
+  
+  /* Legacy Kendo Variables (Safety net) */
+  --kendo-component-bg: var(--card-bg);
+  --kendo-base-bg: var(--bg-primary);
+  --kendo-alt-bg: var(--hover-color);
+  --kendo-border-color: var(--border-color);
+  --kendo-text-color: var(--text-primary);
 }
 
 body.dark-theme {

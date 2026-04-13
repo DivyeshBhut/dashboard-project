@@ -1,0 +1,377 @@
+/* Kendo Grid Theming Overrides */
+.kendo-wrapper .k-grid {
+  border: none;
+  font-family: inherit;
+  color: var(--text-primary) !important;
+  background-color: transparent !important;
+}
+.kendo-wrapper .k-grid-header,
+.kendo-wrapper .k-grid-header-wrap,
+.kendo-wrapper .k-grid-header table,
+.kendo-wrapper .k-grid-header thead,
+.kendo-wrapper .k-table-thead,
+.kendo-wrapper .k-grid-header tr,
+.kendo-wrapper .k-grid-header th,
+.kendo-wrapper .k-grid-header td,
+.kendo-wrapper .k-grid tr.k-filter-row,
+.kendo-wrapper .k-grid tr.k-filter-row th,
+.kendo-wrapper .k-grid tr.k-filter-row td,
+.kendo-wrapper .k-grid-content {
+  background-color: transparent !important;
+  border-color: var(--border-color) !important;
+}
+.kendo-wrapper .k-header {
+  background-color: transparent !important;
+  font-weight: 600;
+  color: var(--text-secondary) !important;
+  border-bottom: none;
+  padding: 1rem 1.5rem;
+}
+.kendo-wrapper .k-grid-content td {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-color);
+  border-left: none;
+  padding: 0.875rem 1.5rem;
+  color: var(--text-secondary);
+}
+.kendo-wrapper .k-grid tbody tr {
+  background-color: transparent !important;
+}
+.kendo-wrapper .k-grid tbody tr.k-alt {
+  background-color: var(--hover-color) !important;
+}
+.kendo-wrapper .k-filtercell .k-input-inner,
+.kendo-wrapper .k-filtercell kendo-textbox {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+}
+.kendo-wrapper .k-filtercell .k-input {
+  border: none !important; 
+  background-color: transparent !important;
+}
+.kendo-wrapper .k-filtercell .k-button,
+.kendo-wrapper .k-grid-header .k-button {
+  background-color: var(--input-bg) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+.kendo-wrapper .k-filtercell .k-button:hover,
+.kendo-wrapper .k-grid-header .k-button:hover {
+  background-color: var(--hover-color) !important;
+  color: var(--accent-color) !important;
+}
+
+/* Checkbox Overrides */
+.kendo-wrapper .k-checkbox {
+  background-color: var(--input-bg) !important;
+  border-color: var(--border-color) !important;
+}
+.kendo-wrapper .k-checkbox:checked,
+.kendo-wrapper .k-checkbox:indeterminate {
+  background-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+}
+
+/* Fix for Checkbox Column Overflow (...) */
+.kendo-wrapper .k-header:first-child,
+.kendo-wrapper .k-grid-content td:first-child {
+  padding-left: 1rem;
+  padding-right: 0.5rem;
+  text-overflow: clip !important;
+}
+.kendo-wrapper .k-header:first-child .k-cell-inner,
+.kendo-wrapper .k-header:first-child .k-link {
+  text-overflow: clip !important;
+}
+.kendo-wrapper .k-table-row {
+  background-color: transparent;
+  transition: background-color 0.15s;
+}
+.kendo-wrapper .k-table-row:hover,
+.kendo-wrapper .k-table-row.k-hover {
+  background-color: var(--hover-color) !important;
+}
+/* Pager and Scrollbar/Spacer Deep Overrides */
+.kendo-wrapper .k-grid-footer,
+.kendo-wrapper .k-grid-footer-wrap,
+.kendo-wrapper .k-grid-header-padding,
+.kendo-wrapper .k-scrollbar,
+.kendo-wrapper .k-virtual-content {
+  background-color: transparent !important;
+}
+
+/* Glassmorphic/Premium Pager Styling */
+.kendo-wrapper .k-pager {
+  border: none !important;
+  border-top: 1px solid var(--border-color) !important;
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.kendo-wrapper .k-pager .k-pager-numbers-wrap {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.kendo-wrapper .k-pager .k-button,
+.kendo-wrapper .k-pager .k-link {
+  background-color: transparent !important;
+  color: var(--text-secondary) !important;
+  border-color: transparent !important;
+  border-radius: 50% !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  padding: 0 !important;
+}
+
+.kendo-wrapper .k-pager .k-button:hover,
+.kendo-wrapper .k-pager .k-link:hover {
+  background-color: var(--hover-color) !important;
+  color: var(--accent-color) !important;
+  transform: scale(1.1);
+}
+
+.kendo-wrapper .k-pager .k-button.k-selected,
+.kendo-wrapper .k-pager .k-pager-numbers .k-link.k-selected {
+  background-color: var(--accent-color) !important;
+  color: white !important;
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 4px 12px var(--accent-light) !important;
+  transform: scale(1.05);
+  font-weight: 700;
+}
+
+/* Stylish Dropdown & Info text */
+.kendo-wrapper .k-pager-info {
+  font-size: 0.85rem !important;
+  color: var(--text-muted) !important;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  margin-left: auto; /* Push info to right edge */
+}
+
+.kendo-wrapper .k-pager .k-textbox,
+.kendo-wrapper .k-pager select,
+.kendo-wrapper .k-pager .k-dropdown-list,
+.kendo-wrapper .k-pager kendo-dropdownlist {
+  background-color: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 999px !important; /* Perfect Pill Shape */
+  padding: 0.2rem 0.75rem !important;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.kendo-wrapper .k-pager select:focus,
+.kendo-wrapper .k-pager kendo-dropdownlist:focus-within {
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+
+/* Standard Dark Mode overrides */
+.dark-theme .btn-secondary {
+  background-color: #334155;
+  color: #f8fafc;
+  border-color: #475569;
+}
+.dark-theme .btn-secondary:hover {
+  background-color: #475569;
+}
+.dark-theme .status-pill.active { background-color: rgba(22, 101, 52, 0.4); color: #4ade80;}
+.dark-theme .status-pill.inactive { background-color: rgba(153, 27, 27, 0.4); color: #f87171;}
+.dark-theme .status-pill.locked { background-color: rgba(133, 77, 14, 0.4); color: #facc15;}
+
+/* Action Hover Icons (Used inside Kendo Templates) */
+.action-icons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  border-radius: 0.375rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.icon-btn svg { width: 16px; height: 16px; }
+.icon-btn:hover { background-color: var(--hover-color); color: var(--accent-color); }
+.icon-btn.edit-icon:hover { color: #f59e0b; }
+.icon-btn.delete-icon:hover { color: #ef4444; }
+
+/* Dynamic Status Pills (Used inside Kendo Templates) */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  background-color: var(--border-color);
+  color: var(--text-secondary);
+}
+.status-pill.active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+.status-pill.inactive {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.status-pill.locked {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+/* Access Group Pills */
+.group-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+.group-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--hover-color);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.725rem;
+  font-weight: 500;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.group-pill:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  border-color: var(--accent-light);
+}
+
+/* Modern DateRange Calendar Overrides */
+kendo-popup.k-animation-container,
+.k-popup.k-calendar-container {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px;
+  border: 1px solid var(--border-color) !important;
+  background-color: var(--card-bg) !important;
+  overflow: hidden;
+}
+.k-calendar,
+.k-calendar .k-calendar-view,
+.k-calendar .k-content {
+  border: none !important;
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  font-family: inherit;
+}
+.k-calendar .k-calendar-header, 
+.k-calendar .k-meta-header {
+  border-bottom: 1px solid var(--border-color);
+  background-color: transparent !important;
+  padding: 0.75rem 1rem;
+}
+.k-calendar .k-calendar-header .k-calendar-title,
+.k-calendar .k-button-flat-primary,
+.k-calendar .k-nav-today,
+.k-calendar .k-calendar-nav-today,
+.k-calendar .k-input-inner {
+  color: var(--text-primary) !important;
+}
+.k-calendar th {
+  color: var(--text-secondary, #9ca3af) !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+.k-calendar td {
+  padding: 2px 0;
+  background-color: transparent !important;
+}
+.k-calendar td[class*="k-range"],
+.k-calendar td.k-selected,
+.k-calendar td.k-state-hover,
+.k-calendar td.k-hover {
+  background-color: transparent !important;
+}
+
+.k-calendar td .k-link {
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+.k-calendar td.k-today .k-link {
+  color: var(--primary-color, #3b82f6) !important;
+  font-weight: 700;
+}
+.k-calendar td.k-today.k-selected .k-link {
+  color: white !important;
+}
+
+/* Suppress Keyboard/Navigation persistent focus highlight */
+.k-calendar td.k-focus .k-link,
+.k-calendar td.k-state-focused .k-link,
+.k-calendar td.k-focus,
+.k-calendar td.k-state-focused {
+  box-shadow: none !important;
+  outline: none !important;
+}
+.k-calendar td.k-focus:not(.k-selected):not(.k-today) .k-link,
+.k-calendar td.k-state-focused:not(.k-selected):not(.k-today) .k-link {
+  background-color: transparent !important;
+}
+
+.k-calendar td.k-selected .k-link {
+  background-color: var(--accent-color, #3b82f6) !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3) !important;
+}
+.k-calendar td:hover .k-link {
+  background-color: var(--hover-color, #f3f4f6);
+  color: var(--text-primary, #111827);
+}
+
+/* Clean Range Selection Highlights (Mid / Split) */
+.k-calendar td.k-range-mid .k-link,
+.k-calendar td[class*="k-range-split"] .k-link,
+.k-calendar td.k-range-end .k-link,
+.k-calendar td.k-range-start .k-link {
+  border-radius: 0; 
+}
+.k-calendar td.k-range-start .k-link,
+.k-calendar td.k-range-split-start .k-link {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  background-color: var(--accent-color, #3b82f6) !important;
+  color: white !important;
+}
+.k-calendar td.k-range-end .k-link,
+.k-calendar td.k-range-split-end .k-link {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  background-color: var(--accent-color, #3b82f6) !important;
+  color: white !important;
+}
+.k-calendar td.k-range-mid .k-link,
+.k-calendar td.k-range-split .k-link {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent-color, #3b82f6) !important;
+  box-shadow: none !important;
+}
+
+/* Forced reload */
