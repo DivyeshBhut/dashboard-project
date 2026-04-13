@@ -1,0 +1,98 @@
+Viewed package.json:1-65
+Listed directory app
+Viewed app.routes.ts:1-27
+Listed directory uam
+Listed directory common
+Viewed users.component.ts:1-58
+Listed directory grid
+Viewed groups.ts:1-38
+Viewed permissions.ts:1-43
+Viewed data-grid.ts:1-37
+
+Here is a comprehensive system prompt you can copy and paste into any other AI tool. It captures the entire context of your current Angular workspace, including the tech stack, architectural decisions, and the custom reusable components we've built, so the AI can hit the ground running.
+
+***
+
+### Copy the text below:
+
+```markdown
+# System Context & Instructions
+
+You are joining an ongoing software development project as an expert Angular engineer. Please carefully review the following context about the application's architecture, tech stack, and current state. You must use this information to align your future suggestions 100% with the existing codebase.
+
+## 1. Project Overview
+- **Project Name:** Dashboard
+- **Goal:** A modern, enterprise-grade dashboard application currently focused on building a User Access Management (UAM) module.
+
+## 2. Tech Stack
+- **Core:** Angular 21+
+- **Component Architecture:** Strictly Angular **Standalone Components** (No `NgModule`).
+- **UI Library:** Kendo UI for Angular (v23)
+- **Styling:** Vanilla CSS (Component-scoped) / Global styles in `app.css`
+
+## 3. Architecture & Directory Structure
+The project uses a domain-driven directory structure prioritizing scalability and reusability. 
+
+```text
+src/app/
+├── app.routes.ts         (Defines all routing logic)
+├── common/               (Shared/reusable UI components)
+│   ├── footer/
+│   ├── header/
+│   ├── sidebar/
+│   └── grid/
+│       ├── data-grid/         (<app-data-grid> Reusable Kendo Grid wrapper)
+│       └── date-range-filter/ (Custom filter component for Kendo Grid)
+├── dashboard/            (Main application module)
+│   ├── dashboard-layout  (Layout wrapper holding sidebar/header)
+│   └── uam/              (User Access Management domain folder)
+│       ├── users/        (Users Component)
+│       ├── groups/       (Groups Component)
+│       └── permissions/  (Permissions Component)
+└── login/                (Login view)
+```
+
+## 4. Key Implementation Details
+
+**1. Routing (`app.routes.ts`)**
+- Root (`/`) redirects automatically to `/login`.
+- `/dashboard` acts as the primary layout wrapper. It has child routes for UAM components: `/dashboard/users`, `/dashboard/groups`, `/dashboard/permissions`.
+
+**2. The Centralized DataGridComponent (`<app-data-grid>`)**
+This is the most critical architectural pattern in the app. To keep code DRY, direct declaration of Kendo Grids is avoided in domain views. Instead, the custom `<app-data-grid>` component is used.
+- **Inputs:** `[data]`, `[columns]`, `[pageSize]`, `[pageable]`, `[sortable]`, `[filterable]`
+- **Outputs:** `(actionClick)` for row-level icon actions (edit/delete/etc).
+- **Configuration:** It relies heavily on the `GridColumn` interface to dynamically render standard text, custom template badges, or dates.
+```typescript
+export interface GridColumn {
+  field: string;
+  title: string;
+  width?: number;
+  type?: 'text' | 'date' | 'status' | 'array' | 'actions';
+  format?: string;
+}
+```
+
+**3. UAM Components Implementation**
+`UsersComponent`, `GroupsComponent`, and `PermissionsComponent` act as configuration providers for the grid. They hold the raw data and define the column structure natively.
+*Example of a component configuration:*
+```typescript
+gridColumns: GridColumn[] = [
+  { field: 'actions', title: 'Actions', width: 120, type: 'actions' },
+  { field: 'groupName', title: 'Group Name', width: 220 },
+  { field: 'permissions', title: 'Permissions', width: 350, type: 'array' },
+  { field: 'status', title: 'Status', width: 150, type: 'status' }
+];
+```
+
+## 5. Coding Standards to Follow
+1. **Always use Standalone Components** (`@Component({ standalone: true, imports: [...] })`).
+2. **Reuse Existing Abstractions:** For any new data table requirements, you MUST use the `<app-data-grid>` component and define the `GridColumn[]` array rather than building a new grid from scratch.
+3. **Paths:** Use relative paths (e.g. `../../../common/grid/data-grid/data-grid`) for internal app imports to avoid issues with standard configuration aliases if they aren't mapping properly.
+
+## 6. Current State
+We have successfully refactored the entire UAM module to use the centralized and reusable Kendo DataGridComponent. The routing is fully operational, and placeholder data is rendering correctly inside the customized grid layouts (with custom status pill badges, array parsing, and action icons). 
+
+## How to Proceed
+Please acknowledge that you have read and understood the architecture, the specific use of `<app-data-grid>`, and the structural patterns. Once you acknowledge, I will give you the next task.
+```
