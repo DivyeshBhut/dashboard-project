@@ -35,14 +35,22 @@ import { CommonModule } from '@angular/common';
               </button>
               
               <div class="dropdown-menu" *ngIf="isBuildDropdownOpen">
-                <div class="dropdown-item" 
-                     *ngFor="let build of builds" 
-                     [class.active]="build === selectedBuild"
-                     (click)="selectBuild(build)">
-                  <span class="item-text">{{ build }}</span>
-                  <svg *ngIf="build === selectedBuild" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-                  </svg>
+                <div class="dropdown-search" (click)="$event.stopPropagation()">
+                  <input type="text" placeholder="Search builds..." (input)="onSearch($event)" [value]="searchQuery">
+                </div>
+                <div class="dropdown-items">
+                  <div class="dropdown-item" 
+                       *ngFor="let build of filteredBuilds" 
+                       [class.active]="build === selectedBuild"
+                       (click)="selectBuild(build)">
+                    <span class="item-text">{{ build }}</span>
+                    <svg *ngIf="build === selectedBuild" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="dropdown-item empty-state" *ngIf="filteredBuilds.length === 0">
+                    No builds found matching "{{ searchQuery }}"
+                  </div>
                 </div>
               </div>
             </div>
@@ -391,13 +399,57 @@ import { CommonModule } from '@angular/common';
       top: calc(100% + 0.5rem);
       left: 0;
       width: 100%;
-      background: var(--card-bg);
+      background: var(--card-bg, var(--bg-primary, #fff));
       border: 1px solid var(--border-color);
       border-radius: 0.5rem;
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
       z-index: 100;
       overflow: hidden;
       animation: dropdownFade 0.2s ease forwards;
+      display: flex;
+      flex-direction: column;
+    }
+    .dropdown-search {
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+      background: inherit;
+      z-index: 2;
+    }
+    .dropdown-search input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 0.375rem;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .dropdown-search input:focus {
+      border-color: var(--accent-color);
+    }
+    .dropdown-items {
+      max-height: 250px;
+      overflow-y: auto;
+    }
+    .dropdown-items::-webkit-scrollbar {
+      width: 4px;
+    }
+    .dropdown-items::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+    .empty-state {
+      color: var(--text-secondary);
+      font-style: italic;
+      justify-content: center;
+      cursor: default;
+    }
+    .empty-state:hover {
+      background: inherit;
+      color: var(--text-secondary);
     }
     .dropdown-item {
       padding: 0.75rem 1rem;
@@ -469,68 +521,96 @@ import { CommonModule } from '@angular/common';
     .stat-card {
       background: var(--bg-secondary);
       border: 1px solid var(--border-color);
-      border-radius: 0.5rem;
-      padding: 1.25rem 1.5rem;
+      border-radius: 1.25rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
     
-    .stat-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: transparent;
+      transition: background 0.3s;
     }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08), 0 8px 10px rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+    
+    .stat-card:nth-child(1):hover::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .stat-card:nth-child(2):hover::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+    .stat-card:nth-child(3):hover::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+    .stat-card:nth-child(4):hover::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
 
     .stat-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     .stat-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 0.5rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    
+    .stat-card:hover .stat-icon {
+      transform: scale(1.15) rotate(5deg);
+    }
+
     .stat-icon svg {
       width: 24px;
       height: 24px;
     }
     .success-icon {
-      background: rgba(16, 185, 129, 0.15);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
       color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.1);
     }
     .info-icon {
-      background: rgba(59, 130, 246, 0.15);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
       color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.1);
     }
     .danger-icon {
-      background: rgba(239, 68, 68, 0.15);
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
       color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.1);
     }
     .timer-icon {
-      background: rgba(139, 92, 246, 0.15);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
       color: #8b5cf6;
+      border: 1px solid rgba(139, 92, 246, 0.1);
     }
 
     .stat-title {
-      font-size: 0.95rem;
-      font-weight: 600;
+      font-size: 1.05rem;
+      font-weight: 700;
       color: var(--text-secondary);
       margin: 0;
+      letter-spacing: -0.01em;
     }
 
     .stat-value {
-      font-size: 1.75rem;
-      font-weight: 700;
+      font-size: 2.25rem;
+      font-weight: 800;
       color: var(--text-primary);
-      margin: 0 0 0.5rem 0;
-      line-height: 1.2;
+      margin: 0 0 0.75rem 0;
+      line-height: 1;
+      letter-spacing: -0.02em;
     }
 
     .stat-footer {
@@ -842,12 +922,24 @@ export class DashboardHomeComponent {
   selectedBuild = 'Latest Build (#4192)';
   builds = ['Latest Build (#4192)', 'Build #4191', 'Build #4190'];
   activeTrendTab = 'week';
+  searchQuery = '';
 
   constructor(private eRef: ElementRef) {}
+
+  get filteredBuilds() {
+    return this.builds.filter(build => build.toLowerCase().includes(this.searchQuery.toLowerCase()));
+  }
+
+  onSearch(event: Event) {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+  }
 
   toggleBuildDropdown(event: Event) {
     event.stopPropagation();
     this.isBuildDropdownOpen = !this.isBuildDropdownOpen;
+    if (this.isBuildDropdownOpen) {
+      this.searchQuery = '';
+    }
   }
 
   selectBuild(build: string) {

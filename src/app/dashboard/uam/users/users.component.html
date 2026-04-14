@@ -14,7 +14,7 @@
       <p class="text-muted">Manage system access, roles, and user profiles across the enterprise.</p>
     </div>
     <div class="header-actions">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="openUserModal()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
@@ -64,3 +64,17 @@
     </app-data-grid>
   </div>
 </div>
+
+<app-dynamic-form-modal
+  [isVisible]="isUserModalOpen"
+  [mode]="modalMode"
+  [titleAdd]="'Add New User'"
+  [titleEdit]="'Edit User'"
+  [titleView]="'View User Details'"
+  [saveBtnTextAdd]="'Save User'"
+  [saveBtnTextEdit]="'Update User'"
+  [fields]="userFormFields"
+  [formData]="currentEditUser"
+  (save)="onSaveUser($event)"
+  (close)="closeUserModal()">
+</app-dynamic-form-modal>

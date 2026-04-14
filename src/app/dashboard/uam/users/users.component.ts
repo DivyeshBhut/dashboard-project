@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { GridModule, FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-grid';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
@@ -15,11 +16,12 @@ export interface User {
 import { DateRangeFilterComponent } from '../../../common/grid/date-range-filter/date-range-filter';
 
 import { DataGridComponent, GridColumn } from '../../../common/grid/data-grid/data-grid';
+import { DynamicFormModalComponent, FormField } from '../../../common/dynamic-form-modal/dynamic-form-modal.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, DataGridComponent],
+  imports: [CommonModule, FormsModule, DataGridComponent, DynamicFormModalComponent],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -51,7 +53,47 @@ export class UsersComponent implements OnInit {
   }
 
   handleAction(event: {action: string, item: any}): void {
+    if (event.action === 'edit') {
+      this.openUserModal(event.item, 'edit');
+    } else if (event.action === 'view') {
+      this.openUserModal(event.item, 'view');
+    }
     console.log(`Action: ${event.action}`, event.item);
   }
-}
 
+  isUserModalOpen = false;
+  modalMode: 'add' | 'edit' | 'view' = 'add';
+  currentEditUser: any = {};
+
+  userFormFields: FormField[] = [
+    { key: 'username', label: 'Username', type: 'text', placeholder: 'e.g. jsmith' },
+    { key: 'email', label: 'Email Address', type: 'email', placeholder: 'e.g. john.smith@company.com' },
+    { key: 'accessGroup', label: 'Access Group', type: 'dropdown', options: ['System Admin', 'Reviewer', 'Auditor', 'Compliance Officer', 'Data Entry', 'Risk Analyst'], searchable: true, placeholder: 'Select Access Group' },
+    { key: 'status', label: 'Status', type: 'dropdown', options: ['Active', 'Inactive', 'Locked'], searchable: false, placeholder: 'Select Status' }
+  ];
+
+  openUserModal(user?: any, mode: 'add' | 'edit' | 'view' = 'add') {
+    this.isUserModalOpen = true;
+    this.modalMode = mode;
+    if (user) {
+      this.currentEditUser = { 
+        id: user.id,
+        username: user.username || '', 
+        email: user.email || '', 
+        accessGroup: user.accessGroup && user.accessGroup.length > 0 ? user.accessGroup[0] : '', 
+        status: user.status || 'Active' 
+      };
+    } else {
+      this.currentEditUser = { username: '', email: '', accessGroup: '', status: 'Active' };
+    }
+  }
+
+  closeUserModal() {
+    this.isUserModalOpen = false;
+  }
+
+  onSaveUser(formData: any) {
+    console.log('Saved user data:', formData);
+    this.closeUserModal();
+  }
+}
