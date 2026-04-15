@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { DataGridComponent, GridColumn } from '../../../common/grid/data-grid/data-grid';
 
 @Component({
   selector: 'app-groups',
   standalone: true,
-  imports: [CommonModule, DataGridComponent],
+  imports: [CommonModule, FormsModule, DataGridComponent],
   templateUrl: './groups.html',
   styleUrl: './groups.css',
 })
 export class GroupsComponent implements OnInit {
   groupsData: any[] = [];
   pageSize = 10;
+  globalSearchTerm = '';
   
   gridColumns: GridColumn[] = [
     { field: 'actions', title: 'Actions', width: 120, type: 'actions' },
@@ -31,7 +33,37 @@ export class GroupsComponent implements OnInit {
     ];
   }
 
+  get filteredGroupsData(): any[] {
+    const term = this.globalSearchTerm.trim().toLowerCase();
+    if (!term) {
+      return this.groupsData;
+    }
+
+    return this.groupsData.filter((group) => {
+      const searchableValues = [
+        group.groupName,
+        group.description,
+        group.status,
+        ...(group.permissions ?? [])
+      ];
+
+      return searchableValues.some((value) => String(value).toLowerCase().includes(term));
+    });
+  }
+
   handleAction(event: {action: string, item: any}): void {
     console.log(`Groups Action Triggered: ${event.action}`, event.item);
+  }
+
+  onRefreshGrid(): void {
+    this.ngOnInit();
+  }
+
+  onAddGroup(): void {
+    console.log('Add Group requested');
+  }
+
+  onExportGrid(): void {
+    console.log('Export Groups requested');
   }
 }

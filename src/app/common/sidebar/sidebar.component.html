@@ -28,7 +28,7 @@
 
     <!-- UAM Section -->
     <div class="nav-group">
-      <button class="nav-item group-toggle" (click)="toggleUam()" [class.open]="uamOpen">
+      <button class="nav-item group-toggle" (click)="onGroupClick('uam', '/dashboard/users')" [class.open]="uamOpen">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
         </svg>
@@ -48,7 +48,7 @@
 
     <!-- Project Hub Section -->
     <div class="nav-group">
-      <button class="nav-item group-toggle" (click)="toggleProjectHub()" [class.open]="projectHubOpen">
+      <button class="nav-item group-toggle" (click)="onGroupClick('projectHub', '/dashboard/screenza-matrix')" [class.open]="projectHubOpen">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.45m.001 0c-.019-.104-.039-.208-.06-.311m-2.45 2.45a5.955 5.955 0 00-1.87 3.39" />
         </svg>
@@ -66,7 +66,7 @@
 
     <!-- Master Data Section -->
     <div class="nav-group">
-      <button class="nav-item group-toggle" (click)="toggleMasterData()" [class.open]="masterDataOpen">
+      <button class="nav-item group-toggle" (click)="onGroupClick('masterData', '/dashboard/test-case-runs')" [class.open]="masterDataOpen">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
         </svg>
@@ -84,7 +84,7 @@
 
     <!-- Security Section -->
     <div class="nav-group">
-      <button class="nav-item group-toggle" (click)="toggleSecurity()" [class.open]="securityOpen">
+      <button class="nav-item group-toggle" (click)="onGroupClick('security', '/dashboard/audit-logs')" [class.open]="securityOpen">
         <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg>

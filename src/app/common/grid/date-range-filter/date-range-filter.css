@@ -1,0 +1,80 @@
+.range-picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+  background-color: var(--input-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 4px;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.range-picker-trigger:hover {
+  border-color: #9ca3af;
+  color: var(--text-primary, #111827);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.range-picker-trigger:focus {
+  outline: none;
+  border-color: var(--primary-color, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.range-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.range-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.range-picker-trigger:hover .range-icon {
+  color: var(--primary-color, #3b82f6);
+}
+
+.clear-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+.clear-icon-container:hover {
+  background-color: #fee2e2;
+}
+
+.clear-icon-container:hover .range-icon {
+  color: #ef4444;
+}
+
+.hidden-inputs {
+  display: none;
+}
+
+.range-actions {
+  display: flex;
+  align-items: center;
+}
+
+.clear-icon {
+  margin-left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+}

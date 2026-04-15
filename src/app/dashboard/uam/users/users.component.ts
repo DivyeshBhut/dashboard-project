@@ -28,6 +28,7 @@ import { DynamicFormModalComponent, FormField } from '../../../common/dynamic-fo
 export class UsersComponent implements OnInit {
   users: User[] = [];
   pageSize = 10;
+  globalSearchTerm = '';
   
   gridColumns: GridColumn[] = [
     { field: 'actions', title: 'Actions', width: 150, type: 'actions' },
@@ -52,6 +53,26 @@ export class UsersComponent implements OnInit {
     this.users = rawData.map(u => ({ ...u, createdDate: new Date(u.createdDate), status: u.status as 'Active' | 'Inactive' | 'Locked' }));
   }
 
+  get filteredUsers(): User[] {
+    const term = this.globalSearchTerm.trim().toLowerCase();
+    if (!term) {
+      return this.users;
+    }
+
+    return this.users.filter((user) => {
+      const createdDate = user.createdDate instanceof Date ? user.createdDate.toLocaleDateString('en-US') : '';
+      const searchableValues = [
+        user.username,
+        user.email,
+        user.status,
+        createdDate,
+        ...(user.accessGroup ?? [])
+      ];
+
+      return searchableValues.some((value) => String(value).toLowerCase().includes(term));
+    });
+  }
+
   handleAction(event: {action: string, item: any}): void {
     if (event.action === 'edit') {
       this.openUserModal(event.item, 'edit');
@@ -59,6 +80,15 @@ export class UsersComponent implements OnInit {
       this.openUserModal(event.item, 'view');
     }
     console.log(`Action: ${event.action}`, event.item);
+  }
+
+  onRefreshGrid(): void {
+    // Keep this as a hook for API re-fetch in integration.
+    this.ngOnInit();
+  }
+
+  onExportGrid(): void {
+    console.log('Export Users requested');
   }
 
   isUserModalOpen = false;

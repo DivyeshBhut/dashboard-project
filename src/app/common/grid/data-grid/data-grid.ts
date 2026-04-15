@@ -25,8 +25,14 @@ export class DataGridComponent {
   @Input() pageable: boolean = true;
   @Input() sortable: boolean = true;
   @Input() filterable: boolean = true;
+  @Input() showToolbarActions: boolean = true;
+  @Input() addActionLabel: string = 'Add';
+  @Input() exportActionLabel: string = 'Export Data';
   
   @Output() actionClick = new EventEmitter<{action: string, item: any}>();
+  @Output() refreshClick = new EventEmitter<void>();
+  @Output() addClick = new EventEmitter<void>();
+  @Output() exportClick = new EventEmitter<void>();
 
   public skip = 0;
 

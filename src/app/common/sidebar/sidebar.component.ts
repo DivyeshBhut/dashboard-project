@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,14 +17,38 @@ export class SidebarComponent {
   projectHubOpen = false;
   masterDataOpen = false;
   securityOpen = false;
+  constructor(private readonly router: Router) {}
+
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.sidebarToggled.emit(this.isSidebarOpen);
   }
 
-  toggleUam(): void { this.uamOpen = !this.uamOpen; }
-  toggleProjectHub(): void { this.projectHubOpen = !this.projectHubOpen; }
-  toggleMasterData(): void { this.masterDataOpen = !this.masterDataOpen; }
-  toggleSecurity(): void { this.securityOpen = !this.securityOpen; }
+  private closeAllMenus(): void {
+    this.uamOpen = false;
+    this.projectHubOpen = false;
+    this.masterDataOpen = false;
+    this.securityOpen = false;
+  }
+
+  private toggleMenu(menu: 'uam' | 'projectHub' | 'masterData' | 'security'): void {
+    const wasOpen = this[`${menu}Open`];
+    this.closeAllMenus();
+    this[`${menu}Open`] = !wasOpen;
+  }
+
+  onGroupClick(
+    menu: 'uam' | 'projectHub' | 'masterData' | 'security',
+    defaultRoute: string
+  ): void {
+    if (!this.isSidebarOpen) {
+      this.closeAllMenus();
+      void this.router.navigate([defaultRoute]);
+      return;
+    }
+
+    this.toggleMenu(menu);
+  }
+
 }
