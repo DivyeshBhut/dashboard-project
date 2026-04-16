@@ -80,6 +80,11 @@
           <a routerLink="/dashboard/test-case-runs" routerLinkActive="active" class="sub-nav-item">Test case runs</a>
         </div>
       </div>
+      <div class="sub-nav" [class.expanded]="masterDataOpen">
+        <div class="sub-nav-inner">
+          <a routerLink="/dashboard/pipeline-executions" routerLinkActive="active" class="sub-nav-item">Pipeline Executions</a>
+        </div>
+      </div>
     </div>
 
     <!-- Security Section -->
