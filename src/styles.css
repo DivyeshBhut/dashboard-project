@@ -33,7 +33,7 @@
   --kendo-color-base-hover: var(--hover-color);
   --kendo-color-surface-hover: var(--hover-color);
   --kendo-color-primary: var(--accent-color);
-  
+
   /* Legacy Kendo Variables (Safety net) */
   --kendo-component-bg: var(--card-bg);
   --kendo-base-bg: var(--bg-primary);
@@ -62,7 +62,8 @@ body.dark-theme {
   --text-muted: #64748b;
 }
 
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -815,6 +816,7 @@ app-pipeline-executions .table-responsive {
 }
 
 @media (max-width: 1280px) {
+
   app-test-case-run .stats-grid,
   app-pipeline-executions .stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -822,6 +824,7 @@ app-pipeline-executions .table-responsive {
 }
 
 @media (max-width: 1080px) {
+
   app-test-case-run .filter-grid,
   app-pipeline-executions .filter-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -829,6 +832,7 @@ app-pipeline-executions .table-responsive {
 }
 
 @media (max-width: 960px) {
+
   app-test-case-run .stats-grid,
   app-pipeline-executions .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -836,6 +840,7 @@ app-pipeline-executions .table-responsive {
 }
 
 @media (max-width: 720px) {
+
   app-test-case-run .filter-grid,
   app-pipeline-executions .filter-grid {
     grid-template-columns: 1fr;
@@ -843,6 +848,7 @@ app-pipeline-executions .table-responsive {
 }
 
 @media (max-width: 640px) {
+
   app-test-case-run .header-card,
   app-pipeline-executions .header-card {
     padding: 1.25rem;
@@ -867,5 +873,62 @@ app-pipeline-executions .table-responsive {
   app-test-case-run .grid-toolbar,
   app-pipeline-executions .grid-toolbar {
     padding: 1rem 1.25rem;
+  }
+
+  /* Charts row — two-column layout */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    /* or use minmax(0, 1fr) minmax(0, 380px) */
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    min-width: 0;
+    /* ← prevents grid blowout */
+  }
+
+  /* Both chart cards */
+  .chart-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    min-width: 0;
+    /* ← critical: stops content from forcing width */
+    overflow: hidden;
+  }
+
+  /* Distribution (donut) card inner layout */
+  .distribution-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    min-height: 260px;
+  }
+
+  .distribution-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* The donut ring itself */
+  .donut-chart {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .donut-center {
+    position: absolute;
+    inset: 30px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }

@@ -252,16 +252,12 @@ interface CriticalFailure {
 
             <div class="distribution-breakdown">
               <div class="distribution-item success">
-                <span class="distribution-key"><span class="legend-swatch success-swatch"></span>Successful</span>
+                <span class="distribution-key">Successful</span>
                 <span class="distribution-value">{{ successfulExecutions }}</span>
               </div>
               <div class="distribution-item danger">
-                <span class="distribution-key"><span class="legend-swatch failure-swatch"></span>Failed</span>
+                <span class="distribution-key">Failed</span>
                 <span class="distribution-value">{{ failedExecutions }}</span>
-              </div>
-              <div class="distribution-item warning">
-                <span class="distribution-key"><span class="legend-swatch warning-swatch"></span>Cancelled</span>
-                <span class="distribution-value">{{ cancelledExecutions }}</span>
               </div>
             </div>
           </div>
@@ -734,6 +730,135 @@ interface CriticalFailure {
       to { opacity: 1; transform: translateY(0); }
     }
 
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr minmax(0, 340px);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      min-width: 0;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .distribution-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding-top: 0.5rem;
+    }
+
+    .distribution-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-chart {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 28px;
+      background: var(--card-bg);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .donut-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+    }
+
+    .donut-center strong {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .distribution-breakdown {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .distribution-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      padding: 0.4rem 1.80rem;
+      min-width: 100px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .distribution-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .distribution-item.success {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1.5px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .distribution-item.success:hover {
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+    }
+
+    .distribution-item.danger {
+      background: rgba(239, 68, 68, 0.07);
+      border: 1.5px solid rgba(239, 68, 68, 0.22);
+    }
+
+    .distribution-item.danger:hover {
+      box-shadow: 0 4px 16px rgba(239, 68, 68, 0.13);
+    }
+
+    .distribution-key {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .distribution-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .distribution-item.success .distribution-value { color: #10b981; }
+    .distribution-item.danger  .distribution-value { color: #ef4444; }
+
     @media (max-width: 1024px) {
       .stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -741,11 +866,6 @@ interface CriticalFailure {
 
       .charts-row {
         grid-template-columns: 1fr;
-      }
-
-      .distribution-content {
-        grid-template-columns: 1fr;
-        min-height: auto;
       }
     }
 
@@ -955,7 +1075,7 @@ export class DashboardHomeComponent {
   }
 
   get totalExecutions(): number {
-    return this.successfulExecutions + this.failedExecutions + this.cancelledExecutions;
+    return this.successfulExecutions + this.failedExecutions;
   }
 
   get successfulExecutionRate(): string {
@@ -965,8 +1085,7 @@ export class DashboardHomeComponent {
   get outcomeDistributionGradient(): string {
     const total = this.totalExecutions || 1;
     const successStop = (this.successfulExecutions / total) * 100;
-    const failureStop = successStop + (this.failedExecutions / total) * 100;
-    return `conic-gradient(#10b981 0 ${successStop}%, #ef4444 ${successStop}% ${failureStop}%, #f59e0b ${failureStop}% 100%)`;
+    return `conic-gradient(#10b981 0 ${successStop}%, #ef4444 ${successStop}% 100%)`;
   }
 
   onSearch(event: Event): void {
