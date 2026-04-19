@@ -1,0 +1,125 @@
+<div class="page-header">
+  <div class="breadcrumb">
+    <span class="breadcrumb-item">Project Hub</span>
+    <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+    <span class="breadcrumb-item active">Screenza Matrix</span>
+  </div>
+
+  <div class="header-card">
+    <div class="header-info">
+      <h2 class="page-title">Screenza Features</h2>
+      <p class="text-muted">
+        End-to-end feature lifecycle management and automation tracking across squads.
+      </p>
+    </div>
+  </div>
+</div>
+
+<section class="stats-grid" aria-label="Feature lifecycle summary">
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon info-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h12A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Total Features</h3>
+    </div>
+    <div class="stat-value">{{ totalFeatures }}</div>
+    <div class="stat-meta">Across 4 lifecycle stages</div>
+    <div class="stat-track"><span class="stat-fill info-fill" style="width: 100%"></span></div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Live and Done</h3>
+    </div>
+    <div class="stat-value">{{ liveAndDoneCount }}</div>
+    <div class="stat-meta">{{ liveDoneRate }}% of total features</div>
+    <div class="stat-track"><span class="stat-fill success-fill" [style.width.%]="liveDoneRate"></span></div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon accent-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2.5m5-2.5a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">In Progress</h3>
+    </div>
+    <div class="stat-value">{{ inProgressCount }}</div>
+    <div class="stat-meta">{{ progressRate }}% active delivery load</div>
+    <div class="stat-track"><span class="stat-fill accent-fill" [style.width.%]="progressRate"></span></div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon danger-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0 3.75h.008v.008H12v-.008zm8.25-3.758a8.25 8.25 0 11-16.5 0 8.25 8.25 0 0116.5 0z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Blocked or Failed</h3>
+    </div>
+    <div class="stat-value">{{ blockedFailedCount }}</div>
+    <div class="stat-meta">{{ blockedRate }}% requiring attention</div>
+    <div class="stat-track"><span class="stat-fill danger-fill" [style.width.%]="blockedRate"></span></div>
+  </article>
+</section>
+
+<section class="grid-card">
+  <div class="grid-toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-copy">
+        <h3 class="section-title">Feature Matrix</h3>
+        <p class="section-description">{{ displayedRecords.length }} records available in the current view.</p>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <div class="global-search">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
+        </svg>
+        <input
+          type="text"
+          class="global-search-input"
+          placeholder="Search feature name or team..."
+          [(ngModel)]="searchTerm"
+        />
+      </div>
+
+      <select class="form-select outcome-select" [(ngModel)]="selectedFilter" (ngModelChange)="onStatusFilterChange()">
+        <option *ngFor="let status of statusOptions" [ngValue]="status">{{ status }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <app-data-grid
+      [data]="displayedRecords"
+      [columns]="gridColumns"
+      [pageSize]="pageSize"
+      [globalSearchTerm]="searchTerm"
+      [showToolbarActions]="true"
+      [showRefreshAction]="true"
+      [showAddAction]="true"
+      [showExportAction]="true"
+      [addActionLabel]="'Add Feature'"
+      [exportActionLabel]="'Import Data'"
+      (refreshClick)="refreshData()"
+      (addClick)="addFeature()"
+      (exportClick)="importData()"
+      (actionClick)="handleGridAction($event)"
+      [emptyMessage]="'No features found for the current search/filter.'"
+    >
+    </app-data-grid>
+  </div>
+</section>

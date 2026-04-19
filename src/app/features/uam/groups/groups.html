@@ -1,7 +1,6 @@
 <div class="page-container fade-in">
-  <!-- Dynamic Header Row -->
+  <!-- Breadcrumbs -->
   <div class="page-header">
-    <!-- Breadcrumbs -->
     <div class="breadcrumb">
       <span class="breadcrumb-item">UAM</span>
       <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -16,7 +15,6 @@
         <h1 class="page-title">Access Groups</h1>
         <p class="text-muted">Manage system permissions and role-based access control.</p>
       </div>
-
       <div class="header-actions">
         <div class="global-search">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
@@ -33,20 +31,19 @@
     </div>
   </div>
 
-  <!-- Complete Data Table Wrapper -->
+  <!-- Grid -->
   <div class="grid-card">
-    <!-- The Shared Data Grid -->
     <div class="table-responsive">
-      <app-data-grid 
-          [data]="filteredGroupsData" 
-          [columns]="gridColumns" 
-          [pageSize]="pageSize"
-          [addActionLabel]="'Add Group'"
-          [exportActionLabel]="'Export Groups'"
-          (refreshClick)="onRefreshGrid()"
-          (addClick)="onAddGroup()"
-          (exportClick)="onExportGrid()"
-          (actionClick)="handleAction($event)">
+      <app-data-grid
+        [data]="filteredGroupsData"
+        [columns]="gridColumns"
+        [pageSize]="pageSize"
+        [addActionLabel]="'Add Group'"
+        [exportActionLabel]="'Export Groups'"
+        (refreshClick)="onRefreshGrid()"
+        (addClick)="onAddGroup()"
+        (exportClick)="onExportGrid()"
+        (actionClick)="handleAction($event)">
       </app-data-grid>
     </div>
   </div>

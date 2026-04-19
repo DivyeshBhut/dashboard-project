@@ -1,295 +1,317 @@
-    <div class="dashboard-content">
-      <nav class="breadcrumb">
-        <ol>
-          <li><a href="#">Dashboard</a></li>
-          <li class="separator">/</li>
-          <li class="current">Pipeline Intelligence</li>
-        </ol>
-      </nav>
+<div class="dashboard-content">
+  <nav class="breadcrumb">
+    <ol>
+      <li><a href="#">Dashboard</a></li>
+      <li class="separator">/</li>
+      <li class="current">Pipeline Intelligence</li>
+    </ol>
+  </nav>
 
-      <div class="header-card">
-        <div class="header-left">
-          <h1 class="header-title">Pipeline Intelligence</h1>
-          <p class="header-subtitle">Real Time Test Automation Insights</p>
-        </div>
-
-        <div class="header-right">
-          <div class="build-selector">
-            <label>Build</label>
-            <div class="custom-select" [class.open]="isBuildDropdownOpen">
-              <button class="select-btn" type="button" (click)="toggleBuildDropdown($event)">
-                <span class="selected-text">{{ selectedBuild }}</span>
-                <svg class="select-icon" [class.rotated]="isBuildDropdownOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                </svg>
-              </button>
-
-              <div class="dropdown-menu" *ngIf="isBuildDropdownOpen">
-                <div class="dropdown-search" (click)="$event.stopPropagation()">
-                  <input type="text" placeholder="Search builds..." (input)="onSearch($event)" [value]="searchQuery">
-                </div>
-                <div class="dropdown-items">
-                  <div
-                    class="dropdown-item"
-                    *ngFor="let build of filteredBuilds"
-                    [class.active]="build === selectedBuild"
-                    (click)="selectBuild(build)"
-                  >
-                    <span class="item-text">{{ build }}</span>
-                    <svg *ngIf="build === selectedBuild" class="check-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
-                    </svg>
-                  </div>
-                  <div class="dropdown-item empty-state" *ngIf="filteredBuilds.length === 0">
-                    No builds found matching "{{ searchQuery }}"
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn-refresh" type="button" aria-label="Refresh Data">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon success-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 class="stat-title">Success Rate</h3>
-          </div>
-          <div class="stat-value">85%</div>
-          <div class="stat-footer">
-            <span class="trend up">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
-              </svg>
-              2.1%
-            </span>
-            <span class="footer-text">vs last build</span>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon info-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-              </svg>
-            </div>
-            <h3 class="stat-title">Total Runs</h3>
-          </div>
-          <div class="stat-value">98</div>
-          <div class="stat-footer">
-            <span class="footer-text">Across 20 builds</span>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon danger-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-              </svg>
-            </div>
-            <h3 class="stat-title">Failures</h3>
-          </div>
-          <div class="stat-value">15</div>
-          <div class="stat-footer">
-            <span class="trend down">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clip-rule="evenodd" />
-              </svg>
-              15%
-            </span>
-            <span class="footer-text">failure rate</span>
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-header">
-            <div class="stat-icon timer-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 class="stat-title">Avg Duration</h3>
-          </div>
-          <div class="stat-value">4m 43s</div>
-          <div class="stat-footer">
-            <span class="footer-text">per pipeline execution</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="charts-row">
-        <div class="chart-card trend-card">
-          <div class="card-header trend-header">
-            <div>
-              <h3 class="card-title">Execution Trends</h3>
-              <p class="card-subtitle">Success rate and total run volume across the latest execution windows.</p>
-            </div>
-            <div class="trend-tabs">
-              <button class="trend-tab" type="button" [class.active]="activeTrendTab === 'week'" (click)="setTrendTab('week')">Week</button>
-              <button class="trend-tab" type="button" [class.active]="activeTrendTab === 'month'" (click)="setTrendTab('month')">Month</button>
-            </div>
-          </div>
-
-          <div class="chart-summary">
-            <div class="legend-item">
-              <span class="legend-swatch runs-swatch"></span>
-              <span class="legend-text">Total Runs <strong>{{ totalRunVolume }}</strong></span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-swatch success-swatch"></span>
-              <span class="legend-text">Avg Success Rate <strong>{{ averageTrendSuccessRate }}</strong></span>
-            </div>
-          </div>
-
-          <div class="trend-chart-shell">
-            <div class="y-axis y-axis-left">
-              <span *ngFor="let label of runsAxisLabels">{{ label }}</span>
-            </div>
-
-            <div class="chart-stage">
-              <div class="grid-lines-bg">
-                <div class="grid-line" *ngFor="let line of chartGridLines"></div>
-              </div>
-
-              <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true">
-                <polyline class="trend-line total-runs-line" [attr.points]="totalRunsPolylinePoints"></polyline>
-                <polyline class="trend-line success-rate-line" [attr.points]="successRatePolylinePoints"></polyline>
-
-                <g *ngFor="let point of totalRunsChartPoints">
-                  <circle class="trend-point total-runs-point" [attr.cx]="point.x" [attr.cy]="point.y" r="5"></circle>
-                </g>
-
-                <g *ngFor="let point of successRateChartPoints">
-                  <circle class="trend-point success-rate-point" [attr.cx]="point.x" [attr.cy]="point.y" r="5"></circle>
-                </g>
-              </svg>
-
-              <div class="x-axis">
-                <span *ngFor="let point of activeTrendData">{{ point.label }}</span>
-              </div>
-            </div>
-
-            <div class="y-axis y-axis-right">
-              <span>100%</span>
-              <span>75%</span>
-              <span>50%</span>
-              <span>25%</span>
-              <span>0%</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="chart-card distribution-card">
-          <div class="card-header">
-            <div>
-              <h3 class="card-title">Outcome Distribution</h3>
-              <p class="card-subtitle">A quick snapshot of the latest execution outcomes across monitored pipelines.</p>
-            </div>
-          </div>
-
-          <div class="distribution-content">
-            <div class="distribution-visual">
-              <div class="donut-chart" [style.background]="outcomeDistributionGradient">
-                <div class="donut-center">
-                  <span class="donut-label">Successful</span>
-                  <strong>{{ successfulExecutionRate }}</strong>
-                </div>
-              </div>
-            </div>
-
-            <div class="distribution-breakdown">
-              <div class="distribution-item success">
-                <span class="distribution-key">Successful</span>
-                <span class="distribution-value">{{ successfulExecutions }}</span>
-              </div>
-              <div class="distribution-item danger">
-                <span class="distribution-key">Failed</span>
-                <span class="distribution-value">{{ failedExecutions }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section class="accordion-card">
-        <button class="accordion-toggle" type="button" (click)="toggleRecentActivities()" [attr.aria-expanded]="isRecentActivitiesOpen">
-          <div class="accordion-copy">
-            <div class="accordion-heading">
-              <h3 class="section-title">Recent Activities</h3>
-              <span class="accordion-badge neutral">{{ recentActivities.length }} items</span>
-            </div>
-            <p class="section-description">
-              Review the latest operational signals flowing through test automation, security, and release execution.
-            </p>
-          </div>
-
-          <svg class="accordion-chevron" [class.open]="isRecentActivitiesOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-
-        <div class="accordion-body" *ngIf="isRecentActivitiesOpen">
-          <div class="table-responsive">
-            <app-data-grid
-              [data]="recentActivities"
-              [columns]="recentActivityColumns"
-              [pageSize]="5"
-            >
-            </app-data-grid>
-          </div>
-        </div>
-      </section>
-
-      <section class="accordion-card">
-        <button class="accordion-toggle" type="button" (click)="toggleCriticalFailures()" [attr.aria-expanded]="isCriticalFailuresOpen">
-          <div class="accordion-copy">
-            <div class="accordion-heading">
-              <h3 class="section-title">Critical Failures</h3>
-              <span class="accordion-badge danger">{{ criticalFailures.length }} active</span>
-            </div>
-            <p class="section-description">
-              Focus on the highest-impact failures and open the action panel to inspect each issue in more detail.
-            </p>
-          </div>
-
-          <svg class="accordion-chevron" [class.open]="isCriticalFailuresOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
-
-        <div class="accordion-body" *ngIf="isCriticalFailuresOpen">
-          <div class="table-responsive">
-            <app-data-grid
-              [data]="criticalFailures"
-              [columns]="criticalFailureColumns"
-              [pageSize]="5"
-              (actionClick)="handleCriticalFailureAction($event)"
-            >
-            </app-data-grid>
-          </div>
-        </div>
-      </section>
+  <div class="header-card">
+    <div class="header-left">
+      <h1 class="header-title">Pipeline Intelligence</h1>
+      <p class="header-subtitle">Real Time Test Automation Insights</p>
     </div>
 
-    <app-dynamic-form-modal
-      [isVisible]="isCriticalFailureModalOpen"
-      [mode]="'view'"
-      [titleView]="'Critical Failure Details'"
-      [fields]="criticalFailureFields"
-      [formData]="selectedCriticalFailureDetails"
-      (close)="closeCriticalFailureModal()"
-    >
-    </app-dynamic-form-modal>
+    <div class="header-right">
+      <div class="build-selector">
+        <label>Build</label>
+        <div class="custom-select" [class.open]="isBuildDropdownOpen">
+          <button class="select-btn" type="button" (click)="toggleBuildDropdown($event)">
+            <span class="selected-text">{{ selectedBuild }}</span>
+            <svg class="select-icon" [class.rotated]="isBuildDropdownOpen" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div class="dropdown-menu" *ngIf="isBuildDropdownOpen">
+            <div class="dropdown-search" (click)="$event.stopPropagation()">
+              <input type="text" placeholder="Search builds..." (input)="onSearch($event)" [value]="searchQuery">
+            </div>
+            <div class="dropdown-items">
+              <div class="dropdown-item" *ngFor="let build of filteredBuilds"
+                [class.active]="build.label === selectedBuild" (click)="selectBuild(build.label)">
+                <span class="item-text">{{ build.label }}</span>
+                <svg *ngIf="build.label === selectedBuild" class="check-icon" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                    d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="dropdown-item empty-state" *ngIf="filteredBuilds.length === 0">
+                No builds found matching "{{ searchQuery }}"
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-refresh" type="button" aria-label="Refresh Data">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="stat-title">Success Rate</h3>
+      </div>
+      <div class="stat-value">{{ successRateLabel }}</div>
+      <div class="stat-footer">
+        <span class="trend" [class.up]="successRateDeltaDirection === 'up'"
+          [class.down]="successRateDeltaDirection === 'down'">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z"
+              clip-rule="evenodd" />
+          </svg>
+          {{ successRateDeltaLabel }}
+        </span>
+        <span class="footer-text">vs last build</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon info-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          </svg>
+        </div>
+        <h3 class="stat-title">Total Runs</h3>
+      </div>
+      <div class="stat-value">{{ totalRunCount }}</div>
+      <div class="stat-footer">
+        <span class="footer-text">Across {{ builds.length }} builds</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon danger-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <h3 class="stat-title">Failures</h3>
+      </div>
+      <div class="stat-value">{{ failedRunsLabel }}</div>
+      <div class="stat-footer">
+        <span class="trend down">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z"
+              clip-rule="evenodd" />
+          </svg>
+          {{ failureRateLabel }}
+        </span>
+        <span class="footer-text">failure rate</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon timer-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="stat-title">Avg Duration</h3>
+      </div>
+      <div class="stat-value">{{ averageDurationLabel }}</div>
+      <div class="stat-footer">
+        <span class="footer-text">per pipeline execution</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-row">
+    <div class="chart-card trend-card">
+      <div class="card-header trend-header">
+        <div>
+          <h3 class="card-title">Execution Trends</h3>
+          <p class="card-subtitle">Success rate and total run volume across the latest execution windows.</p>
+        </div>
+        <div class="trend-tabs">
+          <button class="trend-tab" type="button" [class.active]="activeTrendTab === 'week'"
+            (click)="setTrendTab('week')">Week</button>
+          <button class="trend-tab" type="button" [class.active]="activeTrendTab === 'month'"
+            (click)="setTrendTab('month')">Month</button>
+        </div>
+      </div>
+
+      <div class="chart-summary">
+        <div class="legend-item">
+          <span class="legend-swatch runs-swatch"></span>
+          <span class="legend-text">Total Runs <strong>{{ totalRunVolume }}</strong></span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch success-swatch"></span>
+          <span class="legend-text">Avg Success Rate <strong>{{ averageTrendSuccessRate }}</strong></span>
+        </div>
+      </div>
+
+      <div class="trend-chart-shell">
+        <div class="y-axis y-axis-left">
+          <span *ngFor="let label of runsAxisLabels">{{ label }}</span>
+        </div>
+
+        <div class="chart-stage">
+          <div class="grid-lines-bg">
+            <div class="grid-line" *ngFor="let line of chartGridLines"></div>
+          </div>
+
+          <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true"
+            (mouseleave)="hideTooltip()">
+            <polyline class="trend-line total-runs-line" [attr.points]="totalRunsPolylinePoints"></polyline>
+            <polyline class="trend-line success-rate-line" [attr.points]="successRatePolylinePoints"></polyline>
+
+            <g *ngFor="let point of totalRunsChartPoints; let i = index">
+              <circle class="trend-point total-runs-point" [attr.cx]="point.x" [attr.cy]="point.y" r="6"
+                (mouseenter)="showTooltip($event, 'runs', i)" style="cursor: pointer;">
+              </circle>
+            </g>
+
+            <g *ngFor="let point of successRateChartPoints; let i = index">
+              <circle class="trend-point success-rate-point" [attr.cx]="point.x" [attr.cy]="point.y" r="6"
+                (mouseenter)="showTooltip($event, 'rate', i)" style="cursor: pointer;">
+              </circle>
+            </g>
+          </svg>
+
+          <div class="chart-tooltip" *ngIf="tooltip.visible" [style.left.px]="tooltip.x" [style.top.px]="tooltip.y">
+            <div class="tooltip-label">{{ tooltip.label }}</div>
+            <div class="tooltip-value">{{ tooltip.value }}</div>
+          </div>
+
+          <div class="x-axis">
+            <span *ngFor="let point of activeTrendData">{{ point.label }}</span>
+          </div>
+        </div>
+
+        <div class="y-axis y-axis-right">
+          <span>100%</span>
+          <span>75%</span>
+          <span>50%</span>
+          <span>25%</span>
+          <span>0%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card distribution-card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">Outcome Distribution</h3>
+          <p class="card-subtitle">A quick snapshot of the latest execution outcomes across monitored pipelines.</p>
+        </div>
+      </div>
+
+      <div class="distribution-content">
+        <div class="distribution-visual">
+          <div class="donut-chart" [style.background]="outcomeDistributionGradient">
+            <div class="donut-center">
+              <span class="donut-label">Successful</span>
+              <strong>{{ successfulExecutionRate }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="distribution-breakdown">
+          <div class="distribution-item success">
+            <span class="distribution-key">Successful</span>
+            <span class="distribution-value">{{ successfulExecutions }}</span>
+          </div>
+          <div class="distribution-item danger">
+            <span class="distribution-key">Failed</span>
+            <span class="distribution-value">{{ failedExecutions }}</span>
+          </div>
+          <div class="distribution-item warning">
+            <span class="distribution-key">Skipped</span>
+            <span class="distribution-value">{{ skippedExecutions }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="accordion-card">
+    <button class="accordion-toggle" type="button" (click)="toggleRecentActivities()"
+      [attr.aria-expanded]="isRecentActivitiesOpen">
+      <div class="accordion-copy">
+        <div class="accordion-heading">
+          <h3 class="section-title">Recent Activities</h3>
+          <span class="accordion-badge neutral">{{ recentActivities.length }} items</span>
+        </div>
+        <p class="section-description">
+          Review the latest operational signals flowing through test automation, security, and release execution.
+        </p>
+      </div>
+
+      <svg class="accordion-chevron" [class.open]="isRecentActivitiesOpen" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="accordion-body" *ngIf="isRecentActivitiesOpen">
+      <div class="table-responsive">
+        <app-data-grid [data]="recentActivities" [columns]="recentActivityColumns" [showAddAction]="false" [pageSize]="5">
+        </app-data-grid>
+      </div>
+    </div>
+  </section>
+
+  <section class="accordion-card">
+    <button class="accordion-toggle" type="button" (click)="toggleCriticalFailures()"
+      [attr.aria-expanded]="isCriticalFailuresOpen">
+      <div class="accordion-copy">
+        <div class="accordion-heading">
+          <h3 class="section-title">Critical Failures</h3>
+          <span class="accordion-badge danger">{{ criticalFailures.length }} active</span>
+        </div>
+        <p class="section-description">
+          Focus on the highest-impact failures and open the action panel to inspect each issue in more detail.
+        </p>
+      </div>
+
+      <svg class="accordion-chevron" [class.open]="isCriticalFailuresOpen" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="accordion-body" *ngIf="isCriticalFailuresOpen">
+      <div class="table-responsive">
+        <app-data-grid [data]="criticalFailures" [columns]="criticalFailureColumns" [showAddAction]="false" [pageSize]="5"
+          (actionClick)="handleCriticalFailureAction($event)">
+        </app-data-grid>
+      </div>
+    </div>
+  </section>
+</div>
+
+<app-dynamic-form-modal [isVisible]="isCriticalFailureModalOpen" [mode]="'view'"
+  [titleView]="'Critical Failure Details'" [fields]="criticalFailureFields" [formData]="selectedCriticalFailureDetails"
+  (close)="closeCriticalFailureModal()">
+</app-dynamic-form-modal>

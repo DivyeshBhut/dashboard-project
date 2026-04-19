@@ -49,22 +49,37 @@
            <p class="subtitle">Enter your email and password to access your account</p>
         </div>
 
-        <form (submit)="false">
+        <form (ngSubmit)="onSubmit()">
           <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email" />
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" [(ngModel)]="username" />
           </div>
 
           <div class="input-group">
             <label for="password">Password</label>
             <div class="password-wrapper">
-              <input type="password" id="password" placeholder="Enter your password" />
-              <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <input [type]="showPassword ? 'text' : 'password'" id="password" name="password" placeholder="Enter your password" [(ngModel)]="password" />
+              <button
+                type="button"
+                class="password-toggle"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                (click)="togglePasswordVisibility()"
+              >
+                <svg *ngIf="!showPassword" class="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <svg *ngIf="showPassword" class="eye-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m3 3 18 18" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.58 10.58A3 3 0 0 0 12 15a3 3 0 0 0 2.42-4.42" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.88 5.09A9.77 9.77 0 0 1 12 4.5c4.64 0 8.58 3.01 9.96 7.18.07.21.07.43 0 .64a10 10 0 0 1-4.23 5.31" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.61 6.61A10 10 0 0 0 2.04 11.68c-.07.21-.07.43 0 .64C3.42 16.49 7.36 19.5 12 19.5c1.68 0 3.26-.39 4.66-1.09" />
+                </svg>
+              </button>
             </div>
           </div>
+
+          <p *ngIf="errorMessage" class="form-error">{{ errorMessage }}</p>
 
           <div class="form-actions">
             <label class="remember-me">
@@ -74,7 +89,9 @@
             <span class="forgot-link">Forgot password? <a href="#" class="action-link">Change now</a></span>
           </div>
 
-          <button type="submit" class="sign-in-btn">Sign In</button>
+          <button type="submit" class="sign-in-btn" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Signing In...' : 'Sign In' }}
+          </button>
         </form>
 
         <p class="footer-text">

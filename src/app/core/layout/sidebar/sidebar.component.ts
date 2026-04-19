@@ -51,4 +51,7 @@ export class SidebarComponent {
     this.toggleMenu(menu);
   }
 
+  navigateTo(path: string): void {
+    void this.router.navigate([path]);
+  }
 }

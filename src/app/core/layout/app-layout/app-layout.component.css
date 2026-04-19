@@ -1,7 +1,7 @@
 .dashboard-wrapper {
   display: flex;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: var(--bg-primary);
   overflow: hidden;
 }
@@ -20,4 +20,15 @@
   overflow-y: auto;
   position: relative;
   background-color: var(--bg-primary);
+}
+
+.content-shell {
+  width: min(100%, var(--app-content-max));
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.25rem;
+  }
 }

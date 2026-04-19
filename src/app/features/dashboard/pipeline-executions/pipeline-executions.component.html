@@ -104,37 +104,6 @@
   </article>
 </section>
 
-<section class="filter-card">
-  <div class="filter-header">
-    <div>
-      <h3 class="section-title">Search and Filter</h3>
-      <p class="section-description">Refine pipeline logs by outcome, pipeline name, and trigger ownership.</p>
-    </div>
-    <button class="btn btn-outline btn-sm" type="button" (click)="resetFilters()">Clear Filters</button>
-  </div>
-
-  <div class="filter-grid">
-    <div class="form-group">
-      <label for="outcomeFilter">Outcome</label>
-      <select id="outcomeFilter" class="form-select" [(ngModel)]="selectedOutcome">
-        <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label for="pipelineNameFilter">Pipeline Name</label>
-      <input id="pipelineNameFilter" type="text" class="form-input" placeholder="Search by pipeline name"
-        [(ngModel)]="pipelineNameQuery" />
-    </div>
-
-    <div class="form-group">
-      <label for="triggeredByFilter">Triggered By</label>
-      <input id="triggeredByFilter" type="text" class="form-input" placeholder="Search by trigger owner"
-        [(ngModel)]="triggeredByQuery" />
-    </div>
-  </div>
-</section>
-
 <div class="charts-row">
   <div class="chart-card trend-card">
     <div class="card-header trend-header flex-row">
@@ -143,8 +112,10 @@
         <p class="card-subtitle">Execution success rate and failure trends across the week.</p>
       </div>
       <div class="time-toggles">
-        <button class="toggle-btn" [class.active]="activeTrendTab === 'week'" (click)="setTrendTab('week')">Week</button>
-        <button class="toggle-btn" [class.active]="activeTrendTab === 'month'" (click)="setTrendTab('month')">Month</button>
+        <button class="toggle-btn" [class.active]="activeTrendTab === 'week'"
+          (click)="setTrendTab('week')">Week</button>
+        <button class="toggle-btn" [class.active]="activeTrendTab === 'month'"
+          (click)="setTrendTab('month')">Month</button>
       </div>
     </div>
 
@@ -171,18 +142,28 @@
           <div class="grid-line" *ngFor="let line of chartGridLines"></div>
         </div>
 
-        <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true"
+          (mouseleave)="hideTooltip()">
           <polyline class="trend-line success-trend-line" [attr.points]="successPolylinePoints"></polyline>
           <polyline class="trend-line failure-trend-line" [attr.points]="failurePolylinePoints"></polyline>
 
-          <g *ngFor="let point of successChartPoints">
-            <circle class="trend-point success-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"></circle>
+          <g *ngFor="let point of successChartPoints; let i = index">
+            <circle class="trend-point success-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"
+              (mouseenter)="showTooltip($event, 'success', i)" style="cursor: pointer;">
+            </circle>
           </g>
 
-          <g *ngFor="let point of failureChartPoints">
-            <circle class="trend-point failure-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"></circle>
+          <g *ngFor="let point of failureChartPoints; let i = index">
+            <circle class="trend-point failure-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"
+              (mouseenter)="showTooltip($event, 'failure', i)" style="cursor: pointer;">
+            </circle>
           </g>
         </svg>
+
+        <div class="chart-tooltip" *ngIf="tooltip.visible" [style.left.px]="tooltip.x" [style.top.px]="tooltip.y">
+          <div class="tooltip-label">{{ tooltip.label }}</div>
+          <div class="tooltip-value">{{ tooltip.value }}</div>
+        </div>
 
         <div class="x-axis">
           <span *ngFor="let point of trendSeries">{{ point.label }}</span>
@@ -243,10 +224,25 @@
         <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
       </div>
     </div>
+    <div class="toolbar-right">
+      <div class="global-search">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
+        </svg>
+        <input type="text" class="global-search-input" placeholder="Search pipeline name or triggered by..."
+          [(ngModel)]="globalSearchTerm" />
+      </div>
+
+      <select class="form-select outcome-select" [(ngModel)]="selectedOutcome">
+        <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
+      </select>
+    </div>
   </div>
 
   <div class="table-responsive">
-    <app-data-grid [data]="filteredLogs" [columns]="gridColumns" [pageSize]="pageSize"
+    <app-data-grid [data]="filteredLogs" [columns]="gridColumns" [showAddAction]="false" [pageSize]="pageSize"
       (actionClick)="handleAction($event)">
     </app-data-grid>
   </div>

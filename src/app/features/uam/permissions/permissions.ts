@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
+import { UamApiService, UamPermission } from '../../../core/services/uam-api.service';
 
 @Component({
   selector: 'app-permissions',
@@ -11,7 +12,7 @@ import { DataGridComponent, GridColumn } from '../../../shared/components/grid/d
   styleUrl: './permissions.css',
 })
 export class PermissionsComponent implements OnInit {
-  permissionsData: any[] = [];
+  permissionsData: UamPermission[] = [];
   pageSize = 10;
   globalSearchTerm = '';
   
@@ -24,18 +25,12 @@ export class PermissionsComponent implements OnInit {
     { field: 'updatedOn', title: 'Updated On', width: 200, type: 'date', format: '{0:MMM d, yyyy}' }
   ];
 
-  ngOnInit(): void {
-    const today = new Date();
-    const lastWeek = new Date(today);
-    lastWeek.setDate(lastWeek.getDate() - 7);
+  constructor(private readonly uamApi: UamApiService) {}
 
-    this.permissionsData = [
-      { id: 1, permissionName: 'View Dashboard', addedBy: 'Admin', addedOn: lastWeek, updatedBy: 'Admin', updatedOn: today },
-      { id: 2, permissionName: 'Manage Users', addedBy: 'System', addedOn: lastWeek, updatedBy: 'John Doe', updatedOn: today },
-      { id: 3, permissionName: 'Edit Groups', addedBy: 'Admin', addedOn: new Date(2023, 1, 15), updatedBy: 'Admin', updatedOn: new Date(2023, 5, 20) },
-      { id: 4, permissionName: 'Delete Records', addedBy: 'Jane Smith', addedOn: new Date(2023, 2, 10), updatedBy: 'System', updatedOn: new Date(2023, 8, 5) },
-      { id: 5, permissionName: 'Export Data', addedBy: 'Admin', addedOn: new Date(2023, 0, 5), updatedBy: 'Admin', updatedOn: today }
-    ];
+  ngOnInit(): void {
+    this.uamApi.getPermissions().subscribe((permissions) => {
+      this.permissionsData = permissions;
+    });
   }
 
   get filteredPermissionsData(): any[] {
@@ -64,7 +59,9 @@ export class PermissionsComponent implements OnInit {
   }
 
   onRefreshGrid(): void {
-    this.ngOnInit();
+    this.uamApi.getPermissions().subscribe((permissions) => {
+      this.permissionsData = permissions;
+    });
   }
 
   onAddPermission(): void {

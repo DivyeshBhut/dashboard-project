@@ -1,12 +1,13 @@
 <div class="dashboard-wrapper" [class.dark]="isDarkMode" [class.sidebar-closed]="!isSidebarOpen">
-  
   <app-sidebar (sidebarToggled)="handleSidebarToggle($event)"></app-sidebar>
 
   <div class="main-wrapper">
     <app-header [pageTitle]="'Enterprise Overview'"></app-header>
 
     <main class="main-content">
-      <router-outlet></router-outlet>
+      <div class="content-shell">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </div>
 </div>

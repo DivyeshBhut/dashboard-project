@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DynamicFormModalComponent, FormField } from '../../../shared/components/dynamic-form-modal/dynamic-form-modal.component';
 import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
+import { MasterApiService, PipelineExecutionItem } from '../../../core/services/master-api.service';
 
 type PipelineExecutionOutcome = 'Successful' | 'Failed' | 'Cancelled';
 
@@ -17,17 +18,6 @@ interface ChartPoint {
   y: number;
 }
 
-interface PipelineExecutionLog {
-  id: string;
-  pipelineName: string;
-  triggeredBy: string;
-  outcome: PipelineExecutionOutcome;
-  durationSeconds: number;
-  durationLabel: string;
-  startedAt: Date;
-  executionDetails: string;
-}
-
 @Component({
   selector: 'app-pipeline-executions',
   standalone: true,
@@ -35,12 +25,14 @@ interface PipelineExecutionLog {
   templateUrl: './pipeline-executions.component.html',
   styleUrl: './pipeline-executions.component.css',
 })
-export class PipelineExecutionsComponent {
+export class PipelineExecutionsComponent implements OnInit {
+  private readonly masterApi = inject(MasterApiService);
+
   readonly pageSize = 10;
   readonly outcomeOptions: Array<'All' | PipelineExecutionOutcome> = ['All', 'Successful', 'Failed', 'Cancelled'];
   readonly chartGridLines = [1, 2, 3, 4, 5];
 
-  readonly trendSeries: TrendSnapshot[] = [
+  trendSeries: TrendSnapshot[] = [
     { label: 'Mon', successCount: 5, failureCount: 1 },
     { label: 'Tue', successCount: 6, failureCount: 2 },
     { label: 'Wed', successCount: 4, failureCount: 3 },
@@ -68,140 +60,99 @@ export class PipelineExecutionsComponent {
     { key: 'executionDetails', label: 'Execution Details', type: 'text' },
   ];
 
-  readonly logs: PipelineExecutionLog[] = [
-    {
-      id: 'pipe-2001',
-      pipelineName: 'Nightly Regression Pipeline',
-      triggeredBy: 'system.scheduler',
-      outcome: 'Successful',
-      durationSeconds: 312,
-      durationLabel: '5m 12s',
-      startedAt: new Date('2026-04-15T01:00:00'),
-      executionDetails: 'Pipeline completed successfully after validating all scheduled quality gates.',
-    },
-    {
-      id: 'pipe-2002',
-      pipelineName: 'Release Candidate Deployment',
-      triggeredBy: 'ananya.shah',
-      outcome: 'Failed',
-      durationSeconds: 428,
-      durationLabel: '7m 8s',
-      startedAt: new Date('2026-04-15T08:14:00'),
-      executionDetails: 'Deployment validation failed during post-release smoke tests in the staging environment.',
-    },
-    {
-      id: 'pipe-2003',
-      pipelineName: 'Billing Data Sync',
-      triggeredBy: 'finance.bot',
-      outcome: 'Successful',
-      durationSeconds: 186,
-      durationLabel: '3m 6s',
-      startedAt: new Date('2026-04-15T08:42:00'),
-      executionDetails: 'Billing synchronization finished successfully and archived the transfer report.',
-    },
-    {
-      id: 'pipe-2004',
-      pipelineName: 'Permission Matrix Refresh',
-      triggeredBy: 'ops.admin',
-      outcome: 'Cancelled',
-      durationSeconds: 94,
-      durationLabel: '1m 34s',
-      startedAt: new Date('2026-04-15T09:05:00'),
-      executionDetails: 'Execution was cancelled manually before the final authorization sync step completed.',
-    },
-    {
-      id: 'pipe-2005',
-      pipelineName: 'Analytics Warehouse Load',
-      triggeredBy: 'warehouse.service',
-      outcome: 'Successful',
-      durationSeconds: 274,
-      durationLabel: '4m 34s',
-      startedAt: new Date('2026-04-15T09:28:00'),
-      executionDetails: 'Warehouse load completed successfully with all partitions validated.',
-    },
-    {
-      id: 'pipe-2006',
-      pipelineName: 'Customer Notification Pipeline',
-      triggeredBy: 'marketing.queue',
-      outcome: 'Failed',
-      durationSeconds: 221,
-      durationLabel: '3m 41s',
-      startedAt: new Date('2026-04-15T10:07:00'),
-      executionDetails: 'Notification batch failed because template rendering returned incomplete payload metadata.',
-    },
-    {
-      id: 'pipe-2007',
-      pipelineName: 'Role Sync Backfill',
-      triggeredBy: 'security.scheduler',
-      outcome: 'Successful',
-      durationSeconds: 198,
-      durationLabel: '3m 18s',
-      startedAt: new Date('2026-04-15T10:36:00'),
-      executionDetails: 'Backfill finished successfully and reconciled all outstanding role assignment records.',
-    },
-    {
-      id: 'pipe-2008',
-      pipelineName: 'Pre-Prod Verification Flow',
-      triggeredBy: 'release.manager',
-      outcome: 'Failed',
-      durationSeconds: 356,
-      durationLabel: '5m 56s',
-      startedAt: new Date('2026-04-15T11:02:00'),
-      executionDetails: 'Verification flow failed when the final environment health probe timed out.',
-    },
-  ];
+  logs: PipelineExecutionItem[] = [];
 
-  selectedOutcome: 'All' | PipelineExecutionOutcome = 'All';
-  pipelineNameQuery = '';
-  triggeredByQuery = '';
+  // Cached filtered result — avoids new array reference on every change detection cycle
+  cachedFilteredLogs: PipelineExecutionItem[] = [];
+
+  private _selectedOutcome: 'All' | PipelineExecutionOutcome = 'All';
+  private _globalSearchTerm = '';
+
+  get selectedOutcome(): 'All' | PipelineExecutionOutcome {
+    return this._selectedOutcome;
+  }
+
+  set selectedOutcome(value: 'All' | PipelineExecutionOutcome) {
+    this._selectedOutcome = value;
+    this.applyFilters();
+  }
+
+  get globalSearchTerm(): string {
+    return this._globalSearchTerm;
+  }
+
+  set globalSearchTerm(value: string) {
+    this._globalSearchTerm = value;
+    this.applyFilters();
+  }
+
   activeTrendTab: 'week' | 'month' = 'week';
 
   isDetailsModalOpen = false;
   selectedLogDetails: Record<string, string> = {};
 
-  get filteredLogs(): PipelineExecutionLog[] {
-    const pipelineNameFilter = this.pipelineNameQuery.trim().toLowerCase();
-    const triggeredByFilter = this.triggeredByQuery.trim().toLowerCase();
+  tooltip = {
+    visible: false,
+    x: 0,
+    y: 0,
+    label: '',
+    value: '',
+  };
 
-    return this.logs.filter((log) => {
-      const matchesOutcome = this.selectedOutcome === 'All' || log.outcome === this.selectedOutcome;
-      const matchesPipelineName = !pipelineNameFilter || log.pipelineName.toLowerCase().includes(pipelineNameFilter);
-      const matchesTriggeredBy = !triggeredByFilter || log.triggeredBy.toLowerCase().includes(triggeredByFilter);
-
-      return matchesOutcome && matchesPipelineName && matchesTriggeredBy;
+  ngOnInit(): void {
+    this.masterApi.getPipelineDetails().subscribe((logs) => {
+      this.logs = logs;
+      this.trendSeries = this.buildTrendSeries(logs);
+      this.applyFilters();
     });
   }
 
+  private applyFilters(): void {
+    const searchTerm = this._globalSearchTerm.trim().toLowerCase();
+
+    this.cachedFilteredLogs = this.logs.filter((log) => {
+      const matchesOutcome = this._selectedOutcome === 'All' || log.outcome === this._selectedOutcome;
+      const matchesGlobalSearch =
+        !searchTerm ||
+        log.pipelineName.toLowerCase().includes(searchTerm) ||
+        log.triggeredBy.toLowerCase().includes(searchTerm);
+
+      return matchesOutcome && matchesGlobalSearch;
+    });
+  }
+
+  get filteredLogs(): PipelineExecutionItem[] {
+    return this.cachedFilteredLogs;
+  }
+
   get successfulCount(): number {
-    return this.filteredLogs.filter((log) => log.outcome === 'Successful').length;
+    return this.cachedFilteredLogs.filter((log) => log.outcome === 'Successful').length;
   }
 
   get failedCount(): number {
-    return this.filteredLogs.filter((log) => log.outcome === 'Failed').length;
+    return this.cachedFilteredLogs.filter((log) => log.outcome === 'Failed').length;
   }
 
   get averageDuration(): string {
-    if (this.filteredLogs.length === 0) {
+    if (this.cachedFilteredLogs.length === 0) {
       return '0s';
     }
 
-    const totalDuration = this.filteredLogs.reduce((sum, log) => sum + log.durationSeconds, 0);
-    const averageSeconds = Math.round(totalDuration / this.filteredLogs.length);
+    const totalDuration = this.cachedFilteredLogs.reduce((sum, log) => sum + log.durationSeconds, 0);
+    const averageSeconds = Math.round(totalDuration / this.cachedFilteredLogs.length);
     return this.formatDuration(averageSeconds);
   }
 
   get successRate(): string {
-    if (this.filteredLogs.length === 0) {
+    if (this.cachedFilteredLogs.length === 0) {
       return '0%';
     }
 
-    return `${Math.round((this.successfulCount / this.filteredLogs.length) * 100)}%`;
+    return `${Math.round((this.successfulCount / this.cachedFilteredLogs.length) * 100)}%`;
   }
 
   get peakExecutions(): number {
-    const totalSuccesses = this.trendSeries.reduce((sum, item) => sum + item.successCount, 0);
-    const totalFailures = this.trendSeries.reduce((sum, item) => sum + item.failureCount, 0);
-    return Math.max(...this.trendSeries.map((item) => item.successCount + item.failureCount), 10); // Minimum 10 to make chart visible
+    return Math.max(...this.trendSeries.map((item) => item.successCount + item.failureCount), 10);
   }
 
   get executionsAxisLabels(): number[] {
@@ -237,25 +188,24 @@ export class PipelineExecutionsComponent {
     return this.totalSuccessfulTrend + this.totalFailureTrend;
   }
 
-  setTrendTab(tab: 'week' | 'month'): void {
-    this.activeTrendTab = tab;
-  }
-
   get outcomeDistributionGradient(): string {
-    const totalCancelled = this.logs.filter((log) => log.outcome === 'Cancelled').length;
     const total = this.totalTrendExecutions || 1;
     const successStop = (this.successfulCount / total) * 100;
     const failureStop = ((this.successfulCount + this.failedCount) / total) * 100;
     return `conic-gradient(#10b981 0 ${successStop}%, #ef4444 ${successStop}% ${failureStop}%, #6366f1 ${failureStop}% 100%)`;
   }
 
-  resetFilters(): void {
-    this.selectedOutcome = 'All';
-    this.pipelineNameQuery = '';
-    this.triggeredByQuery = '';
+  setTrendTab(tab: 'week' | 'month'): void {
+    this.activeTrendTab = tab;
   }
 
-  handleAction(event: { action: string; item: PipelineExecutionLog }): void {
+  resetFilters(): void {
+    this._selectedOutcome = 'All';
+    this._globalSearchTerm = '';
+    this.applyFilters();
+  }
+
+  handleAction(event: { action: string; item: PipelineExecutionItem }): void {
     this.openDetailsModal(event.item);
   }
 
@@ -264,7 +214,37 @@ export class PipelineExecutionsComponent {
     this.selectedLogDetails = {};
   }
 
-  private openDetailsModal(log: PipelineExecutionLog): void {
+  showTooltip(event: MouseEvent, series: 'success' | 'failure', index: number): void {
+    const point = this.trendSeries[index];
+    if (!point) return;
+
+    const svgEl = (event.target as SVGCircleElement).closest('svg')!;
+    const svgRect = svgEl.getBoundingClientRect();
+    const parentRect = (svgEl.parentElement as HTMLElement).getBoundingClientRect();
+
+    const scaleX = svgRect.width / 640;
+    const scaleY = svgRect.height / 240;
+
+    const chartPoint = series === 'success'
+      ? this.successChartPoints[index]
+      : this.failureChartPoints[index];
+
+    this.tooltip = {
+      visible: true,
+      x: (svgRect.left - parentRect.left) + chartPoint.x * scaleX,
+      y: (svgRect.top - parentRect.top) + chartPoint.y * scaleY - 48,
+      label: point.label,
+      value: series === 'success'
+        ? `${point.successCount} successful`
+        : `${point.failureCount} failed`,
+    };
+  }
+
+  hideTooltip(): void {
+    this.tooltip.visible = false;
+  }
+
+  private openDetailsModal(log: PipelineExecutionItem): void {
     this.selectedLogDetails = {
       pipelineName: log.pipelineName,
       triggeredBy: log.triggeredBy,
@@ -319,5 +299,29 @@ export class PipelineExecutionsComponent {
 
   private toPolylinePoints(points: ChartPoint[]): string {
     return points.map((point) => `${point.x},${point.y}`).join(' ');
+  }
+
+  private buildTrendSeries(logs: PipelineExecutionItem[]): TrendSnapshot[] {
+    const grouped = new Map<string, TrendSnapshot>();
+
+    for (const log of logs) {
+      const label = log.startedAt.toLocaleDateString('en-US', { weekday: 'short' });
+      if (!grouped.has(label)) {
+        grouped.set(label, { label, successCount: 0, failureCount: 0 });
+      }
+
+      const item = grouped.get(label)!;
+      if (log.outcome === 'Successful') {
+        item.successCount += 1;
+      } else if (log.outcome === 'Failed') {
+        item.failureCount += 1;
+      }
+    }
+
+    return grouped.size ? Array.from(grouped.values()) : this.chartGridLines.map((_, index) => ({
+      label: `P${index + 1}`,
+      successCount: 0,
+      failureCount: 0,
+    }));
   }
 }

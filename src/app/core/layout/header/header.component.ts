@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,13 +13,11 @@ export class HeaderComponent {
   @Input() pageTitle: string = 'Enterprise Overview';
   isDarkMode = false;
   isProfileMenuOpen = false;
-  readonly userName = 'Admin';
-  readonly userEmail = 'admin@trackwizz.com';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private readonly elementRef: ElementRef<HTMLElement>,
-    private readonly router: Router
+    private readonly authService: AuthService
   ) {
     if (isPlatformBrowser(this.platformId)) {
       const savedTheme = localStorage.getItem('theme');
@@ -30,6 +28,14 @@ export class HeaderComponent {
         document.body.classList.add('light-theme');
       }
     }
+  }
+
+  get userName(): string {
+    return this.authService.currentUser()?.username || 'Admin';
+  }
+
+  get userEmail(): string {
+    return this.authService.currentUser()?.email || 'admin@trackwizz.com';
   }
 
   setTheme(theme: 'light' | 'dark'): void {
@@ -54,7 +60,7 @@ export class HeaderComponent {
 
   logout(): void {
     this.closeProfileMenu();
-    void this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   @HostListener('document:click', ['$event'])

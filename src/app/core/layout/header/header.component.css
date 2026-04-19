@@ -1,11 +1,18 @@
 .topbar {
   height: 72px;
   padding: 0 2rem;
+  background-color: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.topbar-shell {
+  width: min(100%, var(--app-content-max));
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--sidebar-bg);
-  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
 }
 .page-title h2 {
   font-size: 1.25rem;
@@ -198,4 +205,14 @@ body.dark-theme .theme-option:not(.active):hover {
   color: #ef4444;
   background-color: rgba(239, 68, 68, 0.08);
   border-color: rgba(239, 68, 68, 0.18);
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 1.25rem;
+  }
+
+  .user-name {
+    display: none;
+  }
 }

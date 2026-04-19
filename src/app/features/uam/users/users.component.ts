@@ -1,22 +1,9 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GridModule, FilterService, BaseFilterCellComponent } from '@progress/kendo-angular-grid';
-import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
-
-export interface User {
-  id: string;
-  username: string;
-  email: string;
-  accessGroup: string[];
-  status: 'Active' | 'Inactive' | 'Locked';
-  createdDate: Date;
-}
-
-import { DateRangeFilterComponent } from '../../../shared/components/grid/date-range-filter/date-range-filter';
-
 import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
 import { DynamicFormModalComponent, FormField } from '../../../shared/components/dynamic-form-modal/dynamic-form-modal.component';
+import { UamApiService, UamUser } from '../../../core/services/uam-api.service';
 
 @Component({
   selector: 'app-users',
@@ -26,7 +13,7 @@ import { DynamicFormModalComponent, FormField } from '../../../shared/components
   styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit {
-  users: User[] = [];
+  users: UamUser[] = [];
   pageSize = 10;
   globalSearchTerm = '';
   
@@ -39,21 +26,15 @@ export class UsersComponent implements OnInit {
     { field: 'createdDate', title: 'Created Date', width: 200, type: 'date', format: '{0:MMM d, yyyy}' }
   ];
 
+  constructor(private readonly uamApi: UamApiService) {}
+
   ngOnInit(): void {
-    const rawData = [
-      { id: '1', username: 'jsmith', email: 'john.smith@trackwizz.com', accessGroup: ['System Admin', 'Reviewer'], status: 'Active', createdDate: '2023-11-10' },
-      { id: '2', username: 'mroberts', email: 'mary.roberts@trackwizz.com', accessGroup: ['Auditor'], status: 'Active', createdDate: '2023-11-12' },
-      { id: '3', username: 'djones', email: 'david.jones@trackwizz.com', accessGroup: ['Compliance Officer', 'Data Entry'], status: 'Inactive', createdDate: '2023-12-05' },
-      { id: '4', username: 'swilliams', email: 's.williams@trackwizz.com', accessGroup: ['Risk Analyst'], status: 'Active', createdDate: '2024-01-18' },
-      { id: '5', username: 'pchen', email: 'peter.chen@trackwizz.com', accessGroup: ['Reviewer', 'Auditor'], status: 'Locked', createdDate: '2024-01-20' },
-      { id: '6', username: 'lgarcia', email: 'laura.garcia@trackwizz.com', accessGroup: ['Compliance Officer'], status: 'Active', createdDate: '2024-02-14' },
-      { id: '7', username: 'rlee', email: 'robert.lee@trackwizz.com', accessGroup: ['Data Entry'], status: 'Active', createdDate: '2024-02-28' },
-      { id: '8', username: 'kbrown', email: 'karen.brown@trackwizz.com', accessGroup: ['System Admin', 'Risk Analyst', 'Compliance Officer'], status: 'Active', createdDate: '2024-03-05' },
-    ];
-    this.users = rawData.map(u => ({ ...u, createdDate: new Date(u.createdDate), status: u.status as 'Active' | 'Inactive' | 'Locked' }));
+    this.uamApi.getUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
-  get filteredUsers(): User[] {
+  get filteredUsers(): UamUser[] {
     const term = this.globalSearchTerm.trim().toLowerCase();
     if (!term) {
       return this.users;
@@ -84,7 +65,9 @@ export class UsersComponent implements OnInit {
 
   onRefreshGrid(): void {
     // Keep this as a hook for API re-fetch in integration.
-    this.ngOnInit();
+    this.uamApi.getUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
   onExportGrid(): void {

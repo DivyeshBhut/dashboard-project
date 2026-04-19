@@ -19,6 +19,7 @@
   --hover-color: #f1f5f9;
   --accent-light: #eff6ff;
   --text-muted: #64748b;
+  --app-content-max: 1440px;
 
   /* Kendo UI Global Theme Mapping */
   --kendo-color-app-surface: var(--bg-secondary);

@@ -103,47 +103,6 @@
       </article>
     </section>
 
-    <section class="filter-card">
-      <div class="filter-header">
-        <div>
-          <h3 class="section-title">Search and Filter</h3>
-          <p class="section-description">Refine execution logs by outcome, test name, and class ownership.</p>
-        </div>
-        <button class="btn btn-outline btn-sm" type="button" (click)="resetFilters()">Clear Filters</button>
-      </div>
-
-      <div class="filter-grid">
-        <div class="form-group">
-          <label for="outcomeFilter">Outcome</label>
-          <select id="outcomeFilter" class="form-select" [(ngModel)]="selectedOutcome">
-            <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="testNameFilter">Test Name</label>
-          <input
-            id="testNameFilter"
-            type="text"
-            class="form-input"
-            placeholder="Search by test name"
-            [(ngModel)]="testNameQuery"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="classNameFilter">Class Name</label>
-          <input
-            id="classNameFilter"
-            type="text"
-            class="form-input"
-            placeholder="Search by class name"
-            [(ngModel)]="classNameQuery"
-          />
-        </div>
-      </div>
-    </section>
-
     <section class="grid-card">
       <div class="grid-toolbar">
         <div class="toolbar-left">
@@ -152,6 +111,23 @@
             <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
           </div>
         </div>
+        <div class="toolbar-right">
+          <div class="global-search">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
+            </svg>
+            <input
+              type="text"
+              class="global-search-input"
+              placeholder="Search test name or class name..."
+              [(ngModel)]="globalSearchTerm"
+            />
+          </div>
+
+          <select class="form-select outcome-select" [(ngModel)]="selectedOutcome">
+            <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
+          </select>
+        </div>
       </div>
 
       <div class="table-responsive">
@@ -159,6 +135,7 @@
           [data]="filteredLogs"
           [columns]="gridColumns"
           [pageSize]="pageSize"
+          [showAddAction]="false"
           (actionClick)="handleAction($event)"
         >
         </app-data-grid>
