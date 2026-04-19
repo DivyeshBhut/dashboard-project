@@ -1,19 +1,19 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { DashboardLayoutComponent } from './dashboard/dashboard-layout.component';
-import { DashboardHomeComponent } from './dashboard/dashboard-home.component';
-import { UsersComponent } from './dashboard/uam/users/users.component';
-import { GroupsComponent } from './dashboard/uam/groups/groups';
-import { PermissionsComponent } from './dashboard/uam/permissions/permissions';
-import { TestCaseRunComponent } from './dashboard/test-case-run/test-case-run.component';
-import { PipelineExecutionsComponent } from './dashboard/pipeline-executions/pipeline-executions.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { AppLayoutComponent } from './core/layout/app-layout/app-layout.component';
+import { DashboardHomeComponent } from './features/dashboard/dashboard-home/dashboard-home.component';
+import { UsersComponent } from './features/uam/users/users.component';
+import { GroupsComponent } from './features/uam/groups/groups';
+import { PermissionsComponent } from './features/uam/permissions/permissions';
+import { TestCaseRunComponent } from './features/dashboard/test-case-run/test-case-run.component';
+import { PipelineExecutionsComponent } from './features/dashboard/pipeline-executions/pipeline-executions.component';
 
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { 
     path: 'dashboard', 
-    component: DashboardLayoutComponent,
+    component: AppLayoutComponent,
     children: [
       { path: '', component: DashboardHomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersComponent },
