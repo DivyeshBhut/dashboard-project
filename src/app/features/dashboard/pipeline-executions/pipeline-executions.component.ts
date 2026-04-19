@@ -6,6 +6,17 @@ import { DataGridComponent, GridColumn } from '../../../shared/components/grid/d
 
 type PipelineExecutionOutcome = 'Successful' | 'Failed' | 'Cancelled';
 
+interface TrendSnapshot {
+  label: string;
+  successCount: number;
+  failureCount: number;
+}
+
+interface ChartPoint {
+  x: number;
+  y: number;
+}
+
 interface PipelineExecutionLog {
   id: string;
   pipelineName: string;
@@ -27,6 +38,17 @@ interface PipelineExecutionLog {
 export class PipelineExecutionsComponent {
   readonly pageSize = 10;
   readonly outcomeOptions: Array<'All' | PipelineExecutionOutcome> = ['All', 'Successful', 'Failed', 'Cancelled'];
+  readonly chartGridLines = [1, 2, 3, 4, 5];
+
+  readonly trendSeries: TrendSnapshot[] = [
+    { label: 'Mon', successCount: 5, failureCount: 1 },
+    { label: 'Tue', successCount: 6, failureCount: 2 },
+    { label: 'Wed', successCount: 4, failureCount: 3 },
+    { label: 'Thu', successCount: 7, failureCount: 1 },
+    { label: 'Fri', successCount: 5, failureCount: 2 },
+    { label: 'Sat', successCount: 3, failureCount: 1 },
+    { label: 'Sun', successCount: 8, failureCount: 2 },
+  ];
 
   readonly gridColumns: GridColumn[] = [
     { field: 'actions', title: 'Actions', width: 140, type: 'actions' },
@@ -132,6 +154,7 @@ export class PipelineExecutionsComponent {
   selectedOutcome: 'All' | PipelineExecutionOutcome = 'All';
   pipelineNameQuery = '';
   triggeredByQuery = '';
+  activeTrendTab: 'week' | 'month' = 'week';
 
   isDetailsModalOpen = false;
   selectedLogDetails: Record<string, string> = {};
@@ -173,6 +196,57 @@ export class PipelineExecutionsComponent {
     }
 
     return `${Math.round((this.successfulCount / this.filteredLogs.length) * 100)}%`;
+  }
+
+  get peakExecutions(): number {
+    const totalSuccesses = this.trendSeries.reduce((sum, item) => sum + item.successCount, 0);
+    const totalFailures = this.trendSeries.reduce((sum, item) => sum + item.failureCount, 0);
+    return Math.max(...this.trendSeries.map((item) => item.successCount + item.failureCount), 10); // Minimum 10 to make chart visible
+  }
+
+  get executionsAxisLabels(): number[] {
+    const peak = this.peakExecutions;
+    return [peak, Math.round(peak * 0.75), Math.round(peak * 0.5), Math.round(peak * 0.25), 0];
+  }
+
+  get totalSuccessfulTrend(): number {
+    return this.trendSeries.reduce((sum, item) => sum + item.successCount, 0);
+  }
+
+  get totalFailureTrend(): number {
+    return this.trendSeries.reduce((sum, item) => sum + item.failureCount, 0);
+  }
+
+  get successChartPoints(): ChartPoint[] {
+    return this.buildChartPoints(this.trendSeries.map((item) => item.successCount), this.peakExecutions);
+  }
+
+  get failureChartPoints(): ChartPoint[] {
+    return this.buildChartPoints(this.trendSeries.map((item) => item.failureCount), this.peakExecutions);
+  }
+
+  get successPolylinePoints(): string {
+    return this.toPolylinePoints(this.successChartPoints);
+  }
+
+  get failurePolylinePoints(): string {
+    return this.toPolylinePoints(this.failureChartPoints);
+  }
+
+  get totalTrendExecutions(): number {
+    return this.totalSuccessfulTrend + this.totalFailureTrend;
+  }
+
+  setTrendTab(tab: 'week' | 'month'): void {
+    this.activeTrendTab = tab;
+  }
+
+  get outcomeDistributionGradient(): string {
+    const totalCancelled = this.logs.filter((log) => log.outcome === 'Cancelled').length;
+    const total = this.totalTrendExecutions || 1;
+    const successStop = (this.successfulCount / total) * 100;
+    const failureStop = ((this.successfulCount + this.failedCount) / total) * 100;
+    return `conic-gradient(#10b981 0 ${successStop}%, #ef4444 ${successStop}% ${failureStop}%, #6366f1 ${failureStop}% 100%)`;
   }
 
   resetFilters(): void {
@@ -226,5 +300,24 @@ export class PipelineExecutionsComponent {
       hour: 'numeric',
       minute: '2-digit',
     });
+  }
+
+  private buildChartPoints(values: number[], maxValue: number): ChartPoint[] {
+    const startX = 28;
+    const endX = 612;
+    const topY = 24;
+    const bottomY = 210;
+    const usableWidth = endX - startX;
+    const usableHeight = bottomY - topY;
+    const divisor = values.length > 1 ? values.length - 1 : 1;
+
+    return values.map((value, index) => ({
+      x: startX + (usableWidth / divisor) * index,
+      y: bottomY - (value / Math.max(maxValue, 1)) * usableHeight,
+    }));
+  }
+
+  private toPolylinePoints(points: ChartPoint[]): string {
+    return points.map((point) => `${point.x},${point.y}`).join(' ');
   }
 }

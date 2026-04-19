@@ -1,177 +1,257 @@
+<div class="page-header">
+  <div class="breadcrumb">
+    <span class="breadcrumb-item">Dashboard</span>
+    <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+      stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+    <span class="breadcrumb-item active">Pipeline Executions</span>
+  </div>
 
-    <div class="page-header">
-      <div class="breadcrumb">
-        <span class="breadcrumb-item">Dashboard</span>
-        <svg
-          class="breadcrumb-separator"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  <div class="header-card">
+    <div class="header-info">
+      <h2 class="page-title">Pipeline Executions</h2>
+      <p class="text-muted">
+        Track orchestration health, validate run outcomes, and review recent execution activity across pipelines.
+      </p>
+    </div>
+  </div>
+</div>
+
+<section class="stats-grid" aria-label="Pipeline execution summary">
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon info-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
         </svg>
-        <span class="breadcrumb-item active">Pipeline Executions</span>
       </div>
+      <h3 class="stat-title">Total Executions</h3>
+    </div>
+    <div class="stat-value">{{ filteredLogs.length }}</div>
+    <div class="stat-footer">
+      <span class="footer-text">Visible after current filters</span>
+    </div>
+  </article>
 
-      <div class="header-card">
-        <div class="header-info">
-          <h2 class="page-title">Pipeline Executions</h2>
-          <p class="text-muted">
-            Track orchestration health, validate run outcomes, and review recent execution activity across pipelines.
-          </p>
-        </div>
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon success-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Successful</h3>
+    </div>
+    <div class="stat-value">{{ successfulCount }}</div>
+    <div class="stat-footer">
+      <span class="trend up">{{ successRate }} success rate</span>
+    </div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon danger-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 9v2.25m0 3.75h.008v.008H12v-.008zm9-3.758c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Failed</h3>
+    </div>
+    <div class="stat-value">{{ failedCount }}</div>
+    <div class="stat-footer">
+      <span class="trend down">{{ failedCount }} execution failures detected</span>
+    </div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon timer-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Avg Duration</h3>
+    </div>
+    <div class="stat-value">{{ averageDuration }}</div>
+    <div class="stat-footer">
+      <span class="footer-text">Per execution in current view</span>
+    </div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-header">
+      <div class="stat-icon accent-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12V7.5h-4.5" />
+        </svg>
+      </div>
+      <h3 class="stat-title">Success Rate</h3>
+    </div>
+    <div class="stat-value">{{ successRate }}</div>
+    <div class="stat-footer">
+      <span class="footer-text">Based on successful vs total executions</span>
+    </div>
+  </article>
+</section>
+
+<section class="filter-card">
+  <div class="filter-header">
+    <div>
+      <h3 class="section-title">Search and Filter</h3>
+      <p class="section-description">Refine pipeline logs by outcome, pipeline name, and trigger ownership.</p>
+    </div>
+    <button class="btn btn-outline btn-sm" type="button" (click)="resetFilters()">Clear Filters</button>
+  </div>
+
+  <div class="filter-grid">
+    <div class="form-group">
+      <label for="outcomeFilter">Outcome</label>
+      <select id="outcomeFilter" class="form-select" [(ngModel)]="selectedOutcome">
+        <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="pipelineNameFilter">Pipeline Name</label>
+      <input id="pipelineNameFilter" type="text" class="form-input" placeholder="Search by pipeline name"
+        [(ngModel)]="pipelineNameQuery" />
+    </div>
+
+    <div class="form-group">
+      <label for="triggeredByFilter">Triggered By</label>
+      <input id="triggeredByFilter" type="text" class="form-input" placeholder="Search by trigger owner"
+        [(ngModel)]="triggeredByQuery" />
+    </div>
+  </div>
+</section>
+
+<div class="charts-row">
+  <div class="chart-card trend-card">
+    <div class="card-header trend-header flex-row">
+      <div>
+        <h3 class="card-title">Success/Failure Trend</h3>
+        <p class="card-subtitle">Execution success rate and failure trends across the week.</p>
+      </div>
+      <div class="time-toggles">
+        <button class="toggle-btn" [class.active]="activeTrendTab === 'week'" (click)="setTrendTab('week')">Week</button>
+        <button class="toggle-btn" [class.active]="activeTrendTab === 'month'" (click)="setTrendTab('month')">Month</button>
       </div>
     </div>
 
-    <section class="stats-grid" aria-label="Pipeline execution summary">
-      <article class="stat-card">
-        <div class="stat-header">
-          <div class="stat-icon info-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-            </svg>
-          </div>
-          <h3 class="stat-title">Total Executions</h3>
-        </div>
-        <div class="stat-value">{{ filteredLogs.length }}</div>
-        <div class="stat-footer">
-          <span class="footer-text">Visible after current filters</span>
-        </div>
-      </article>
+    <div class="chart-metrics">
+      <div class="metric-block">
+        <div class="metric-dot success-dot"></div>
+        <span class="metric-label">Successful</span>
+        <span class="metric-value">{{ totalSuccessfulTrend }}</span>
+      </div>
+      <div class="metric-block">
+        <div class="metric-dot failure-dot"></div>
+        <span class="metric-label">Failed</span>
+        <span class="metric-value">{{ totalFailureTrend }}</span>
+      </div>
+    </div>
 
-      <article class="stat-card">
-        <div class="stat-header">
-          <div class="stat-icon success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="stat-title">Successful</h3>
-        </div>
-        <div class="stat-value">{{ successfulCount }}</div>
-        <div class="stat-footer">
-          <span class="trend up">{{ successRate }} success rate</span>
-        </div>
-      </article>
-
-      <article class="stat-card">
-        <div class="stat-header">
-          <div class="stat-icon danger-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2.25m0 3.75h.008v.008H12v-.008zm9-3.758c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-            </svg>
-          </div>
-          <h3 class="stat-title">Failed</h3>
-        </div>
-        <div class="stat-value">{{ failedCount }}</div>
-        <div class="stat-footer">
-          <span class="trend down">{{ failedCount }} execution failures detected</span>
-        </div>
-      </article>
-
-      <article class="stat-card">
-        <div class="stat-header">
-          <div class="stat-icon timer-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="stat-title">Avg Duration</h3>
-        </div>
-        <div class="stat-value">{{ averageDuration }}</div>
-        <div class="stat-footer">
-          <span class="footer-text">Per execution in current view</span>
-        </div>
-      </article>
-
-      <article class="stat-card">
-        <div class="stat-header">
-          <div class="stat-icon accent-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12V7.5h-4.5" />
-            </svg>
-          </div>
-          <h3 class="stat-title">Success Rate</h3>
-        </div>
-        <div class="stat-value">{{ successRate }}</div>
-        <div class="stat-footer">
-          <span class="footer-text">Based on successful vs total executions</span>
-        </div>
-      </article>
-    </section>
-
-    <section class="filter-card">
-      <div class="filter-header">
-        <div>
-          <h3 class="section-title">Search and Filter</h3>
-          <p class="section-description">Refine pipeline logs by outcome, pipeline name, and trigger ownership.</p>
-        </div>
-        <button class="btn btn-outline btn-sm" type="button" (click)="resetFilters()">Clear Filters</button>
+    <div class="trend-chart-shell">
+      <div class="y-axis y-axis-left">
+        <span *ngFor="let label of executionsAxisLabels">{{ label }}</span>
       </div>
 
-      <div class="filter-grid">
-        <div class="form-group">
-          <label for="outcomeFilter">Outcome</label>
-          <select id="outcomeFilter" class="form-select" [(ngModel)]="selectedOutcome">
-            <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
-          </select>
+      <div class="chart-stage">
+        <div class="grid-lines-bg">
+          <div class="grid-line" *ngFor="let line of chartGridLines"></div>
         </div>
 
-        <div class="form-group">
-          <label for="pipelineNameFilter">Pipeline Name</label>
-          <input
-            id="pipelineNameFilter"
-            type="text"
-            class="form-input"
-            placeholder="Search by pipeline name"
-            [(ngModel)]="pipelineNameQuery"
-          />
-        </div>
+        <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="trend-line success-trend-line" [attr.points]="successPolylinePoints"></polyline>
+          <polyline class="trend-line failure-trend-line" [attr.points]="failurePolylinePoints"></polyline>
 
-        <div class="form-group">
-          <label for="triggeredByFilter">Triggered By</label>
-          <input
-            id="triggeredByFilter"
-            type="text"
-            class="form-input"
-            placeholder="Search by trigger owner"
-            [(ngModel)]="triggeredByQuery"
-          />
+          <g *ngFor="let point of successChartPoints">
+            <circle class="trend-point success-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"></circle>
+          </g>
+
+          <g *ngFor="let point of failureChartPoints">
+            <circle class="trend-point failure-trend-point" [attr.cx]="point.x" [attr.cy]="point.y" r="4.5"></circle>
+          </g>
+        </svg>
+
+        <div class="x-axis">
+          <span *ngFor="let point of trendSeries">{{ point.label }}</span>
         </div>
       </div>
-    </section>
 
-    <section class="grid-card">
-      <div class="grid-toolbar">
-        <div class="toolbar-left">
-          <div class="toolbar-copy">
-            <h3 class="section-title">Detailed Execution Logs</h3>
-            <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
+      <div class="y-axis y-axis-right">
+        <span>{{ executionsAxisLabels[0] }}</span>
+        <span>{{ executionsAxisLabels[1] }}</span>
+        <span>{{ executionsAxisLabels[2] }}</span>
+        <span>{{ executionsAxisLabels[3] }}</span>
+        <span>{{ executionsAxisLabels[4] }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card distribution-card">
+    <div class="card-header">
+      <div>
+        <h3 class="card-title">Status Distribution</h3>
+        <p class="card-subtitle">Distribution of successful, failed, and in-progress executions.</p>
+      </div>
+    </div>
+
+    <div class="distribution-content">
+      <div class="distribution-visual">
+        <div class="donut-chart" [style.background]="outcomeDistributionGradient">
+          <div class="donut-center">
+            <span class="donut-label">Successful</span>
+            <strong>{{ successRate }}</strong>
           </div>
         </div>
       </div>
 
-      <div class="table-responsive">
-        <app-data-grid
-          [data]="filteredLogs"
-          [columns]="gridColumns"
-          [pageSize]="pageSize"
-          (actionClick)="handleAction($event)"
-        >
-        </app-data-grid>
+      <div class="distribution-breakdown">
+        <div class="distribution-item success">
+          <span class="distribution-key">Successful</span>
+          <span class="distribution-value">{{ successfulCount }}</span>
+        </div>
+        <div class="distribution-item danger">
+          <span class="distribution-key">Failed</span>
+          <span class="distribution-value">{{ failedCount }}</span>
+        </div>
+        <div class="distribution-item pending">
+          <span class="distribution-key">In Progress</span>
+          <span class="distribution-value">0</span>
+        </div>
       </div>
-    </section>
+    </div>
+  </div>
+</div>
 
-    <app-dynamic-form-modal
-      [isVisible]="isDetailsModalOpen"
-      [mode]="'view'"
-      [titleView]="'Pipeline Execution Details'"
-      [fields]="detailFields"
-      [formData]="selectedLogDetails"
-      (close)="closeDetailsModal()"
-    >
-    </app-dynamic-form-modal>
-  
+<section class="grid-card">
+  <div class="grid-toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-copy">
+        <h3 class="section-title">Detailed Execution Logs</h3>
+        <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <app-data-grid [data]="filteredLogs" [columns]="gridColumns" [pageSize]="pageSize"
+      (actionClick)="handleAction($event)">
+    </app-data-grid>
+  </div>
+</section>
+
+<app-dynamic-form-modal [isVisible]="isDetailsModalOpen" [mode]="'view'" [titleView]="'Pipeline Execution Details'"
+  [fields]="detailFields" [formData]="selectedLogDetails" (close)="closeDetailsModal()">
+</app-dynamic-form-modal>
