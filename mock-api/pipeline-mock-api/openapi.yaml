@@ -1,0 +1,569 @@
+openapi: 3.0.3
+info:
+  title: Pipeline Dashboard API
+  version: 1.0.0
+  description: Mock API for Pipeline Dashboard frontend testing
+
+servers:
+  - url: http://localhost:3001/api
+
+paths:
+  # ─── Auth ───────────────────────────────────────────────
+  /Auth/login:
+    post:
+      tags: [Auth]
+      summary: Authenticate user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, example: OK }
+
+  /Auth/validate:
+    get:
+      tags: [Auth]
+      summary: Validate session
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, example: OK }
+
+  /Auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, example: OK }
+
+  # ─── Dashboard ──────────────────────────────────────────
+  /Dashboard/stats:
+    get:
+      tags: [Dashboard]
+      parameters:
+        - in: query
+          name: buildId
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/builds:
+    get:
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/trends:
+    get:
+      tags: [Dashboard]
+      parameters:
+        - in: query
+          name: buildId
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/analytics:
+    get:
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/analytics/{buildId}:
+    get:
+      tags: [Dashboard]
+      parameters:
+        - in: path
+          name: buildId
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/debug-data:
+    get:
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/real-time-verification:
+    get:
+      tags: [Dashboard]
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/recent-runs:
+    get:
+      tags: [Dashboard]
+      parameters:
+        - in: query
+          name: buildId
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Dashboard/latest-failures:
+    get:
+      tags: [Dashboard]
+      parameters:
+        - in: query
+          name: buildId
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  # ─── AuditLogs ──────────────────────────────────────────
+  /AuditLogs:
+    get:
+      tags: [AuditLogs]
+      parameters:
+        - in: query
+          name: Search
+          schema: { type: string }
+        - in: query
+          name: TableName
+          schema: { type: string }
+        - in: query
+          name: Page
+          schema: { type: integer }
+        - in: query
+          name: Limit
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /AuditLogs/tables:
+    get:
+      tags: [AuditLogs]
+      responses:
+        '200':
+          description: OK
+
+  # ─── Groups ─────────────────────────────────────────────
+  /Groups:
+    get:
+      tags: [Groups]
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Groups]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+
+  /Groups/{id}:
+    get:
+      tags: [Groups]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Groups]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Groups]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /Groups/export:
+    get:
+      tags: [Groups]
+      responses:
+        '200':
+          description: OK
+
+  # ─── Master ─────────────────────────────────────────────
+  /Master/test-results:
+    get:
+      tags: [Master]
+      parameters:
+        - in: query
+          name: buildId
+          schema: { type: string }
+        - in: query
+          name: outcome
+          schema: { type: string }
+        - in: query
+          name: className
+          schema: { type: string }
+        - in: query
+          name: search
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Master/test-error/{id}:
+    get:
+      tags: [Master]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /Master/pipeline-details:
+    get:
+      tags: [Master]
+      parameters:
+        - in: query
+          name: status
+          schema: { type: string }
+        - in: query
+          name: buildNumber
+          schema: { type: string }
+        - in: query
+          name: fromDate
+          schema: { type: string, format: date-time }
+        - in: query
+          name: toDate
+          schema: { type: string, format: date-time }
+      responses:
+        '200':
+          description: OK
+
+  # ─── Permissions ────────────────────────────────────────
+  /Permissions:
+    get:
+      tags: [Permissions]
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Permissions]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+
+  /Permissions/{id}:
+    get:
+      tags: [Permissions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Permissions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Permissions]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /Permissions/categories:
+    get:
+      tags: [Permissions]
+      responses:
+        '200':
+          description: OK
+
+  # ─── Preferences ────────────────────────────────────────
+  /Preferences/{key}:
+    get:
+      tags: [Preferences]
+      parameters:
+        - in: path
+          name: key
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: OK
+
+  /Preferences:
+    post:
+      tags: [Preferences]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+
+  # ─── Screenzaa ──────────────────────────────────────────
+  /Screenzaa:
+    get:
+      tags: [Screenzaa]
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Screenzaa]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+
+  /Screenzaa/{id}:
+    get:
+      tags: [Screenzaa]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Screenzaa]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Screenzaa]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /Screenzaa/import:
+    post:
+      tags: [Screenzaa]
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file: { type: string, format: binary }
+      responses:
+        '200':
+          description: OK
+
+  /Screenzaa/sample:
+    get:
+      tags: [Screenzaa]
+      responses:
+        '200':
+          description: OK
+
+  # ─── Users ──────────────────────────────────────────────
+  /Users:
+    get:
+      tags: [Users]
+      parameters:
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: groupId
+          schema: { type: integer }
+        - in: query
+          name: isActive
+          schema: { type: boolean }
+        - in: query
+          name: sortBy
+          schema: { type: string }
+        - in: query
+          name: sortDirection
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 10 }
+      responses:
+        '200':
+          description: OK
+    post:
+      tags: [Users]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+
+  /Users/{id}:
+    get:
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  /Users/export:
+    get:
+      tags: [Users]
+      parameters:
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: groupId
+          schema: { type: integer }
+        - in: query
+          name: isActive
+          schema: { type: boolean }
+      responses:
+        '200':
+          description: OK
+
+  /Users/bulk-delete:
+    post:
+      tags: [Users]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items: { type: integer }
+      responses:
+        '200':
+          description: OK
+
+  # ─── Settings ───────────────────────────────────────────
+  /Settings:
+    get:
+      tags: [Settings]
+      responses:
+        '200':
+          description: OK

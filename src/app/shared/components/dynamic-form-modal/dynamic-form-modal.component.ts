@@ -6,9 +6,10 @@ export interface FormField {
   key: string;
   label: string;
   type: 'text' | 'email' | 'dropdown';
-  options?: string[]; // Array of strings for options
+  options?: string[];
   searchable?: boolean;
   placeholder?: string;
+  fullWidth?: boolean; // New: allow specific fields to span full width in double layout
 }
 
 @Component({
@@ -21,6 +22,7 @@ export interface FormField {
 export class DynamicFormModalComponent {
   @Input() isVisible = false;
   @Input() mode: 'add' | 'edit' | 'view' = 'add';
+  @Input() layout: 'single' | 'double' | 'drawer' = 'single'; // New Layout Parameter
   @Input() titleAdd = 'Add New';
   @Input() titleEdit = 'Edit Item';
   @Input() titleView = 'View Details';
@@ -44,6 +46,16 @@ export class DynamicFormModalComponent {
     return this.mode === 'edit' ? this.saveBtnTextEdit : this.saveBtnTextAdd;
   }
 
+  // Combines layout and mode for styling
+  get containerClasses() {
+    return {
+      'layout-single': this.layout === 'single',
+      'layout-double': this.layout === 'double',
+      'layout-drawer': this.layout === 'drawer',
+      'view-mode': this.mode === 'view'
+    };
+  }
+
   onClose() {
     this.close.emit();
     this.openDropdownKey = null;
@@ -54,14 +66,13 @@ export class DynamicFormModalComponent {
     this.openDropdownKey = null;
   }
 
-  // Dropdown Logic
   toggleDropdown(event: Event, key: string) {
     event.stopPropagation();
     if (this.openDropdownKey === key) {
       this.openDropdownKey = null;
     } else {
       this.openDropdownKey = key;
-      this.searchQueries[key] = ''; // reset search query on open
+      this.searchQueries[key] = '';
     }
   }
 

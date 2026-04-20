@@ -145,10 +145,10 @@
     <app-dynamic-form-modal
       [isVisible]="isDetailsModalOpen"
       [mode]="'view'"
+      [layout]="'double'"
       [titleView]="'Test Run Details'"
       [fields]="detailFields"
       [formData]="selectedLogDetails"
-      (close)="closeDetailsModal()"
-    >
+      (close)="closeDetailsModal()">
     </app-dynamic-form-modal>
   

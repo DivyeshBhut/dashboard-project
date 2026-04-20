@@ -1,0 +1,17 @@
+{
+  "name": "pipeline-dashboard-mock-api",
+  "version": "1.0.0",
+  "description": "Local mock API server for Pipeline Dashboard frontend testing",
+  "main": "mock-server.js",
+  "scripts": {
+    "start": "node mock-server.js",
+    "dev": "npx nodemon mock-server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,5 +1,5 @@
 <div class="modal-backdrop" *ngIf="isVisible" (click)="onClose()">
-  <div class="modal-container" (click)="$event.stopPropagation()">
+  <div class="modal-container" [ngClass]="containerClasses" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h3>{{ title }}</h3>
       <button class="close-btn" (click)="onClose()">
@@ -8,19 +8,22 @@
         </svg>
       </button>
     </div>
+    
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group full-width" *ngFor="let field of fields">
+        <div class="form-group" 
+             [class.field-full-width]="field.fullWidth" 
+             *ngFor="let field of fields">
           <label>{{ field.label }}</label>
-          
-          <!-- Text Input -->
-          <input *ngIf="field.type === 'text'" type="text" class="form-control" [placeholder]="field.placeholder || ''" [(ngModel)]="formData[field.key]" [disabled]="mode === 'view'">
-          
-          <!-- Email Input -->
-          <input *ngIf="field.type === 'email'" type="email" class="form-control" [placeholder]="field.placeholder || ''" [(ngModel)]="formData[field.key]" [disabled]="mode === 'view'">
-          
-          <!-- Dropdown Input -->
-          <div *ngIf="field.type === 'dropdown'" class="custom-select" [class.open]="openDropdownKey === field.key" [class.disabled-select]="mode === 'view'">
+
+          <input *ngIf="field.type === 'text'" type="text" class="form-control" 
+                 [placeholder]="field.placeholder || ''" [(ngModel)]="formData[field.key]" [disabled]="mode === 'view'">
+
+          <input *ngIf="field.type === 'email'" type="email" class="form-control" 
+                 [placeholder]="field.placeholder || ''" [(ngModel)]="formData[field.key]" [disabled]="mode === 'view'">
+
+          <div *ngIf="field.type === 'dropdown'" class="custom-select" 
+               [class.open]="openDropdownKey === field.key" [class.disabled-select]="mode === 'view'">
             <button class="select-btn" (click)="toggleDropdown($event, field.key)" [disabled]="mode === 'view'">
               <span class="selected-text">{{ formData[field.key] || field.placeholder || 'Select...' }}</span>
               <svg class="select-icon" [class.rotated]="openDropdownKey === field.key" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -50,6 +53,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal-footer">
       <button class="btn btn-outline" (click)="onClose()">{{ mode === 'view' ? 'Close' : 'Cancel' }}</button>
       <button class="btn btn-primary" *ngIf="mode !== 'view'" (click)="onSave()">{{ saveBtnText }}</button>
