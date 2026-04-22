@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 export interface FormField {
   key: string;
   label: string;
-  type: 'text' | 'email' | 'dropdown';
+  type: 'text' | 'email' | 'dropdown' | 'multiselect';
   options?: string[];
   searchable?: boolean;
   placeholder?: string;
@@ -79,6 +79,34 @@ export class DynamicFormModalComponent {
   selectOption(key: string, option: string) {
     this.formData[key] = option;
     this.openDropdownKey = null;
+  }
+
+  toggleMultiSelectOption(event: Event, key: string, option: string) {
+    event.stopPropagation();
+    let current = this.formData[key];
+    if (!Array.isArray(current)) {
+      current = [];
+    }
+    const index = current.indexOf(option);
+    if (index > -1) {
+      current.splice(index, 1);
+    } else {
+      current.push(option);
+    }
+    this.formData[key] = current;
+  }
+
+  isOptionSelected(key: string, option: string): boolean {
+    const current = this.formData[key];
+    return Array.isArray(current) && current.includes(option);
+  }
+
+  getMultiSelectText(key: string, placeholder?: string): string {
+    const current = this.formData[key];
+    if (Array.isArray(current) && current.length > 0) {
+      return current.join(', ');
+    }
+    return placeholder || 'Select...';
   }
 
   onSearch(event: Event, key: string) {

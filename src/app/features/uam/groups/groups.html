@@ -48,3 +48,18 @@
     </div>
   </div>
 </div>
+
+<app-dynamic-form-modal
+  [isVisible]="isGroupModalOpen"
+  [layout]="'single'"
+  [mode]="modalMode"
+  [titleAdd]="'Add New Group'"
+  [titleEdit]="'Edit Group'"
+  [titleView]="'View Group Details'"
+  [saveBtnTextAdd]="'Save Group'"
+  [saveBtnTextEdit]="'Update Group'"
+  [fields]="groupFormFields"
+  [formData]="currentEditGroup"
+  (save)="onSaveGroup($event)"
+  (close)="closeGroupModal()">
+</app-dynamic-form-modal>
