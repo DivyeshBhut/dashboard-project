@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, AfterViewInit, OnDestroy, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import { DynamicFormModalComponent, FormField } from '../../../shared/components/dynamic-form-modal/dynamic-form-modal.component';
 import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
 import { BuildOption, DashboardApiService, DashboardTrendPoint, LatestFailureItem, RecentActivityItem } from '../../../core/services/dashboard-api.service';
@@ -19,8 +19,9 @@ interface ChartPoint {
   templateUrl: './dashboard-home.component.html',
   styleUrl: './dashboard-home.component.css',
 })
-export class DashboardHomeComponent implements OnInit {
+export class DashboardHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly dashboardApi = inject(DashboardApiService);
+  private readonly cdRef = inject(ChangeDetectorRef);
   private readonly percentageFormatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 1,
@@ -91,6 +92,10 @@ export class DashboardHomeComponent implements OnInit {
   searchQuery = '';
   selectedCriticalFailureDetails: Record<string, string> = {};
   
+  chartWidth = 640;
+  private resizeObserver?: ResizeObserver;
+  @ViewChild('chartContainer') chartContainer?: ElementRef;
+  
   get userName(): string {
     return this.authService.currentUser()?.username || 'User';
   }
@@ -101,6 +106,25 @@ export class DashboardHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDashboardData();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.chartContainer) {
+      this.resizeObserver = new ResizeObserver((entries) => {
+        if (entries.length > 0) {
+          const width = entries[0].contentRect.width;
+          if (width > 0 && Math.abs(this.chartWidth - width) > 2) {
+            this.chartWidth = width;
+            this.cdRef.detectChanges();
+          }
+        }
+      });
+      this.resizeObserver.observe(this.chartContainer.nativeElement);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
   }
 
   get filteredBuilds(): BuildOption[] {
@@ -144,12 +168,12 @@ export class DashboardHomeComponent implements OnInit {
     return this.buildChartPoints(this.activeTrendData.map((item) => item.successRate), 100);
   }
 
-  get totalRunsPolylinePoints(): string {
-    return this.toPolylinePoints(this.totalRunsChartPoints);
+  get totalRunsPathData(): string {
+    return this.toSmoothPath(this.totalRunsChartPoints);
   }
 
-  get successRatePolylinePoints(): string {
-    return this.toPolylinePoints(this.successRateChartPoints);
+  get successRatePathData(): string {
+    return this.toSmoothPath(this.successRateChartPoints);
   }
 
   get totalExecutions(): number {
@@ -238,8 +262,10 @@ export class DashboardHomeComponent implements OnInit {
     const svgEl = (event.target as SVGCircleElement).closest('svg')!;
     const svgRect = svgEl.getBoundingClientRect();
     const parentRect = (svgEl.parentElement as HTMLElement).getBoundingClientRect();
-    const scaleX = svgRect.width / 640;
-    const scaleY = svgRect.height / 240;
+    
+    // Scale mapping no longer necessary, viewBox maps 1:1 to pixel dimensions because of ResizeObserver width match
+    const scaleX = 1;
+    const scaleY = 1;
     const chartPoint = series === 'runs'
       ? this.totalRunsChartPoints[index]
       : this.successRateChartPoints[index];
@@ -258,7 +284,7 @@ export class DashboardHomeComponent implements OnInit {
 
   private buildChartPoints(values: number[], maxValue: number): ChartPoint[] {
     const startX = 28;
-    const endX = 612;
+    const endX = Math.max(this.chartWidth - 28, 100);
     const topY = 24;
     const bottomY = 210;
     const usableWidth = endX - startX;
@@ -274,8 +300,30 @@ export class DashboardHomeComponent implements OnInit {
     }));
   }
 
-  private toPolylinePoints(points: ChartPoint[]): string {
-    return points.map((point) => `${point.x},${point.y}`).join(' ');
+  private toSmoothPath(points: ChartPoint[]): string {
+    if (points.length === 0) return '';
+    if (points.length === 1) return `M ${points[0].x},${points[0].y}`;
+    
+    let path = `M ${points[0].x},${points[0].y}`;
+    
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = i > 0 ? points[i - 1] : points[0];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = i !== points.length - 2 ? points[i + 2] : p2;
+      
+      const tension = 0.15;
+      
+      const cp1x = p1.x + (p2.x - p0.x) * tension;
+      const cp1y = p1.y + (p2.y - p0.y) * tension;
+      
+      const cp2x = p2.x - (p3.x - p1.x) * tension;
+      const cp2y = p2.y - (p3.y - p1.y) * tension;
+      
+      path += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2.x},${p2.y}`;
+    }
+    
+    return path;
   }
 
   private formatPercentage(value: number, total: number): string {

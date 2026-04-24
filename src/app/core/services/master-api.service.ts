@@ -21,6 +21,11 @@ export interface TestResultItem {
   durationLabel: string;
   executedAt: Date;
   errorDetails: string;
+  releaseNumber: string;
+  buildNumber: string;
+  featureName: string;
+  trxFileName: string;
+  pipelineExecutionNumber: number;
 }
 
 export interface PipelineExecutionItem {
@@ -83,6 +88,11 @@ export class MasterApiService {
         errorDetails: toStringValue(
           pickFirst(item, ['errorDetails', 'errorMessage', 'details', 'message'], 'Execution completed successfully.')
         ),
+        releaseNumber: toStringValue(pickFirst(item, ['releaseNumber', 'release'], 'Rel-1.0')),
+        buildNumber: toStringValue(pickFirst(item, ['buildNumber', 'buildName', 'build'], `Build-${100 + index}`)),
+        featureName: toStringValue(pickFirst(item, ['featureName', 'feature'], 'Core Feature')),
+        trxFileName: toStringValue(pickFirst(item, ['trxFileName', 'trxFile'], 'results.trx')),
+        pipelineExecutionNumber: toNumberValue(pickFirst(item, ['pipelineExecutionNumber', 'pipelineId'], Math.floor(Math.random() * 1000) + 1000))
       };
     });
   }

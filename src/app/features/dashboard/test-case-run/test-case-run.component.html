@@ -1,41 +1,87 @@
+<div class="page-header">
+  <div class="breadcrumb">
+    <span class="breadcrumb-item">Dashboard</span>
+    <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+      stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+    <span class="breadcrumb-item active">Test Run Details</span>
+  </div>
 
-    <div class="page-header">
-      <div class="breadcrumb">
-        <span class="breadcrumb-item">Dashboard</span>
-        <svg
-          class="breadcrumb-separator"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-        </svg>
-        <span class="breadcrumb-item active">Test Case Run</span>
+  <div class="header-card">
+    <div class="header-info">
+      <h2 class="page-title">Test Run Details</h2>
+      <p class="text-muted">
+        Inspect test run execution outcomes and summary metrics across all recent builds.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-container">
+  <button class="tab-button" [class.active]="activeTab === 'summary'" (click)="setTab('summary')">Summary</button>
+  <button class="tab-button" [class.active]="activeTab === 'run-details'" (click)="setTab('run-details')">Run
+    Details</button>
+</div>
+
+<!-- ======================================= -->
+<!--             SUMMARY TAB                 -->
+<!-- ======================================= -->
+<ng-container *ngIf="activeTab === 'summary'">
+
+  <section class="grid-card search-card">
+    <h3 class="section-title search-title">Search Criteria</h3>
+    <div class="search-filters">
+      <div class="filter-group">
+        <label>Release Number</label>
+        <input type="text" class="form-input" [(ngModel)]="summaryFilters.releaseNumber" (keyup.enter)="searchSummary()"
+          placeholder="e.g. Rel-1.0">
       </div>
-
-      <div class="header-card">
-        <div class="header-info">
-          <h2 class="page-title">Test Case Run</h2>
-          <p class="text-muted">
-            Monitor execution outcomes, inspect failures, and keep test reliability visible across recent runs.
-          </p>
-        </div>
+      <div class="filter-group">
+        <label>Build Name</label>
+        <input type="text" class="form-input" [(ngModel)]="summaryFilters.buildName" (keyup.enter)="searchSummary()"
+          placeholder="e.g. Build-100">
+      </div>
+      <div class="filter-group">
+        <label>Feature Name</label>
+        <input type="text" class="form-input" [(ngModel)]="summaryFilters.featureName" (keyup.enter)="searchSummary()"
+          placeholder="e.g. Core Feature">
+      </div>
+      <div class="filter-group">
+        <label>TRX File Name</label>
+        <input type="text" class="form-input" [(ngModel)]="summaryFilters.trxFileName" (keyup.enter)="searchSummary()"
+          placeholder="e.g. results.trx">
       </div>
     </div>
+    <div class="search-actions">
+      <button class="btn btn-outline" (click)="resetSummaryFilters()">Reset</button>
+      <button class="btn btn-primary" (click)="searchSummary()">Search</button>
+    </div>
+  </section>
 
+  <div *ngIf="!summarySearched" class="empty-state">
+    <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+    </svg>
+    <p>Please select your search criteria and click Search to view the summary.</p>
+  </div>
+
+  <ng-container *ngIf="summarySearched">
     <section class="stats-grid" aria-label="Execution results summary">
       <article class="stat-card">
         <div class="stat-header">
           <div class="stat-icon info-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
             </svg>
           </div>
           <h3 class="stat-title">Total Runs</h3>
         </div>
-        <div class="stat-value">{{ filteredLogs.length }}</div>
+        <div class="stat-value">{{ summaryData.length }}</div>
         <div class="stat-footer">
           <span class="footer-text">Visible after current filters</span>
         </div>
@@ -44,8 +90,10 @@
       <article class="stat-card">
         <div class="stat-header">
           <div class="stat-icon success-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <h3 class="stat-title">Passed</h3>
@@ -59,8 +107,10 @@
       <article class="stat-card">
         <div class="stat-header">
           <div class="stat-icon danger-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2.25m0 3.75h.008v.008H12v-.008zm9-3.758c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2.25m0 3.75h.008v.008H12v-.008zm9-3.758c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
             </svg>
           </div>
           <h3 class="stat-title">Failed</h3>
@@ -74,7 +124,8 @@
       <article class="stat-card">
         <div class="stat-header">
           <div class="stat-icon timer-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -89,7 +140,8 @@
       <article class="stat-card">
         <div class="stat-header">
           <div class="stat-icon accent-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.5 4.5L21.75 7.5" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 12V7.5h-4.5" />
             </svg>
@@ -107,48 +159,89 @@
       <div class="grid-toolbar">
         <div class="toolbar-left">
           <div class="toolbar-copy">
-            <h3 class="section-title">Detailed Execution Logs</h3>
-            <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
+            <h3 class="section-title">Summary Logs</h3>
+            <p class="section-description">{{ summaryData.length }} records loaded.</p>
           </div>
-        </div>
-        <div class="toolbar-right">
-          <div class="global-search">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
-            </svg>
-            <input
-              type="text"
-              class="global-search-input"
-              placeholder="Search test name or class name..."
-              [(ngModel)]="globalSearchTerm"
-            />
-          </div>
-
-          <select class="form-select outcome-select" [(ngModel)]="selectedOutcome">
-            <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
-          </select>
         </div>
       </div>
 
       <div class="table-responsive">
-        <app-data-grid
-          [data]="filteredLogs"
-          [columns]="gridColumns"
-          [pageSize]="pageSize"
-          [showAddAction]="false"
-          (actionClick)="handleAction($event)"
-        >
+        <app-data-grid [data]="summaryData" [columns]="gridColumns" [pageSize]="pageSize" [showAddAction]="false"
+          (actionClick)="handleAction($event)">
         </app-data-grid>
       </div>
     </section>
+  </ng-container>
+</ng-container>
 
-    <app-dynamic-form-modal
-      [isVisible]="isDetailsModalOpen"
-      [mode]="'view'"
-      [layout]="'double'"
-      [titleView]="'Test Run Details'"
-      [fields]="detailFields"
-      [formData]="selectedLogDetails"
-      (close)="closeDetailsModal()">
-    </app-dynamic-form-modal>
-  
+<!-- ======================================= -->
+<!--           RUN DETAILS TAB               -->
+<!-- ======================================= -->
+<ng-container *ngIf="activeTab === 'run-details'">
+  <div class="run-details-layout">
+
+    <!-- Sidebar Filters -->
+    <aside class="details-sidebar">
+      <div class="sidebar-header">
+        <h3 class="sidebar-title">Filters</h3>
+        <button class="btn-clear" (click)="resetRunDetailsFilters()">Clear All</button>
+      </div>
+      <div class="sidebar-content">
+        <div class="filter-group">
+          <label>Release Number</label>
+          <input type="text" class="form-input" [(ngModel)]="runDetailsFilters.releaseNumber"
+            (ngModelChange)="onRunDetailsFilterChange()" placeholder="e.g. Rel-1.0">
+        </div>
+        <div class="filter-group">
+          <label>Build Number</label>
+          <input type="text" class="form-input" [(ngModel)]="runDetailsFilters.buildNumber"
+            (ngModelChange)="onRunDetailsFilterChange()" placeholder="e.g. Build-100">
+        </div>
+        <div class="filter-group">
+          <label>Feature Name</label>
+          <input type="text" class="form-input" [(ngModel)]="runDetailsFilters.featureName"
+            (ngModelChange)="onRunDetailsFilterChange()" placeholder="e.g. Core Feature">
+        </div>
+        <div class="filter-group">
+          <label>TRX File Name</label>
+          <input type="text" class="form-input" [(ngModel)]="runDetailsFilters.trxFileName"
+            (ngModelChange)="onRunDetailsFilterChange()" placeholder="e.g. results.trx">
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Grid Content -->
+    <section class="grid-card run-details-main">
+      <div class="grid-toolbar">
+        <div class="toolbar-left">
+          <div class="toolbar-copy">
+            <h3 class="section-title">Detailed Execution Logs</h3>
+            <p class="section-description">{{ runDetailsData.length }} records available.</p>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-primary generate-btn" (click)="generateReport()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Generate Report
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="flex: 1; display: flex; flex-direction: column;">
+        <app-data-grid style="flex: 1;" [data]="runDetailsData" [columns]="runDetailsColumns" [pageSize]="pageSize"
+          [showAddAction]="false" (actionClick)="handleAction($event)">
+        </app-data-grid>
+      </div>
+    </section>
+  </div>
+</ng-container>
+
+
+<app-dynamic-form-modal [isVisible]="isDetailsModalOpen" [mode]="'view'" [layout]="'double'"
+  [titleView]="'Test Run Details'" [fields]="detailFields" [formData]="selectedLogDetails"
+  (close)="closeDetailsModal()">
+</app-dynamic-form-modal>

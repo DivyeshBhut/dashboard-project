@@ -5,8 +5,6 @@ import { DynamicFormModalComponent, FormField } from '../../../shared/components
 import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
 import { MasterApiService, TestResultItem } from '../../../core/services/master-api.service';
 
-type TestRunOutcome = 'Passed' | 'Failed' | 'Skipped';
-
 @Component({
   selector: 'app-test-case-run',
   standalone: true,
@@ -18,7 +16,8 @@ export class TestCaseRunComponent implements OnInit {
   private readonly masterApi = inject(MasterApiService);
 
   readonly pageSize = 10;
-  readonly outcomeOptions: Array<'All' | TestRunOutcome> = ['All', 'Passed', 'Failed', 'Skipped'];
+
+  activeTab: 'summary' | 'run-details' = 'summary';
 
   readonly gridColumns: GridColumn[] = [
     { field: 'actions', title: 'Actions', width: 140, type: 'actions' },
@@ -27,6 +26,17 @@ export class TestCaseRunComponent implements OnInit {
     { field: 'outcome', title: 'Outcome', width: 160 },
     { field: 'durationLabel', title: 'Duration', width: 150 },
     { field: 'executedAt', title: 'Executed At', width: 220, type: 'date', format: '{0:MMM d, yyyy h:mm tt}' },
+  ];
+
+  readonly runDetailsColumns: GridColumn[] = [
+    { field: 'pipelineExecutionNumber', title: 'Execution #', width: 150 },
+    { field: 'releaseNumber', title: 'Release', width: 150 },
+    { field: 'buildNumber', title: 'Build', width: 150 },
+    { field: 'actions', title: 'Actions', width: 140, type: 'actions' },
+    { field: 'testName', title: 'Test Name', width: 200 },
+    { field: 'className', title: 'Class Name', width: 200 },
+    { field: 'outcome', title: 'Outcome', width: 140 },
+    { field: 'durationLabel', title: 'Duration', width: 140 }
   ];
 
   readonly detailFields: FormField[] = [
@@ -40,29 +50,24 @@ export class TestCaseRunComponent implements OnInit {
 
   logs: TestResultItem[] = [];
 
-  // Cached filtered result — avoids new array reference on every change detection cycle
-  cachedFilteredLogs: TestResultItem[] = [];
+  // Summary State
+  summarySearched = false;
+  summaryData: TestResultItem[] = [];
+  summaryFilters = {
+    buildName: '',
+    trxFileName: '',
+    featureName: '',
+    releaseNumber: ''
+  };
 
-  private _selectedOutcome: 'All' | TestRunOutcome = 'All';
-  private _globalSearchTerm = '';
-
-  get selectedOutcome(): 'All' | TestRunOutcome {
-    return this._selectedOutcome;
-  }
-
-  set selectedOutcome(value: 'All' | TestRunOutcome) {
-    this._selectedOutcome = value;
-    this.applyFilters();
-  }
-
-  get globalSearchTerm(): string {
-    return this._globalSearchTerm;
-  }
-
-  set globalSearchTerm(value: string) {
-    this._globalSearchTerm = value;
-    this.applyFilters();
-  }
+  // Run Details State
+  runDetailsData: TestResultItem[] = [];
+  runDetailsFilters = {
+    releaseNumber: '',
+    buildNumber: '',
+    featureName: '',
+    trxFileName: ''
+  };
 
   isDetailsModalOpen = false;
   selectedLogDetails: Record<string, string> = {};
@@ -70,58 +75,118 @@ export class TestCaseRunComponent implements OnInit {
   ngOnInit(): void {
     this.masterApi.getTestResults().subscribe((logs) => {
       this.logs = logs;
-      this.applyFilters();
+      this.applySummaryFilters();
+      this.applyRunDetailsFilters();
     });
   }
 
-  private applyFilters(): void {
-    const searchTerm = this._globalSearchTerm.trim().toLowerCase();
+  setTab(tab: 'summary' | 'run-details'): void {
+    this.activeTab = tab;
+  }
 
-    this.cachedFilteredLogs = this.logs.filter((log) => {
-      const matchesOutcome = this._selectedOutcome === 'All' || log.outcome === this._selectedOutcome;
-      const matchesGlobalSearch =
-        !searchTerm ||
-        log.testName.toLowerCase().includes(searchTerm) ||
-        log.className.toLowerCase().includes(searchTerm);
+  searchSummary(): void {
+    this.summarySearched = true;
+    this.applySummaryFilters();
+  }
 
-      return matchesOutcome && matchesGlobalSearch;
+  resetSummaryFilters(): void {
+    this.summarySearched = false;
+    this.summaryFilters = {
+      buildName: '',
+      trxFileName: '',
+      featureName: '',
+      releaseNumber: ''
+    };
+    this.applySummaryFilters();
+  }
+
+  onSummaryFilterChange(): void {
+    // Optionally trigger search live if it has already been searched
+    if (this.summarySearched) {
+      this.applySummaryFilters();
+    }
+  }
+
+  onRunDetailsFilterChange(): void {
+    this.applyRunDetailsFilters();
+  }
+
+  resetRunDetailsFilters(): void {
+    this.runDetailsFilters = {
+      releaseNumber: '',
+      buildNumber: '',
+      featureName: '',
+      trxFileName: ''
+    };
+    this.applyRunDetailsFilters();
+  }
+
+  generateReport(): void {
+    alert('Generating testing report based on current filters...');
+  }
+
+  private applySummaryFilters(): void {
+    if (!this.summarySearched) {
+      this.summaryData = [];
+      return;
+    }
+
+    this.summaryData = this.logs.filter((log) => {
+      const bSearch = this.summaryFilters.buildName.trim().toLowerCase();
+      const tSearch = this.summaryFilters.trxFileName.trim().toLowerCase();
+      const fSearch = this.summaryFilters.featureName.trim().toLowerCase();
+      const rSearch = this.summaryFilters.releaseNumber.trim().toLowerCase();
+
+      return (!bSearch || log.buildNumber?.toLowerCase().includes(bSearch)) &&
+        (!tSearch || log.trxFileName?.toLowerCase().includes(tSearch)) &&
+        (!fSearch || log.featureName?.toLowerCase().includes(fSearch)) &&
+        (!rSearch || log.releaseNumber?.toLowerCase().includes(rSearch));
     });
   }
 
-  get filteredLogs(): TestResultItem[] {
-    return this.cachedFilteredLogs;
+  private applyRunDetailsFilters(): void {
+    const details = this.logs.filter((log) => {
+      const bSearch = this.runDetailsFilters.buildNumber.trim().toLowerCase();
+      const tSearch = this.runDetailsFilters.trxFileName.trim().toLowerCase();
+      const fSearch = this.runDetailsFilters.featureName.trim().toLowerCase();
+      const rSearch = this.runDetailsFilters.releaseNumber.trim().toLowerCase();
+
+      return (!bSearch || log.buildNumber?.toLowerCase().includes(bSearch)) &&
+        (!tSearch || log.trxFileName?.toLowerCase().includes(tSearch)) &&
+        (!fSearch || log.featureName?.toLowerCase().includes(fSearch)) &&
+        (!rSearch || log.releaseNumber?.toLowerCase().includes(rSearch));
+    });
+
+    this.runDetailsData = details.sort((a, b) => {
+      return (b.pipelineExecutionNumber || 0) - (a.pipelineExecutionNumber || 0);
+    });
   }
 
+  // Stats driven from summaryData (if wanted on summary page)
   get passedCount(): number {
-    return this.cachedFilteredLogs.filter((log) => log.outcome === 'Passed').length;
+    return this.summaryData.filter((log) => log.outcome === 'Passed').length;
   }
 
   get failedCount(): number {
-    return this.cachedFilteredLogs.filter((log) => log.outcome === 'Failed').length;
+    return this.summaryData.filter((log) => log.outcome === 'Failed').length;
   }
 
   get averageDuration(): string {
-    if (this.cachedFilteredLogs.length === 0) {
+    if (this.summaryData.length === 0) {
       return '0s';
     }
 
-    const totalDuration = this.cachedFilteredLogs.reduce((sum, log) => sum + log.durationSeconds, 0);
-    const averageSeconds = Math.round(totalDuration / this.cachedFilteredLogs.length);
+    const totalDuration = this.summaryData.reduce((sum, log) => sum + log.durationSeconds, 0);
+    const averageSeconds = Math.round(totalDuration / this.summaryData.length);
     return this.formatDuration(averageSeconds);
   }
 
   get passRate(): string {
-    if (this.cachedFilteredLogs.length === 0) {
+    if (this.summaryData.length === 0) {
       return '0%';
     }
 
-    return `${Math.round((this.passedCount / this.cachedFilteredLogs.length) * 100)}%`;
-  }
-
-  resetFilters(): void {
-    this._selectedOutcome = 'All';
-    this._globalSearchTerm = '';
-    this.applyFilters();
+    return `${Math.round((this.passedCount / this.summaryData.length) * 100)}%`;
   }
 
   handleAction(event: { action: string; item: TestResultItem }): void {

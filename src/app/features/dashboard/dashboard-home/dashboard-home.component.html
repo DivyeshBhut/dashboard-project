@@ -176,23 +176,26 @@
           <span *ngFor="let label of runsAxisLabels">{{ label }}</span>
         </div>
 
-        <div class="chart-stage">
+        <div class="chart-stage" #chartContainer>
           <div class="grid-lines-bg">
             <div class="grid-line" *ngFor="let line of chartGridLines"></div>
           </div>
 
-          <svg class="trend-svg" viewBox="0 0 640 240" preserveAspectRatio="none" aria-hidden="true"
-            (mouseleave)="hideTooltip()">
-            <polyline class="trend-line total-runs-line" [attr.points]="totalRunsPolylinePoints"></polyline>
-            <polyline class="trend-line success-rate-line" [attr.points]="successRatePolylinePoints"></polyline>
+          <svg class="trend-svg" [attr.viewBox]="'0 0 ' + chartWidth + ' 240'" aria-hidden="true"
+            (mouseleave)="hideTooltip()" style="width: 100%; height: 100%;">
+            
+            <path class="trend-line total-runs-line" fill="none" [attr.d]="totalRunsPathData"></path>
+            <path class="trend-line success-rate-line" fill="none" [attr.d]="successRatePathData"></path>
 
-            <g *ngFor="let point of totalRunsChartPoints; let i = index">
+            <g *ngFor="let point of totalRunsChartPoints; let i = index; let last = last">
+              <circle *ngIf="last" class="pulse-ring runs-pulse-ring" [attr.cx]="point.x" [attr.cy]="point.y" r="6"></circle>
               <circle class="trend-point total-runs-point" [attr.cx]="point.x" [attr.cy]="point.y" r="6"
                 (mouseenter)="showTooltip($event, 'runs', i)" style="cursor: pointer;">
               </circle>
             </g>
 
-            <g *ngFor="let point of successRateChartPoints; let i = index">
+            <g *ngFor="let point of successRateChartPoints; let i = index; let last = last">
+              <circle *ngIf="last" class="pulse-ring success-pulse-ring" [attr.cx]="point.x" [attr.cy]="point.y" r="6"></circle>
               <circle class="trend-point success-rate-point" [attr.cx]="point.x" [attr.cy]="point.y" r="6"
                 (mouseenter)="showTooltip($event, 'rate', i)" style="cursor: pointer;">
               </circle>
