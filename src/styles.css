@@ -458,12 +458,12 @@ app-dashboard-home .accordion-card:last-of-type {
 
 /* Dashboard Sibling Modules */
 app-test-case-run .page-header,
-app-pipeline-executions .page-header {
+app-pipeline-execution-dashboard .page-header, app-pipeline-execution-pipelines .page-header {
   margin-bottom: 1.5rem;
 }
 
 app-test-case-run .breadcrumb,
-app-pipeline-executions .breadcrumb {
+app-pipeline-execution-dashboard .breadcrumb, app-pipeline-execution-pipelines .breadcrumb {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -473,19 +473,19 @@ app-pipeline-executions .breadcrumb {
 }
 
 app-test-case-run .breadcrumb-separator,
-app-pipeline-executions .breadcrumb-separator {
+app-pipeline-execution-dashboard .breadcrumb-separator, app-pipeline-execution-pipelines .breadcrumb-separator {
   width: 14px;
   height: 14px;
 }
 
 app-test-case-run .breadcrumb-item.active,
-app-pipeline-executions .breadcrumb-item.active {
+app-pipeline-execution-dashboard .breadcrumb-item.active, app-pipeline-execution-pipelines .breadcrumb-item.active {
   font-weight: 600;
   color: var(--text-primary);
 }
 
 app-test-case-run .header-card,
-app-pipeline-executions .header-card {
+app-pipeline-execution-dashboard .header-card, app-pipeline-execution-pipelines .header-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -497,7 +497,7 @@ app-pipeline-executions .header-card {
 }
 
 app-test-case-run .header-info .page-title,
-app-pipeline-executions .header-info .page-title {
+app-pipeline-execution-dashboard .header-info .page-title, app-pipeline-execution-pipelines .header-info .page-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -506,7 +506,7 @@ app-pipeline-executions .header-info .page-title {
 }
 
 app-test-case-run .header-info .text-muted,
-app-pipeline-executions .header-info .text-muted {
+app-pipeline-execution-dashboard .header-info .text-muted, app-pipeline-execution-pipelines .header-info .text-muted {
   font-size: 0.95rem;
   color: var(--text-secondary);
   margin: 0;
@@ -514,7 +514,7 @@ app-pipeline-executions .header-info .text-muted {
 }
 
 app-test-case-run .stats-grid,
-app-pipeline-executions .stats-grid {
+app-pipeline-execution-dashboard .stats-grid, app-pipeline-execution-pipelines .stats-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1.25rem;
@@ -522,7 +522,7 @@ app-pipeline-executions .stats-grid {
 }
 
 app-test-case-run .stat-card,
-app-pipeline-executions .stat-card {
+app-pipeline-execution-dashboard .stat-card, app-pipeline-execution-pipelines .stat-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: 1rem;
@@ -535,13 +535,13 @@ app-pipeline-executions .stat-card {
 }
 
 app-test-case-run .stat-card:hover,
-app-pipeline-executions .stat-card:hover {
+app-pipeline-execution-dashboard .stat-card:hover, app-pipeline-execution-pipelines .stat-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
 app-test-case-run .stat-header,
-app-pipeline-executions .stat-header {
+app-pipeline-execution-dashboard .stat-header, app-pipeline-execution-pipelines .stat-header {
   display: flex;
   align-items: center;
   gap: 0.9rem;
@@ -549,7 +549,7 @@ app-pipeline-executions .stat-header {
 }
 
 app-test-case-run .stat-icon,
-app-pipeline-executions .stat-icon {
+app-pipeline-execution-dashboard .stat-icon, app-pipeline-execution-pipelines .stat-icon {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -560,48 +560,48 @@ app-pipeline-executions .stat-icon {
 }
 
 app-test-case-run .stat-icon svg,
-app-pipeline-executions .stat-icon svg {
+app-pipeline-execution-dashboard .stat-icon svg, app-pipeline-execution-pipelines .stat-icon svg {
   width: 22px;
   height: 22px;
 }
 
 app-test-case-run .info-icon,
-app-pipeline-executions .info-icon {
+app-pipeline-execution-dashboard .info-icon, app-pipeline-execution-pipelines .info-icon {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
   color: #3b82f6;
   border-color: rgba(59, 130, 246, 0.1);
 }
 
 app-test-case-run .success-icon,
-app-pipeline-executions .success-icon {
+app-pipeline-execution-dashboard .success-icon, app-pipeline-execution-pipelines .success-icon {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
   color: #10b981;
   border-color: rgba(16, 185, 129, 0.1);
 }
 
 app-test-case-run .danger-icon,
-app-pipeline-executions .danger-icon {
+app-pipeline-execution-dashboard .danger-icon, app-pipeline-execution-pipelines .danger-icon {
   background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
   color: #ef4444;
   border-color: rgba(239, 68, 68, 0.1);
 }
 
 app-test-case-run .timer-icon,
-app-pipeline-executions .timer-icon {
+app-pipeline-execution-dashboard .timer-icon, app-pipeline-execution-pipelines .timer-icon {
   background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.05));
   color: #f59e0b;
   border-color: rgba(245, 158, 11, 0.1);
 }
 
 app-test-case-run .accent-icon,
-app-pipeline-executions .accent-icon {
+app-pipeline-execution-dashboard .accent-icon, app-pipeline-execution-pipelines .accent-icon {
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0.05));
   color: #6366f1;
   border-color: rgba(99, 102, 241, 0.1);
 }
 
 app-test-case-run .stat-title,
-app-pipeline-executions .stat-title {
+app-pipeline-execution-dashboard .stat-title, app-pipeline-execution-pipelines .stat-title {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text-secondary);
@@ -609,7 +609,7 @@ app-pipeline-executions .stat-title {
 }
 
 app-test-case-run .stat-value,
-app-pipeline-executions .stat-value {
+app-pipeline-execution-dashboard .stat-value, app-pipeline-execution-pipelines .stat-value {
   font-size: 2rem;
   font-weight: 800;
   color: var(--text-primary);
@@ -619,7 +619,7 @@ app-pipeline-executions .stat-value {
 }
 
 app-test-case-run .stat-footer,
-app-pipeline-executions .stat-footer {
+app-pipeline-execution-dashboard .stat-footer, app-pipeline-execution-pipelines .stat-footer {
   margin-top: auto;
   display: flex;
   align-items: center;
@@ -629,29 +629,29 @@ app-pipeline-executions .stat-footer {
 }
 
 app-test-case-run .footer-text,
-app-pipeline-executions .footer-text {
+app-pipeline-execution-dashboard .footer-text, app-pipeline-execution-pipelines .footer-text {
   color: var(--text-secondary);
 }
 
 app-test-case-run .trend,
-app-pipeline-executions .trend {
+app-pipeline-execution-dashboard .trend, app-pipeline-execution-pipelines .trend {
   font-weight: 600;
 }
 
 app-test-case-run .trend.up,
-app-pipeline-executions .trend.up {
+app-pipeline-execution-dashboard .trend.up, app-pipeline-execution-pipelines .trend.up {
   color: #10b981;
 }
 
 app-test-case-run .trend.down,
-app-pipeline-executions .trend.down {
+app-pipeline-execution-dashboard .trend.down, app-pipeline-execution-pipelines .trend.down {
   color: #ef4444;
 }
 
 app-test-case-run .filter-card,
 app-test-case-run .grid-card,
-app-pipeline-executions .filter-card,
-app-pipeline-executions .grid-card {
+app-pipeline-execution-dashboard .filter-card, app-pipeline-execution-pipelines .filter-card ,
+app-pipeline-execution-dashboard .grid-card, app-pipeline-execution-pipelines .grid-card {
   background-color: var(--card-bg);
   border-radius: 0.75rem;
   border: 1px solid var(--card-border);
@@ -659,13 +659,13 @@ app-pipeline-executions .grid-card {
 }
 
 app-test-case-run .filter-card,
-app-pipeline-executions .filter-card {
+app-pipeline-execution-dashboard .filter-card, app-pipeline-execution-pipelines .filter-card {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
 app-test-case-run .filter-header,
-app-pipeline-executions .filter-header {
+app-pipeline-execution-dashboard .filter-header, app-pipeline-execution-pipelines .filter-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -674,7 +674,7 @@ app-pipeline-executions .filter-header {
 }
 
 app-test-case-run .section-title,
-app-pipeline-executions .section-title {
+app-pipeline-execution-dashboard .section-title, app-pipeline-execution-pipelines .section-title {
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -683,7 +683,7 @@ app-pipeline-executions .section-title {
 }
 
 app-test-case-run .section-description,
-app-pipeline-executions .section-description {
+app-pipeline-execution-dashboard .section-description, app-pipeline-execution-pipelines .section-description {
   font-size: 0.9rem;
   color: var(--text-secondary);
   margin: 0;
@@ -691,14 +691,14 @@ app-pipeline-executions .section-description {
 }
 
 app-test-case-run .filter-grid,
-app-pipeline-executions .filter-grid {
+app-pipeline-execution-dashboard .filter-grid, app-pipeline-execution-pipelines .filter-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
 app-test-case-run .form-group,
-app-pipeline-executions .form-group {
+app-pipeline-execution-dashboard .form-group, app-pipeline-execution-pipelines .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -706,14 +706,14 @@ app-pipeline-executions .form-group {
 }
 
 app-test-case-run .form-group label,
-app-pipeline-executions .form-group label {
+app-pipeline-execution-dashboard .form-group label, app-pipeline-execution-pipelines .form-group label {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
 
 app-test-case-run .form-select,
-app-pipeline-executions .form-select {
+app-pipeline-execution-dashboard .form-select, app-pipeline-execution-pipelines .form-select {
   padding: 0.75rem 2.5rem 0.75rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
@@ -729,7 +729,7 @@ app-pipeline-executions .form-select {
 }
 
 app-test-case-run .form-input,
-app-pipeline-executions .form-input {
+app-pipeline-execution-dashboard .form-input, app-pipeline-execution-pipelines .form-input {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
@@ -743,14 +743,14 @@ app-pipeline-executions .form-input {
 
 app-test-case-run .form-select:focus,
 app-test-case-run .form-input:focus,
-app-pipeline-executions .form-select:focus,
-app-pipeline-executions .form-input:focus {
+app-pipeline-execution-dashboard .form-select:focus, app-pipeline-execution-pipelines .form-select:focus ,
+app-pipeline-execution-dashboard .form-input:focus, app-pipeline-execution-pipelines .form-input:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px var(--accent-light);
 }
 
 app-test-case-run .btn,
-app-pipeline-executions .btn {
+app-pipeline-execution-dashboard .btn, app-pipeline-execution-pipelines .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -764,36 +764,36 @@ app-pipeline-executions .btn {
 }
 
 app-test-case-run .btn-sm,
-app-pipeline-executions .btn-sm {
+app-pipeline-execution-dashboard .btn-sm, app-pipeline-execution-pipelines .btn-sm {
   padding: 0.5rem 1rem;
 }
 
 app-test-case-run .btn-outline,
-app-pipeline-executions .btn-outline {
+app-pipeline-execution-dashboard .btn-outline, app-pipeline-execution-pipelines .btn-outline {
   background-color: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
 }
 
 app-test-case-run .btn-outline:hover,
-app-pipeline-executions .btn-outline:hover {
+app-pipeline-execution-dashboard .btn-outline:hover, app-pipeline-execution-pipelines .btn-outline:hover {
   background-color: var(--hover-color);
 }
 
 app-test-case-run .filter-header .btn,
-app-pipeline-executions .filter-header .btn {
+app-pipeline-execution-dashboard .filter-header .btn, app-pipeline-execution-pipelines .filter-header .btn {
   align-self: flex-start;
 }
 
 app-test-case-run .grid-card,
-app-pipeline-executions .grid-card {
+app-pipeline-execution-dashboard .grid-card, app-pipeline-execution-pipelines .grid-card {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 app-test-case-run .grid-toolbar,
-app-pipeline-executions .grid-toolbar {
+app-pipeline-execution-dashboard .grid-toolbar, app-pipeline-execution-pipelines .grid-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -803,23 +803,23 @@ app-pipeline-executions .grid-toolbar {
 }
 
 app-test-case-run .toolbar-left,
-app-pipeline-executions .toolbar-left {
+app-pipeline-execution-dashboard .toolbar-left, app-pipeline-execution-pipelines .toolbar-left {
   display: flex;
   align-items: center;
   min-width: 0;
 }
 
 app-test-case-run .toolbar-copy,
-app-pipeline-executions .toolbar-copy,
+app-pipeline-execution-dashboard .toolbar-copy, app-pipeline-execution-pipelines .toolbar-copy ,
 app-test-case-run .table-responsive,
-app-pipeline-executions .table-responsive {
+app-pipeline-execution-dashboard .table-responsive, app-pipeline-execution-pipelines .table-responsive {
   min-width: 0;
 }
 
 @media (max-width: 1280px) {
 
   app-test-case-run .stats-grid,
-  app-pipeline-executions .stats-grid {
+  app-pipeline-execution-dashboard .stats-grid, app-pipeline-execution-pipelines .stats-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -827,7 +827,7 @@ app-pipeline-executions .table-responsive {
 @media (max-width: 1080px) {
 
   app-test-case-run .filter-grid,
-  app-pipeline-executions .filter-grid {
+  app-pipeline-execution-dashboard .filter-grid, app-pipeline-execution-pipelines .filter-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -835,7 +835,7 @@ app-pipeline-executions .table-responsive {
 @media (max-width: 960px) {
 
   app-test-case-run .stats-grid,
-  app-pipeline-executions .stats-grid {
+  app-pipeline-execution-dashboard .stats-grid, app-pipeline-execution-pipelines .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -843,7 +843,7 @@ app-pipeline-executions .table-responsive {
 @media (max-width: 720px) {
 
   app-test-case-run .filter-grid,
-  app-pipeline-executions .filter-grid {
+  app-pipeline-execution-dashboard .filter-grid, app-pipeline-execution-pipelines .filter-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -851,28 +851,28 @@ app-pipeline-executions .table-responsive {
 @media (max-width: 640px) {
 
   app-test-case-run .header-card,
-  app-pipeline-executions .header-card {
+  app-pipeline-execution-dashboard .header-card, app-pipeline-execution-pipelines .header-card {
     padding: 1.25rem;
   }
 
   app-test-case-run .filter-card,
-  app-pipeline-executions .filter-card {
+  app-pipeline-execution-dashboard .filter-card, app-pipeline-execution-pipelines .filter-card {
     padding: 1.25rem;
   }
 
   app-test-case-run .filter-header,
-  app-pipeline-executions .filter-header {
+  app-pipeline-execution-dashboard .filter-header, app-pipeline-execution-pipelines .filter-header {
     flex-direction: column;
     align-items: stretch;
   }
 
   app-test-case-run .stats-grid,
-  app-pipeline-executions .stats-grid {
+  app-pipeline-execution-dashboard .stats-grid, app-pipeline-execution-pipelines .stats-grid {
     grid-template-columns: 1fr;
   }
 
   app-test-case-run .grid-toolbar,
-  app-pipeline-executions .grid-toolbar {
+  app-pipeline-execution-dashboard .grid-toolbar, app-pipeline-execution-pipelines .grid-toolbar {
     padding: 1rem 1.25rem;
   }
 

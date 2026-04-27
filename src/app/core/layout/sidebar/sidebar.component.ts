@@ -17,6 +17,7 @@ export class SidebarComponent {
   projectHubOpen = false;
   masterDataOpen = false;
   securityOpen = false;
+  pipelineExecutionsOpen = false;
   constructor(private readonly router: Router) {}
 
 
@@ -30,16 +31,17 @@ export class SidebarComponent {
     this.projectHubOpen = false;
     this.masterDataOpen = false;
     this.securityOpen = false;
+    this.pipelineExecutionsOpen = false;
   }
 
-  private toggleMenu(menu: 'uam' | 'projectHub' | 'masterData' | 'security'): void {
+  private toggleMenu(menu: 'uam' | 'projectHub' | 'masterData' | 'security' | 'pipelineExecutions'): void {
     const wasOpen = this[`${menu}Open`];
     this.closeAllMenus();
     this[`${menu}Open`] = !wasOpen;
   }
 
   onGroupClick(
-    menu: 'uam' | 'projectHub' | 'masterData' | 'security',
+    menu: 'uam' | 'projectHub' | 'masterData' | 'security' | 'pipelineExecutions',
     defaultRoute: string
   ): void {
     if (!this.isSidebarOpen) {
@@ -49,6 +51,20 @@ export class SidebarComponent {
     }
 
     this.toggleMenu(menu);
+  }
+
+  onNestedGroupClick(
+    event: Event,
+    menu: 'pipelineExecutions',
+    defaultRoute: string
+  ): void {
+    event.stopPropagation();
+    if (!this.isSidebarOpen) {
+      void this.router.navigate([defaultRoute]);
+      return;
+    }
+
+    this[`${menu}Open`] = !this[`${menu}Open`];
   }
 
   navigateTo(path: string): void {

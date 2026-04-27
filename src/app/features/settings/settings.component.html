@@ -1,0 +1,168 @@
+<div class="settings-content">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <span class="breadcrumb-item">Dashboard</span>
+      <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+      <span class="breadcrumb-item active">Settings</span>
+    </div>
+
+    <div class="header-card">
+      <div class="header-info">
+        <h1 class="page-title">Global Settings</h1>
+        <p class="text-muted">Manage your AI integrations, system configurations, and data synchronization.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-grid">
+    <!-- Left Column -->
+    <div class="settings-column">
+      
+      <!-- AI Models Setting -->
+      <section class="settings-card">
+        <div class="card-header">
+          <div class="card-icon primary-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.45m.001 0c-.019-.104-.039-.208-.06-.311m-2.45 2.45a5.955 5.955 0 00-1.87 3.39" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="section-title">AI Models Setting</h3>
+            <p class="section-description">Configure primary inference models and context window limits.</p>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="form-group">
+            <label>Primary Model</label>
+            <select class="form-select" [(ngModel)]="selectedModel">
+              <option *ngFor="let model of availableModels" [value]="model.id">{{ model.name }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>API Key</label>
+            <input type="password" class="form-input" placeholder="Enter API Key" [(ngModel)]="apiKey">
+            <span class="field-hint">Never stored in plain text.</span>
+          </div>
+
+          <div class="form-group">
+            <div class="slider-header">
+              <label>Temperature: <span>{{ temperature }}</span></label>
+            </div>
+            <input type="range" class="form-range" min="0" max="1" step="0.1" [(ngModel)]="temperature">
+            <div class="range-labels">
+              <span>Precise</span>
+              <span>Creative</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-primary" (click)="saveModelSettings()">Save Configuration</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Right Column -->
+    <div class="settings-column">
+      
+      <!-- Configuration -->
+      <section class="settings-card">
+        <div class="card-header">
+          <div class="card-icon success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="section-title">Configuration</h3>
+            <p class="section-description">System-wide behaviors and operational flags.</p>
+          </div>
+        </div>
+
+        <div class="card-body toggle-list">
+          <div class="toggle-row" (click)="toggleConfig('strictMode')">
+            <div class="toggle-info">
+              <h4>Strict Mode Validation</h4>
+              <p>Enforce strict schema validation on all inputs.</p>
+            </div>
+            <button class="toggle-switch" [class.active]="strictMode" type="button" role="switch" [attr.aria-checked]="strictMode">
+              <span class="toggle-knob"></span>
+            </button>
+          </div>
+
+          <div class="toggle-row" (click)="toggleConfig('autoSave')">
+            <div class="toggle-info">
+              <h4>Auto-Save Workflows</h4>
+              <p>Automatically persist draft changes every 30 seconds.</p>
+            </div>
+            <button class="toggle-switch" [class.active]="autoSave" type="button" role="switch" [attr.aria-checked]="autoSave">
+              <span class="toggle-knob"></span>
+            </button>
+          </div>
+
+          <div class="toggle-row" (click)="toggleConfig('enableBetaFeatures')">
+            <div class="toggle-info">
+              <h4>Enable Beta Features</h4>
+              <p>Opt-in to experimental UI and backend processing.</p>
+            </div>
+            <button class="toggle-switch" [class.active]="enableBetaFeatures" type="button" role="switch" [attr.aria-checked]="enableBetaFeatures">
+              <span class="toggle-knob"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Embedding Syncing -->
+      <section class="settings-card">
+        <div class="card-header">
+          <div class="card-icon warning-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="section-title">Embedding Syncing</h3>
+            <p class="section-description">Manage vector store updates across all connected corpora.</p>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="sync-status">
+            <div class="status-indicator" [class.syncing]="isSyncing"></div>
+            <div class="status-text">
+              <ng-container *ngIf="!isSyncing">
+                <strong>Up to date.</strong> Last synced {{ lastSyncTime | date:'shortTime' }}.
+              </ng-container>
+              <ng-container *ngIf="isSyncing">
+                <strong>Syncing embeddings...</strong> Please wait.
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="progress-container" *ngIf="isSyncing">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="syncProgress"></div>
+            </div>
+            <span class="progress-text">{{ syncProgress }}%</span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="btn btn-outline" (click)="startSync()" [disabled]="isSyncing">
+            <svg *ngIf="isSyncing" class="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            {{ isSyncing ? 'Synchronizing...' : 'Force Sync Now' }}
+          </button>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+</div>

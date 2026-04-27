@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DynamicFormModalComponent, FormField } from '../../../shared/components/dynamic-form-modal/dynamic-form-modal.component';
-import { DataGridComponent, GridColumn } from '../../../shared/components/grid/data-grid/data-grid';
-import { MasterApiService, PipelineExecutionItem } from '../../../core/services/master-api.service';
+import { DynamicFormModalComponent, FormField } from '../../../../shared/components/dynamic-form-modal/dynamic-form-modal.component';
+import { DataGridComponent, GridColumn } from '../../../../shared/components/grid/data-grid/data-grid';
+import { MasterApiService, PipelineExecutionItem } from '../../../../core/services/master-api.service';
 
 type PipelineExecutionOutcome = 'Successful' | 'Failed' | 'Cancelled';
 
@@ -19,13 +19,13 @@ interface ChartPoint {
 }
 
 @Component({
-  selector: 'app-pipeline-executions',
+  selector: 'app-pipeline-execution-pipelines',
   standalone: true,
   imports: [CommonModule, FormsModule, DataGridComponent, DynamicFormModalComponent],
-  templateUrl: './pipeline-executions.component.html',
-  styleUrl: './pipeline-executions.component.css',
+  templateUrl: './pipeline-execution-pipelines.component.html',
+  styleUrl: './pipeline-execution-pipelines.component.css',
 })
-export class PipelineExecutionsComponent implements OnInit {
+export class PipelineExecutionPipelinesComponent implements OnInit {
   private readonly masterApi = inject(MasterApiService);
 
   readonly pageSize = 10;

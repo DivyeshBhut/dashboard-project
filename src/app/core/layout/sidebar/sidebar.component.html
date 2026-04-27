@@ -78,11 +78,20 @@
       <div class="sub-nav" [class.expanded]="masterDataOpen">
         <div class="sub-nav-inner">
           <a routerLink="/dashboard/test-case-runs" routerLinkActive="active" (click)="navigateTo('/dashboard/test-case-runs')" class="sub-nav-item">Test case runs</a>
-        </div>
-      </div>
-      <div class="sub-nav" [class.expanded]="masterDataOpen">
-        <div class="sub-nav-inner">
-          <a routerLink="/dashboard/pipeline-executions" routerLinkActive="active" (click)="navigateTo('/dashboard/pipeline-executions')" class="sub-nav-item">Pipeline Executions</a>
+
+          <!-- Nested Pipeline Executions Section -->
+          <div class="nested-group">
+            <button class="sub-nav-item group-toggle" (click)="onNestedGroupClick($event, 'pipelineExecutions', '/dashboard/pipeline-executions/dashboard')" [class.open]="pipelineExecutionsOpen">
+              <span class="group-title">Pipeline Executions</span>
+              <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </button>
+            <div class="nested-sub-nav" [class.expanded]="pipelineExecutionsOpen">
+              <a routerLink="/dashboard/pipeline-executions/dashboard" routerLinkActive="active" (click)="navigateTo('/dashboard/pipeline-executions/dashboard')" class="sub-nav-item nested-item">Dashboard</a>
+              <a routerLink="/dashboard/pipeline-executions/pipelines" routerLinkActive="active" (click)="navigateTo('/dashboard/pipeline-executions/pipelines')" class="sub-nav-item nested-item">Pipelines</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

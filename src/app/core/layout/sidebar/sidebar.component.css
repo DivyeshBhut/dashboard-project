@@ -159,7 +159,46 @@
   font-weight: 600; 
 }
 
-/* Collapsed state styling */
+/* Nested Sub-Nav Styling */
+.nested-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nested-group .group-toggle {
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding-right: 1rem;
+  text-align: left;
+}
+
+.nested-group .group-toggle:hover {
+  background-color: var(--hover-color);
+  color: var(--text-primary);
+}
+
+.nested-sub-nav {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.nested-sub-nav.expanded {
+  max-height: 200px;
+}
+
+.sub-nav-item.nested-item {
+  padding-left: 3rem; /* Indent more than regular sub-nav-item */
+}
+
+/* Fix collapsed state to also hide nested elements appropriately */
 .sidebar.collapsed .brand { display: none; }
 .sidebar.collapsed .brand-text { display: none; }
 .sidebar.collapsed .menu-label { opacity: 0; margin-bottom: 0; padding: 0; }

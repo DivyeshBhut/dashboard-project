@@ -6,10 +6,13 @@ import { UsersComponent } from './features/uam/users/users.component';
 import { GroupsComponent } from './features/uam/groups/groups';
 import { PermissionsComponent } from './features/uam/permissions/permissions';
 import { TestCaseRunComponent } from './features/dashboard/test-case-run/test-case-run.component';
-import { PipelineExecutionsComponent } from './features/dashboard/pipeline-executions/pipeline-executions.component';
+import { PipelineExecutionDashboardComponent } from './features/dashboard/pipeline-executions/pipeline-execution-dashboard/pipeline-execution-dashboard.component';
+import { PipelineExecutionPipelinesComponent } from './features/dashboard/pipeline-executions/pipeline-execution-pipelines/pipeline-execution-pipelines.component';
 import { ScreenzaMatrixComponent } from './features/dashboard/screenza-matrix/screenza-matrix.component';
 import { authGuard } from './core/services/auth.guard';
 
+
+import { SettingsComponent } from './features/settings/settings.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,8 +28,9 @@ export const routes: Routes = [
       { path: 'screenza-matrix', component: ScreenzaMatrixComponent },
       { path: 'test-case-runs', component: TestCaseRunComponent },
       { path: 'audit-logs', component: DashboardHomeComponent },
-      { path: 'settings', component: DashboardHomeComponent },
-      { path: 'pipeline-executions', component: PipelineExecutionsComponent },
+      { path: 'settings', component: SettingsComponent },
+      { path: 'pipeline-executions/dashboard', component: PipelineExecutionDashboardComponent },
+      { path: 'pipeline-executions/pipelines', component: PipelineExecutionPipelinesComponent },
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },

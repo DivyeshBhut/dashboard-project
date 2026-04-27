@@ -1,0 +1,48 @@
+<div class="page-header">
+  <div class="breadcrumb">
+    <span class="breadcrumb-item">Dashboard</span>
+    <svg class="breadcrumb-separator" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+      stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+    <span class="breadcrumb-item active">Pipeline Executions</span>
+  </div>
+
+  
+</div>
+
+<section class="grid-card">
+  <div class="grid-toolbar">
+    <div class="toolbar-left">
+      <div class="toolbar-copy">
+        <h3 class="section-title">Detailed Execution Logs</h3>
+        <p class="section-description">{{ filteredLogs.length }} records available in the current view.</p>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <div class="global-search">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 6.04 6.04a7.5 7.5 0 0 0 10.61 10.61Z" />
+        </svg>
+        <input type="text" class="global-search-input" placeholder="Search pipeline name or triggered by..."
+          [(ngModel)]="globalSearchTerm" />
+      </div>
+
+      <select class="form-select outcome-select" [(ngModel)]="selectedOutcome">
+        <option *ngFor="let outcome of outcomeOptions" [ngValue]="outcome">{{ outcome }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <app-data-grid [data]="filteredLogs" [columns]="gridColumns" [showAddAction]="false" [pageSize]="pageSize"
+      (actionClick)="handleAction($event)">
+    </app-data-grid>
+  </div>
+</section>
+
+<app-dynamic-form-modal [isVisible]="isDetailsModalOpen" [mode]="'view'" [titleView]="'Pipeline Execution Details'"
+  [fields]="detailFields" [formData]="selectedLogDetails" (close)="closeDetailsModal()">
+</app-dynamic-form-modal>
